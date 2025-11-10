@@ -1,0 +1,175 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+  /* Font Family */
+  --font-family:
+    'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Text 24px - Bold */
+  --text-24b-font-family: var(--font-family);
+  --text-24b-font-size: 1.5rem;
+  --text-24b-font-weight: 700;
+  --text-24b-line-height: 1.875rem;
+  --text-24b-letter-spacing: 0;
+
+  /* Text 24px - Semi-Bold */
+  --text-24sb-font-family: var(--font-family);
+  --text-24sb-font-size: 1.5rem;
+  --text-24sb-font-weight: 600;
+  --text-24sb-line-height: 1.875rem;
+  --text-24sb-letter-spacing: 0;
+
+  /* Text 24px - Medium */
+  --text-24m-font-family: var(--font-family);
+  --text-24m-font-size: 1.5rem;
+  --text-24m-font-weight: 500;
+  --text-24m-line-height: 1.875rem;
+  --text-24m-letter-spacing: 0;
+
+  /* Text 24px - Regular */
+  --text-24r-font-family: var(--font-family);
+  --text-24r-font-size: 1.5rem;
+  --text-24r-font-weight: 400;
+  --text-24r-line-height: 1.875rem;
+  --text-24r-letter-spacing: 0;
+
+  /* Text 20px - Bold */
+  --text-20b-font-family: var(--font-family);
+  --text-20b-font-size: 1.25rem;
+  --text-20b-font-weight: 700;
+  --text-20b-line-height: 1.5rem;
+  --text-20b-letter-spacing: 0;
+
+  /* Text 20px - Semi-Bold */
+  --text-20sb-font-family: var(--font-family);
+  --text-20sb-font-size: 1.25rem;
+  --text-20sb-font-weight: 600;
+  --text-20sb-line-height: 1.5rem;
+  --text-20sb-letter-spacing: 0;
+
+  /* Text 20px - Medium */
+  --text-20m-font-family: var(--font-family);
+  --text-20m-font-size: 1.25rem;
+  --text-20m-font-weight: 500;
+  --text-20m-line-height: 1.5rem;
+  --text-20m-letter-spacing: 0;
+
+  /* Text 20px - Regular */
+  --text-20r-font-family: var(--font-family);
+  --text-20r-font-size: 1.25rem;
+  --text-20r-font-weight: 400;
+  --text-20r-line-height: 1.5rem;
+  --text-20r-letter-spacing: 0;
+
+  /* Text 18px - Bold */
+  --text-18b-font-family: var(--font-family);
+  --text-18b-font-size: 1.125rem;
+  --text-18b-font-weight: 700;
+  --text-18b-line-height: 1.375rem;
+  --text-18b-letter-spacing: 0;
+
+  /* Text 18px - Semi-Bold */
+  --text-18sb-font-family: var(--font-family);
+  --text-18sb-font-size: 1.125rem;
+  --text-18sb-font-weight: 600;
+  --text-18sb-line-height: 1.375rem;
+  --text-18sb-letter-spacing: 0;
+
+  /* Text 18px - Medium */
+  --text-18m-font-family: var(--font-family);
+  --text-18m-font-size: 1.125rem;
+  --text-18m-font-weight: 500;
+  --text-18m-line-height: 1.375rem;
+  --text-18m-letter-spacing: 0;
+
+  /* Text 18px - Regular */
+  --text-18r-font-family: var(--font-family);
+  --text-18r-font-size: 1.125rem;
+  --text-18r-font-weight: 400;
+  --text-18r-line-height: 1.375rem;
+  --text-18r-letter-spacing: 0;
+
+  /* Text 16px - Bold */
+  --text-16b-font-family: var(--font-family);
+  --text-16b-font-size: 1rem;
+  --text-16b-font-weight: 700;
+  --text-16b-line-height: 1.25rem;
+  --text-16b-letter-spacing: 0;
+
+  /* Text 16px - Semi-Bold */
+  --text-16sb-font-family: var(--font-family);
+  --text-16sb-font-size: 1rem;
+  --text-16sb-font-weight: 600;
+  --text-16sb-line-height: 1.25rem;
+  --text-16sb-letter-spacing: 0;
+
+  /* Text 16px - Medium */
+  --text-16m-font-family: var(--font-family);
+  --text-16m-font-size: 1rem;
+  --text-16m-font-weight: 500;
+  --text-16m-line-height: 1.25rem;
+  --text-16m-letter-spacing: 0;
+
+  /* Text 16px - Regular */
+  --text-16r-font-family: var(--font-family);
+  --text-16r-font-size: 1rem;
+  --text-16r-font-weight: 400;
+  --text-16r-line-height: 1.25rem;
+  --text-16r-letter-spacing: 0;
+
+  /* Text 14px - Bold */
+  --text-14b-font-family: var(--font-family);
+  --text-14b-font-size: 0.875rem;
+  --text-14b-font-weight: 700;
+  --text-14b-line-height: 1.125rem;
+  --text-14b-letter-spacing: 0;
+
+  /* Text 14px - Semi-Bold */
+  --text-14sb-font-family: var(--font-family);
+  --text-14sb-font-size: 0.875rem;
+  --text-14sb-font-weight: 600;
+  --text-14sb-line-height: 1.125rem;
+  --text-14sb-letter-spacing: 0;
+
+  /* Text 14px - Medium */
+  --text-14m-font-family: var(--font-family);
+  --text-14m-font-size: 0.875rem;
+  --text-14m-font-weight: 500;
+  --text-14m-line-height: 1.125rem;
+  --text-14m-letter-spacing: 0;
+
+  /* Text 14px - Regular */
+  --text-14r-font-family: var(--font-family);
+  --text-14r-font-size: 0.875rem;
+  --text-14r-font-weight: 400;
+  --text-14r-line-height: 1.125rem;
+  --text-14r-letter-spacing: 0;
+
+  /* Text 12px - Bold */
+  --text-12b-font-family: var(--font-family);
+  --text-12b-font-size: 0.75rem;
+  --text-12b-font-weight: 700;
+  --text-12b-line-height: 1rem;
+  --text-12b-letter-spacing: 0;
+
+  /* Text 12px - Semi-Bold */
+  --text-12sb-font-family: var(--font-family);
+  --text-12sb-font-size: 0.75rem;
+  --text-12sb-font-weight: 600;
+  --text-12sb-line-height: 1rem;
+  --text-12sb-letter-spacing: 0;
+
+  /* Text 12px - Medium */
+  --text-12m-font-family: var(--font-family);
+  --text-12m-font-size: 0.75rem;
+  --text-12m-font-weight: 500;
+  --text-12m-line-height: 1rem;
+  --text-12m-letter-spacing: 0;
+
+  /* Text 12px - Regular */
+  --text-12r-font-family: var(--font-family);
+  --text-12r-font-size: 0.75rem;
+  --text-12r-font-weight: 400;
+  --text-12r-line-height: 1rem;
+  --text-12r-letter-spacing: 0;
+}
