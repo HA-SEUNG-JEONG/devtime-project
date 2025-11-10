@@ -119,56 +119,56 @@
 
   /* Text 14px - Bold */
   --text-14b-font-family: var(--font-family);
-  --text-14b-font-size: 1rem;
+  --text-14b-font-size: 0.875rem;
   --text-14b-font-weight: 700;
   --text-14b-line-height: 1.125rem;
   --text-14b-letter-spacing: 0;
 
   /* Text 14px - Semi-Bold */
   --text-14sb-font-family: var(--font-family);
-  --text-14sb-font-size: 1rem;
+  --text-14sb-font-size: 0.875rem;
   --text-14sb-font-weight: 600;
   --text-14sb-line-height: 1.125rem;
   --text-14sb-letter-spacing: 0;
 
   /* Text 14px - Medium */
   --text-14m-font-family: var(--font-family);
-  --text-14m-font-size: 1rem;
+  --text-14m-font-size: 0.875rem;
   --text-14m-font-weight: 500;
   --text-14m-line-height: 1.125rem;
   --text-14m-letter-spacing: 0;
 
   /* Text 14px - Regular */
   --text-14r-font-family: var(--font-family);
-  --text-14r-font-size: 1rem;
+  --text-14r-font-size: 0.875rem;
   --text-14r-font-weight: 400;
   --text-14r-line-height: 1.125rem;
   --text-14r-letter-spacing: 0;
 
   /* Text 12px - Bold */
   --text-12b-font-family: var(--font-family);
-  --text-12b-font-size: 1rem;
+  --text-12b-font-size: 0.75rem;
   --text-12b-font-weight: 700;
   --text-12b-line-height: 1rem;
   --text-12b-letter-spacing: 0;
 
   /* Text 12px - Semi-Bold */
   --text-12sb-font-family: var(--font-family);
-  --text-12sb-font-size: 1rem;
+  --text-12sb-font-size: 0.75rem;
   --text-12sb-font-weight: 600;
   --text-12sb-line-height: 1rem;
   --text-12sb-letter-spacing: 0;
 
   /* Text 12px - Medium */
   --text-12m-font-family: var(--font-family);
-  --text-12m-font-size: 1rem;
+  --text-12m-font-size: 0.75rem;
   --text-12m-font-weight: 500;
   --text-12m-line-height: 1rem;
   --text-12m-letter-spacing: 0;
 
   /* Text 12px - Regular */
   --text-12r-font-family: var(--font-family);
-  --text-12r-font-size: 1rem;
+  --text-12r-font-size: 0.75rem;
   --text-12r-font-weight: 400;
   --text-12r-line-height: 1rem;
   --text-12r-letter-spacing: 0;
