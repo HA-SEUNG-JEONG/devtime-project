@@ -83,11 +83,11 @@
   --text-18m-letter-spacing: 0;
 
   /* Text 18px - Regular */
-  --text-18m-font-family: var(--font-family);
-  --text-18m-font-size: 1.125rem;
-  --text-18m-font-weight: 400;
-  --text-18m-line-height: 1.375rem;
-  --text-18m-letter-spacing: 0;
+  --text-18r-font-family: var(--font-family);
+  --text-18r-font-size: 1.125rem;
+  --text-18r-font-weight: 400;
+  --text-18r-line-height: 1.375rem;
+  --text-18r-letter-spacing: 0;
 
   /* Text 16px - Bold */
   --text-16b-font-family: var(--font-family);
