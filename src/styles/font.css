@@ -27,11 +27,11 @@
   --text-24m-letter-spacing: 0;
 
   /* Text 24px - Regular */
-  --text-24m-font-family: var(--font-family);
-  --text-24m-font-size: 1.5rem;
-  --text-24m-font-weight: 400;
-  --text-24m-line-height: 1.875rem;
-  --text-24m-letter-spacing: 0;
+  --text-24r-font-family: var(--font-family);
+  --text-24r-font-size: 1.5rem;
+  --text-24r-font-weight: 400;
+  --text-24r-line-height: 1.875rem;
+  --text-24r-letter-spacing: 0;
 
   /* Text 20px - Bold */
   --text-20b-font-family: var(--font-family);
