@@ -55,11 +55,11 @@
   --text-20m-letter-spacing: 0;
 
   /* Text 20px - Regular */
-  --text-20m-font-family: var(--font-family);
-  --text-20m-font-size: 1.25rem;
-  --text-20m-font-weight: 400;
-  --text-20m-line-height: 1.5rem;
-  --text-20m-letter-spacing: 0;
+  --text-20r-font-family: var(--font-family);
+  --text-20r-font-size: 1.25rem;
+  --text-20r-font-weight: 400;
+  --text-20r-line-height: 1.5rem;
+  --text-20r-letter-spacing: 0;
 
   /* Text 18px - Bold */
   --text-18b-font-family: var(--font-family);
@@ -111,11 +111,11 @@
   --text-16m-letter-spacing: 0;
 
   /* Text 16px - Regular */
-  --text-16m-font-family: var(--font-family);
-  --text-16m-font-size: 1rem;
-  --text-16m-font-weight: 400;
-  --text-16m-line-height: 1.25rem;
-  --text-16m-letter-spacing: 0;
+  --text-16r-font-family: var(--font-family);
+  --text-16r-font-size: 1rem;
+  --text-16r-font-weight: 400;
+  --text-16r-line-height: 1.25rem;
+  --text-16r-letter-spacing: 0;
 
   /* Text 14px - Bold */
   --text-14b-font-family: var(--font-family);
