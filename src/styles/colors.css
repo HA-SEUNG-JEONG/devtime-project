@@ -68,3 +68,96 @@
   --fuchsia: var(--color-fuchsia);
   --fuchsia-light: var(--color-fuchsia-light);
 }
+
+/* Color Utility Classes */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-primary-2 {
+  color: var(--color-primary-2);
+}
+
+.text-indigo {
+  color: var(--color-indigo);
+}
+
+.text-indigo-light {
+  color: var(--color-indigo-light);
+}
+
+.text-informative {
+  color: var(--color-informative);
+}
+
+.text-negative {
+  color: var(--color-negative);
+}
+
+.text-notice {
+  color: var(--color-notice);
+}
+
+.text-notice-light {
+  color: var(--color-notice-light);
+}
+
+.text-positive {
+  color: var(--color-positive);
+}
+
+.text-positive-light {
+  color: var(--color-positive-light);
+}
+
+.text-fuchsia {
+  color: var(--color-fuchsia);
+}
+
+.text-fuchsia-light {
+  color: var(--color-fuchsia-light);
+}
+
+.text-gray {
+  color: var(--gray);
+}
+
+.text-gray-50 {
+  color: var(--gray-50);
+}
+
+.text-gray-100 {
+  color: var(--gray-100);
+}
+
+.text-gray-200 {
+  color: var(--gray-200);
+}
+
+.text-gray-300 {
+  color: var(--gray-300);
+}
+
+.text-gray-400 {
+  color: var(--gray-400);
+}
+
+.text-gray-500 {
+  color: var(--gray-500);
+}
+
+.text-gray-600 {
+  color: var(--gray-600);
+}
+
+.text-gray-700 {
+  color: var(--gray-700);
+}
+
+.text-gray-800 {
+  color: var(--gray-800);
+}
+
+.text-disabled {
+  color: var(--state-disabled);
+}
