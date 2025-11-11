@@ -52,7 +52,6 @@ const Button: React.FC<ButtonProps> = ({
   const buttonClasses = `${getButtonClasses(priority, disabled)} ${className}`;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(e.detail, 'ed');
     // 더블 클릭 감지: event.detail을 사용하여 정확한 연속 더블 클릭만 감지
     // 키보드 사용자가 Tab으로 이동한 후 더블 클릭 시 포커스가 남아있는 문제 해결
     // event.detail은 브라우저가 관리하는 연속 클릭 횟수 (1=single, 2=double, 3=triple 등)

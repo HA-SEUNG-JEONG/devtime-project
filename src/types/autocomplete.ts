@@ -1,3 +1,5 @@
+import type React from 'react';
+
 export type AutocompleteVariant = 'ready' | 'typing' | 'noResult';
 
 export interface AutocompleteProps
