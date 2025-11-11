@@ -14,8 +14,8 @@ export interface DialogProps {
 const Dialog: React.FC<DialogProps> = ({
   title,
   body,
-  cancelLabel = 'Button',
-  confirmLabel = 'Button',
+  cancelLabel = '취소',
+  confirmLabel = '확인',
   onCancel,
   onConfirm,
   className = '',
