@@ -1,7 +1,8 @@
+import type React from 'react';
+
 export type InputLabelVariant = 'placeholder' | 'typing' | 'typed';
 
-export interface InputLabelProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface InputLabelProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: InputLabelVariant;
   value?: string;
   placeholder?: string;
@@ -12,4 +13,3 @@ export interface InputLabelProps
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onButtonClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
-
