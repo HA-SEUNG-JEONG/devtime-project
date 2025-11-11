@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import type { ButtonProps, ButtonPriority } from '../types/button';
 
 const Button: React.FC<ButtonProps> = ({
@@ -10,10 +10,6 @@ const Button: React.FC<ButtonProps> = ({
   onBlur,
   ...props
 }) => {
-  // 더블 클릭 감지를 위한 ref
-  // 두 번째 클릭 시 버튼의 포커스를 제거하여 키보드 접근성 향상
-  const clickCountRef = useRef(0);
-
   // 공통 스타일 (Figma 디자인 기준)
   const baseClasses =
     'flex flex-row justify-center items-center px-4 py-3 gap-2 rounded-[5px] text-18sb border border-transparent';
@@ -56,13 +52,12 @@ const Button: React.FC<ButtonProps> = ({
   const buttonClasses = `${getButtonClasses(priority, disabled)} ${className}`;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // 더블 클릭 감지: 두 번째 클릭 시 버튼 포커스 제거
+    console.log(e.detail, 'ed');
+    // 더블 클릭 감지: event.detail을 사용하여 정확한 연속 더블 클릭만 감지
     // 키보드 사용자가 Tab으로 이동한 후 더블 클릭 시 포커스가 남아있는 문제 해결
-    clickCountRef.current += 1;
-
-    if (clickCountRef.current === 2) {
+    // event.detail은 브라우저가 관리하는 연속 클릭 횟수 (1=single, 2=double, 3=triple 등)
+    if (e.detail === 2) {
       e.currentTarget.blur();
-      clickCountRef.current = 0; // 리셋
     }
 
     if (onClick) {
@@ -71,9 +66,6 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLButtonElement>) => {
-    // 포커스가 다른 곳으로 이동하면 클릭 카운트 리셋
-    // 이렇게 하면 버튼을 떠났다가 다시 돌아왔을 때 카운트가 초기화됨
-    clickCountRef.current = 0;
     // 기존 onBlur 핸들러가 있으면 실행
     if (onBlur) {
       onBlur(e);
