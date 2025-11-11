@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '/logo.png';
 
-const NavBar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+interface NavBarProps {
+  initialLoggedIn?: boolean;
+}
+
+const NavBar = ({ initialLoggedIn = true }: NavBarProps) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
   // const [userName] = useState('사용자'); // 로그인 상태일 때 표시할 사용자 이름 (향후 사용 예정)
 
   const handleLogout = () => {
@@ -36,7 +40,7 @@ const NavBar = () => {
               <span className="text-16sb text-primary">{/* img로 대체 */}</span>
               <button
                 onClick={handleLogout}
-                className="text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-[var(--color-primary-2)]"
+                className="text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2"
               >
                 DevTime
               </button>

@@ -1,4 +1,44 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Digital+Numbers&display=swap');
+
+/* colors.css와 font.css를 먼저 import하여 CSS 변수를 사용 가능하게 함 */
+@import './styles/colors.css';
+@import './styles/font.css';
+
+/* Tailwind CSS v4 @theme 지시어로 커스텀 색상 정의 */
+/* colors.css에서 이미 정의된 CSS 변수를 @theme에서 참조하여 Tailwind 유틸리티 클래스 자동 생성 */
+/* 주의: @theme는 colors.css import 이후에 와야 함 */
+@theme {
+  /* Primary Colors - colors.css의 --color-primary 변수 참조 */
+  --color-primary: #4c79ff;
+  --color-primary-10: rgba(76, 121, 255, 0.1);
+  --color-primary-30: rgba(76, 121, 255, 0.3);
+  --color-primary-2: #78b0ff;
+
+  /* Secondary Colors */
+  --color-indigo: #023e99;
+  --color-indigo-light: #a3c3ff;
+  --color-informative: #2563eb;
+  --color-negative: #dc2626;
+  --color-notice: #fbbf24;
+  --color-notice-light: #ffdb7f;
+  --color-positive: #22c55e;
+  --color-positive-light: #62ec95;
+  --color-fuchsia: #fd28ec;
+  --color-fuchsia-light: #ff87f5;
+
+  /* Gray Colors */
+  --color-gray: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f0f2f5;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #ccd0d6;
+  --color-gray-400: #969da8;
+  --color-gray-500: #717887;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #394252;
+  --color-gray-800: #1f2937;
+}
 /* :root {
   font-family: var(--font-family);
   line-height: 1.5;
@@ -65,4 +105,26 @@ button:focus-visible {
 } */
 a {
   text-decoration: inherit;
+}
+
+/* Digital Numbers 폰트 설정 */
+body {
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
+}
+
+/* Cursor blink animation for Autocomplete */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
