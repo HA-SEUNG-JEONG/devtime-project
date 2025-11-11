@@ -91,7 +91,6 @@ export const NoResult: Story = {
 export const Interactive: Story = {
   render: () => {
     const [value, setValue] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
     const allOptions = [
       'AAABC',
       'AABBYF',
@@ -112,16 +111,11 @@ export const Interactive: Story = {
         )
       : [];
 
-    // variant 결정
     let variant: 'ready' | 'typing' | 'noResult' = 'ready';
-    if (isFocused || value) {
-      if (filteredOptions.length > 0) {
-        variant = 'typing';
-      } else if (value) {
-        variant = 'noResult';
-      } else {
-        variant = 'typing';
-      }
+    if (filteredOptions.length > 0) {
+      variant = 'typing';
+    } else if (value) {
+      variant = 'noResult';
     }
 
     return (
@@ -133,13 +127,9 @@ export const Interactive: Story = {
           onChange={e => setValue(e.target.value)}
           onSelectOption={option => {
             setValue(option);
-            setIsFocused(false);
-            console.log('Selected:', option);
           }}
           onAddNewItem={() => {
-            alert(`새 항목 추가: ${value}`);
             setValue('');
-            setIsFocused(false);
           }}
         />
         <div className="text-sm text-gray-600 mt-4">

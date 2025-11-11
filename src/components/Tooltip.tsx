@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import type { TooltipProps, TooltipPosition } from '../types/tooltip';
 
 const Tooltip: React.FC<TooltipProps> = ({
@@ -8,6 +8,21 @@ const Tooltip: React.FC<TooltipProps> = ({
   className = '',
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const tooltipId = useId();
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Escape' && isVisible) {
+      setIsVisible(false);
+    }
+  };
+
+  const handleFocus = () => {
+    setIsVisible(true);
+  };
+
+  const handleBlur = () => {
+    setIsVisible(false);
+  };
 
   const getPositionClasses = (pos: TooltipPosition): string => {
     switch (pos) {
@@ -24,10 +39,10 @@ const Tooltip: React.FC<TooltipProps> = ({
     }
   };
 
-  const getArrowClasses = (pos: TooltipPosition): string => {
-    switch (pos) {
+  const getArrowClasses = (position: TooltipPosition): string => {
+    switch (position) {
       case 'top':
-        return 'top-full left-1/2 -translate-x-1/2 border-t-gray-800 border-l-transparent border-r-transparent border-b-transparent';
+        return 'top-full left-1/2 -tran	slate-x-1/2 border-t-gray-800 border-l-transparent border-r-transparent border-b-transparent';
       case 'bottom':
         return 'bottom-full left-1/2 -translate-x-1/2 border-b-gray-800 border-l-transparent border-r-transparent border-t-transparent';
       case 'left':
@@ -42,12 +57,17 @@ const Tooltip: React.FC<TooltipProps> = ({
   return (
     <div
       className={`relative inline-block ${className}`}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
+      onMouseEnter={handleFocus}
+      onMouseLeave={handleBlur}
+      onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      aria-describedby={isVisible ? tooltipId : undefined}
     >
       {children}
       {isVisible && (
         <div
+          id={tooltipId}
           className={`absolute z-50 ${getPositionClasses(position)}`}
           role="tooltip"
         >
