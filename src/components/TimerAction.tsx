@@ -43,14 +43,14 @@ const TimerAction: React.FC<TimerActionProps> = ({
   };
 
   return (
-    <div className="flex flex-row items-center gap-[134px] w-[746px] h-[100px]">
+    <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 sm:gap-8 lg:gap-[134px] w-full lg:w-[746px] h-auto lg:h-[100px]">
       {/* Main-action */}
-      <div className="flex flex-row items-center gap-[80px] w-[460px] h-[100px]">
+      <div className="flex flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-[80px] w-full sm:w-auto lg:w-[460px] h-auto lg:h-[100px]">
         {/* Start */}
         <button
           onClick={onStart}
           disabled={!isStartEnabled}
-          className={`w-[100px] h-[100px] shrink-0 ${getMainActionButtonStyle(
+          className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] shrink-0 ${getMainActionButtonStyle(
             isStartEnabled
           )} flex items-center justify-center disabled:cursor-not-allowed`}
         >
@@ -65,7 +65,7 @@ const TimerAction: React.FC<TimerActionProps> = ({
         <button
           onClick={onPause}
           disabled={!isPauseEnabled}
-          className={`w-[100px] h-[100px] shrink-0 ${getMainActionButtonStyle(
+          className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] shrink-0 ${getMainActionButtonStyle(
             isPauseEnabled
           )} flex items-center justify-center disabled:cursor-not-allowed`}
         >
@@ -80,7 +80,7 @@ const TimerAction: React.FC<TimerActionProps> = ({
         <button
           onClick={onFinish}
           disabled={!isFinishEnabled}
-          className={`w-[100px] h-[100px] shrink-0 ${getMainActionButtonStyle(
+          className={`w-16 h-16 sm:w-20 sm:h-20 lg:w-[100px] lg:h-[100px] shrink-0 ${getMainActionButtonStyle(
             isFinishEnabled
           )} flex items-center justify-center disabled:cursor-not-allowed`}
         >
@@ -95,14 +95,14 @@ const TimerAction: React.FC<TimerActionProps> = ({
       </div>
 
       {/* Sub-action */}
-      <div className="flex flex-row items-center gap-6 w-[152px] h-[64px]">
+      <div className="flex flex-row items-center justify-center gap-4 sm:gap-5 lg:gap-6 w-full sm:w-auto lg:w-[152px] h-auto lg:h-[64px]">
         {/* See TODO */}
         <button
           onClick={onSeeTodo}
           disabled={!isSeeTodoEnabled}
-          className="flex flex-row items-center p-2 gap-[10px] w-[64px] h-[64px] bg-white rounded-[32px] disabled:cursor-not-allowed"
+          className="flex flex-row items-center p-1.5 sm:p-2 gap-2 sm:gap-[10px] w-12 h-12 sm:w-14 sm:h-14 lg:w-[64px] lg:h-[64px] bg-white rounded-full sm:rounded-[28px] lg:rounded-[32px] disabled:cursor-not-allowed"
         >
-          <div className="w-12 h-12 flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center">
             <img
               src={getSeeTodoIcon()}
               alt="See TODO"
@@ -115,9 +115,9 @@ const TimerAction: React.FC<TimerActionProps> = ({
         <button
           onClick={onReset}
           disabled={!isResetEnabled}
-          className="flex flex-row items-center p-2 gap-[10px] w-[64px] h-[64px] bg-white rounded-[32px] disabled:cursor-not-allowed"
+          className="flex flex-row items-center p-1.5 sm:p-2 gap-2 sm:gap-[10px] w-12 h-12 sm:w-14 sm:h-14 lg:w-[64px] lg:h-[64px] bg-white rounded-full sm:rounded-[28px] lg:rounded-[32px] disabled:cursor-not-allowed"
         >
-          <div className="w-12 h-12 flex items-center justify-center">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 flex items-center justify-center">
             <img
               src={getResetIcon()}
               alt="Reset"

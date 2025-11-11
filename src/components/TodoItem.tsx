@@ -45,7 +45,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   // 공통 스타일
   const baseContainerClasses =
-    'flex flex-row justify-center items-center p-6 gap-4 w-[568px] h-[72px] rounded-[8px]';
+    'flex flex-row justify-center items-center p-4 sm:p-5 lg:p-6 gap-3 sm:gap-4 lg:gap-4 w-full sm:w-[400px] lg:w-[568px] h-auto sm:h-[64px] lg:h-[72px] rounded-[8px]';
 
   // 상태별 배경색 및 텍스트 색상 클래스 - 상수 사용으로 Tailwind가 인식 가능
   const getContainerClasses = (status: TodoItemStatus): string => {
@@ -71,9 +71,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
   return (
     <div className={containerClasses}>
       {/* Symbol 아이콘 */}
-      <div className="relative w-[42px] h-5 flex-none">
+      <div className="relative w-8 h-4 sm:w-9 sm:h-[18px] lg:w-[42px] lg:h-5 flex-none">
         <div
-          className={`absolute w-[42px] h-5 left-1/2 -translate-x-1/2 top-0 flex items-center justify-center`}
+          className={`absolute w-8 h-4 sm:w-9 sm:h-[18px] lg:w-[42px] lg:h-5 left-1/2 -translate-x-1/2 top-0 flex items-center justify-center`}
         >
           <img
             src={symbolIcon}
@@ -94,15 +94,15 @@ const TodoItem: React.FC<TodoItemProps> = ({
               setInputValue(newValue);
               onTextChange?.(newValue);
             }}
-            className={`text-16sb ${getTextColorClass(status)} flex items-center bg-transparent border-0 outline-0 flex-1 placeholder-transparent`}
+            className={`text-14sb sm:text-15sb lg:text-16sb ${getTextColorClass(status)} flex items-center bg-transparent border-0 outline-0 flex-1 placeholder-transparent`}
             placeholder=""
             autoFocus
           />
-          <div className="w-0 h-[18.5px] border-l border-white ml-1 animate-blink absolute right-0" />
+          <div className="w-0 h-4 sm:h-[16px] lg:h-[18.5px] border-l border-white ml-1 animate-blink absolute right-0" />
         </div>
       ) : (
         <span
-          className={`text-16sb ${getTextColorClass(status)} flex items-center flex-1`}
+          className={`text-14sb sm:text-15sb lg:text-16sb ${getTextColorClass(status)} flex items-center flex-1`}
         >
           {text}
         </span>
@@ -113,7 +113,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
         <>
           <button
             onClick={onEdit}
-            className="w-6 h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
+            className="w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
             aria-label="Edit"
           >
             <img
@@ -124,7 +124,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
           </button>
           <button
             onClick={onDelete}
-            className="w-6 h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
+            className="w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
             aria-label="Delete"
           >
             <img
@@ -139,7 +139,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
       {status === 'typing' && (
         <button
           onClick={onCheck}
-          className="w-6 h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
+          className="w-5 h-5 sm:w-[22px] sm:h-[22px] lg:w-6 lg:h-6 flex-none relative cursor-pointer bg-transparent border-0 p-0 flex items-center justify-center"
           aria-label="Check"
         >
           <img

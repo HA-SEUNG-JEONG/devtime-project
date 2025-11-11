@@ -56,9 +56,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
     );
   }
 
-  // TODO 스타일: 36px x 36px
-  const containerSize = 'w-9 h-9'; // 36px
-  const boxSize = 'w-7 h-7'; // 28px
+  // TODO 스타일: 반응형 크기
+  const containerSize = 'w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9'; // 모바일: 28px, sm: 32px, lg: 36px
+  const boxSize = 'w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7'; // 모바일: 20px, sm: 24px, lg: 28px
   const borderRadius = 'rounded-lg'; // 8px
 
   return (

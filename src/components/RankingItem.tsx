@@ -30,21 +30,21 @@ const RankingItem: React.FC<RankingItemProps> = ({
         badgeBg: 'bg-primary',
         badgeTextColor: 'text-white',
         badgeWidthClass: 'w-auto min-w-[43px]',
-        containerWidth: 'w-[80px]',
+        containerWidth: 'w-full sm:w-[80px]',
       };
     } else if (rank >= 4 && rank <= 10) {
       return {
         badgeBg: 'bg-primary-10',
         badgeTextColor: 'text-primary',
         badgeWidthClass: 'w-auto min-w-[47px]',
-        containerWidth: 'w-[80px]',
+        containerWidth: 'w-full sm:w-[80px]',
       };
     } else {
       return {
         badgeBg: 'bg-gray-100',
         badgeTextColor: 'text-gray-500',
         badgeWidthClass: 'w-auto min-w-[50px] max-w-[100px]',
-        containerWidth: 'w-[80px]',
+        containerWidth: 'w-full sm:w-[80px]',
       };
     }
   };
@@ -63,12 +63,12 @@ const RankingItem: React.FC<RankingItemProps> = ({
 
   return (
     <div
-      className={`flex flex-row items-start py-3 px-6 gap-9 w-[1200px] h-[150px] bg-white rounded-xl ${className}`}
+      className={`flex flex-col sm:flex-row items-start py-3 px-4 sm:px-6 gap-4 sm:gap-6 lg:gap-9 w-full lg:w-[1200px] h-auto lg:h-[150px] bg-white rounded-xl ${className}`}
       {...props}
     >
       {/* 랭크 배지와 프로필 이미지 영역 */}
       <div
-        className={`flex flex-col items-start gap-4 ${rankStyle.containerWidth} h-[126px] flex-none`}
+        className={`flex flex-col items-center sm:items-start gap-4 ${rankStyle.containerWidth} h-auto sm:h-[126px] flex-none`}
       >
         {/* 랭크 배지 */}
         <div
@@ -98,21 +98,21 @@ const RankingItem: React.FC<RankingItemProps> = ({
       </div>
 
       {/* 프로필 정보 영역 */}
-      <div className="flex flex-col items-start gap-4 w-[998px] h-[126px] flex-none">
+      <div className="flex flex-col items-start gap-4 w-full sm:w-auto lg:w-[998px] h-auto sm:h-[126px] flex-none">
         {/* 닉네임과 목표 */}
-        <div className="flex flex-col items-start gap-0.5 w-[998px] h-[46px] flex-none self-stretch">
+        <div className="flex flex-col items-start gap-0.5 w-full h-auto sm:h-[46px] flex-none self-stretch">
           {/* 닉네임 */}
-          <div className="w-[998px] h-6 flex-none self-stretch">
+          <div className="w-full h-6 flex-none self-stretch">
             <span className="text-20b text-primary">{nickname}</span>
           </div>
           {/* 목표 */}
-          <div className="w-[998px] h-5 flex-none self-stretch">
+          <div className="w-full h-5 flex-none self-stretch">
             <span className="text-16m text-primary">{goal}</span>
           </div>
         </div>
 
         {/* 스펙 정보 */}
-        <div className="flex flex-row items-center gap-6 w-auto h-5 flex-none">
+        <div className="flex flex-row flex-wrap items-center gap-4 sm:gap-6 w-auto h-auto sm:h-5 flex-none">
           {/* 누적 시간 */}
           <div className="flex flex-row items-center gap-2 w-auto h-5 flex-none">
             <span className="text-16r text-gray-500">누적</span>
@@ -137,7 +137,7 @@ const RankingItem: React.FC<RankingItemProps> = ({
         </div>
 
         {/* 스택 태그 */}
-        <div className="flex flex-row items-center gap-2 w-auto h-7 flex-none">
+        <div className="flex flex-row flex-wrap items-center gap-2 w-auto h-auto sm:h-7 flex-none">
           {stacks.map((stack, index) => (
             <div
               key={index}
