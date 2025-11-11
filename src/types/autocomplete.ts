@@ -1,7 +1,8 @@
 export type AutocompleteVariant = 'ready' | 'typing' | 'noResult';
 
 export interface AutocompleteProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+  extends React.HTMLAttributes<HTMLDivElement> {
+  label?: string;
   variant?: AutocompleteVariant;
   value?: string;
   options?: string[];
@@ -9,4 +10,6 @@ export interface AutocompleteProps
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectOption?: (option: string) => void;
   onAddNewItem?: () => void;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }

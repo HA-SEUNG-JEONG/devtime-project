@@ -2,15 +2,19 @@ import React from 'react';
 import type { AutocompleteProps } from '../types/autocomplete';
 
 const Autocomplete: React.FC<AutocompleteProps> = ({
+  label = 'Autocomplete Label',
   variant = 'ready',
   value = '',
   options = [],
   onChange,
   onSelectOption,
   onAddNewItem,
+  onFocus,
+  onBlur,
   className = '',
   ...props
 }) => {
+  const inputId = `autocomplete-${Math.random().toString(36).substring(2, 15)}`; // 임시 id
   const handleSelectOption = (option: string) => {
     onSelectOption?.(option);
   };
@@ -19,24 +23,17 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
     onAddNewItem?.();
   };
 
-  // Input width 계산: value가 있으면 auto, 없으면 variant에 따라 다름
-  const getInputWidth = () => {
-    if (value) return 'auto';
-    return variant === 'typing' ? '22px' : '86px';
-  };
-
-  const getInputMinWidth = () => {
-    return variant === 'typing' ? '22px' : '86px';
-  };
-
   return (
     <div
       className={`flex flex-col items-start p-0 gap-2 w-[156px] min-w-[156px] ${className}`}
       {...props}
     >
       {/* Label */}
-      <label className="w-[156px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0">
-        Autocomplete Label
+      <label
+        htmlFor={inputId}
+        className="w-[156px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
+      >
+        {label}
       </label>
 
       {/* Input Field Container */}
@@ -48,15 +45,21 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
         ) : (
           <div className="flex flex-row items-center p-0 flex-none order-0 grow">
             <input
+              id={inputId}
               type="text"
               value={value}
               onChange={onChange}
+              readOnly={!onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
               autoFocus
-              className="h-5 text-16m text-gray-800 flex items-center flex-none order-0 grow-0 bg-transparent border-none outline-none p-0"
-              style={{
-                width: getInputWidth(),
-                minWidth: getInputMinWidth(),
-              }}
+              className={`h-5 text-16m text-gray-800 flex items-center flex-none order-0 grow-0 bg-transparent border-none outline-none p-0 ${
+                value
+                  ? 'w-auto'
+                  : variant === 'typing'
+                    ? 'w-[22px]'
+                    : 'w-[86px]'
+              } ${variant === 'typing' ? 'min-w-[22px]' : 'min-w-[86px]'}`}
             />
           </div>
         )}
