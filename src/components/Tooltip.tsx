@@ -42,7 +42,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   const getArrowClasses = (position: TooltipPosition): string => {
     switch (position) {
       case 'top':
-        return 'top-full left-1/2 -tran	slate-x-1/2 border-t-gray-800 border-l-transparent border-r-transparent border-b-transparent';
+        return 'top-full left-1/2 -translate-x-1/2 border-t-gray-800 border-l-transparent border-r-transparent border-b-transparent';
       case 'bottom':
         return 'bottom-full left-1/2 -translate-x-1/2 border-b-gray-800 border-l-transparent border-r-transparent border-t-transparent';
       case 'left':

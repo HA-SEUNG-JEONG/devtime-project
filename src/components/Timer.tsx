@@ -13,38 +13,40 @@ const Timer: React.FC<TimerProps> = ({
 }) => {
   // 값 검증 및 클램핑: 시간 0-24, 분/초 0-59
   const clampHours = (value: number): number => {
-    if (value < 0) {
+    const intValue = Math.floor(value);
+    if (intValue < 0) {
       console.warn(
         `Timer: hours 값이 범위를 벗어났습니다. ${value}는 0으로 클램핑됩니다.`
       );
       return 0;
     }
-    if (value > 24) {
+    if (intValue > 23) {
       console.warn(
         `Timer: hours 값이 범위를 벗어났습니다. ${value}는 24로 클램핑됩니다.`
       );
-      return 24;
+      return 23;
     }
-    return value;
+    return intValue;
   };
 
   const clampMinutesOrSeconds = (
     value: number,
     type: 'minutes' | 'seconds'
   ): number => {
-    if (value < 0) {
+    const intValue = Math.floor(value);
+    if (intValue < 0) {
       console.warn(
         `Timer: ${type} 값이 범위를 벗어났습니다. ${value}는 0으로 클램핑됩니다.`
       );
       return 0;
     }
-    if (value > 59) {
+    if (intValue > 59) {
       console.warn(
         `Timer: ${type} 값이 범위를 벗어났습니다. ${value}는 59로 클램핑됩니다.`
       );
       return 59;
     }
-    return value;
+    return intValue;
   };
 
   const validatedHours = clampHours(hours);

@@ -56,11 +56,6 @@ const RankingItem: React.FC<RankingItemProps> = ({
     return `${hours}시간`;
   };
 
-  // 일 평균 포맷팅
-  const formatDailyAverage = (hours: number): string => {
-    return `${hours}시간`;
-  };
-
   return (
     <div
       className={`flex flex-col sm:flex-row items-start py-3 px-4 sm:px-6 gap-4 sm:gap-6 lg:gap-9 w-full lg:w-[1200px] h-auto lg:h-[150px] bg-white rounded-xl ${className}`}
@@ -125,7 +120,7 @@ const RankingItem: React.FC<RankingItemProps> = ({
           <div className="flex flex-row items-center gap-2 w-auto h-5 flex-none">
             <span className="text-16r text-gray-500">일 평균</span>
             <span className="text-16sb text-gray-700">
-              {formatDailyAverage(dailyAverage)}
+              {formatHours(dailyAverage)}
             </span>
           </div>
 

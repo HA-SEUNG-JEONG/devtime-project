@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import type { DropdownProps } from '../types/dropdown';
 
 const ChevronIcon = ({ isUp }: { isUp: boolean }) => (
@@ -36,12 +36,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const onToggleRef = useRef(onToggle);
-  const listboxId = useRef(
-    `dropdown-listbox-${Math.random().toString(36).slice(2, 11)}`
-  );
-  const labelId = useRef(
-    `dropdown-label-${Math.random().toString(36).slice(2, 11)}`
-  );
+
+  const baseId = useId();
+  const listboxId = `${baseId}-dropdown-listbox`;
+  const labelId = `${baseId}-dropdown-label`;
   const isControlled = isControlledVariant(variant);
 
   useEffect(() => {
@@ -242,7 +240,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {...props}
     >
       <label
-        id={labelId.current}
+        id={labelId}
         className="w-[147px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
       >
         {label}
@@ -256,8 +254,8 @@ const Dropdown: React.FC<DropdownProps> = ({
           onKeyDown={handleKeyDown}
           aria-haspopup="listbox"
           aria-expanded={isDropdownOpen}
-          aria-labelledby={labelId.current}
-          aria-controls={isDropdownOpen ? listboxId.current : undefined}
+          aria-labelledby={labelId}
+          aria-controls={isDropdownOpen ? listboxId : undefined}
           className="flex flex-row items-center justify-between px-3 py-3 pl-4 gap-2 w-full h-11 bg-gray-50 rounded-[5px] flex-none order-0 grow cursor-pointer hover:opacity-90 transition-opacity"
         >
           {showPlaceholder ? (
@@ -275,9 +273,9 @@ const Dropdown: React.FC<DropdownProps> = ({
 
       {isDropdownOpen && options.length > 0 && (
         <div
-          id={listboxId.current}
+          id={listboxId}
           role="listbox"
-          aria-labelledby={labelId.current}
+          aria-labelledby={labelId}
           className={`box-border flex flex-col items-start px-3 py-4 gap-4 w-[147px] bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)] flex-none order-2 self-stretch grow-0 ${
             variant === 'scrollSelecting' ? 'max-h-[340px] overflow-y-auto' : ''
           }`}
@@ -285,7 +283,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {options.map((option, index) => {
             const isSelected = index === currentSelectedIndex;
             const isLast = index === options.length - 1;
-            const optionId = `${listboxId.current}-option-${index}`;
+            const optionId = `${listboxId}-option-${index}`;
 
             return (
               <div

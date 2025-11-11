@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     hours: {
       control: { type: 'number', min: 0, max: 23 },
-      description: '시간 (0-24)',
+      description: '시간 (0-23)',
     },
     minutes: {
       control: { type: 'number', min: 0, max: 59 },
