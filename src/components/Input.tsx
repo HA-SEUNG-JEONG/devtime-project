@@ -1,0 +1,46 @@
+import React from 'react';
+import type { InputProps } from '../types/input';
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      variant = 'ready',
+      value = '',
+      placeholder = 'Placeholder',
+      className = '',
+      onChange,
+      onFocus,
+      onBlur,
+      ...props
+    },
+    ref
+  ) => {
+    const inputClasses = `flex flex-row items-center px-4 py-3 gap-[10px] h-11 bg-gray-50 rounded-[5px] text-16m border-none outline-none w-full ${
+      variant === 'ready'
+        ? 'text-gray-300'
+        : variant === 'typing'
+          ? 'text-gray-800'
+          : 'text-gray-600'
+    } ${className}`;
+
+    return (
+      <input
+        ref={ref}
+        type="text"
+        value={value}
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        className={inputClasses}
+        autoFocus={variant === 'typing'}
+        readOnly={variant === 'typed'}
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = 'Input';
+
+export default Input;

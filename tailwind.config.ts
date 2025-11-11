@@ -1,55 +1,35 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      colors: {
-        primary: {
-          DEFAULT: '#4c79ff',
-          '10': 'rgba(76, 121, 255, 0.1)',
-          '30': 'rgba(76, 121, 255, 0.3)',
-          '2': '#78b0ff',
-        },
-        indigo: {
-          DEFAULT: '#023e99',
-          light: '#a3c3ff',
-        },
-        informative: '#2563eb',
-        negative: '#dc2626',
-        notice: {
-          DEFAULT: '#fbbf24',
-          light: '#ffdb7f',
-        },
-        positive: {
-          DEFAULT: '#22c55e',
-          light: '#62ec95',
-        },
-        fuchsia: {
-          DEFAULT: '#fd28ec',
-          light: '#ff87f5',
-        },
-        gray: {
-          DEFAULT: '#ffffff',
-          '50': '#f9fafb',
-          '100': '#f0f2f5',
-          '200': '#e5e7eb',
-          '300': '#ccd0d6',
-          '400': '#969da8',
-          '500': '#717887',
-          '600': '#4b5563',
-          '700': '#394252',
-          '800': '#1f2937',
-        },
+      fontFamily: {
+        'digital-numbers': ['Digital Numbers', 'monospace'],
+        pretendard: [
+          'Pretendard',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'system-ui',
+          'sans-serif',
+        ],
       },
+      /* Tailwind v4에서는 @theme 지시어로 색상을 정의하므로 colors는 제거 */
+      /* 색상은 src/index.css의 @theme 블록에서 colors.css의 CSS 변수를 참조 */
       maxWidth: {
-        'container': '1280px',
+        container: '1280px',
       },
       spacing: {
         '48': '48px',
+      },
+      keyframes: {
+        blink: {
+          '0%, 50%': { opacity: '1' },
+          '51%, 100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        blink: 'blink 1s infinite',
       },
     },
   },
@@ -57,4 +37,3 @@ const config: Config = {
 };
 
 export default config;
-
