@@ -11,8 +11,8 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     hours: {
-      control: { type: 'number', min: 0, max: 99 },
-      description: '시간 (0-99)',
+      control: { type: 'number', min: 0, max: 24 },
+      description: '시간 (0-24)',
     },
     minutes: {
       control: { type: 'number', min: 0, max: 59 },
