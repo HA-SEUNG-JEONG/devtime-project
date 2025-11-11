@@ -31,8 +31,17 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [internalSelectedIndex, setInternalSelectedIndex] =
     useState(selectedIndex);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const onToggleRef = useRef(onToggle);
+  const listboxId = useRef(
+    `dropdown-listbox-${Math.random().toString(36).slice(2, 11)}`
+  );
+  const labelId = useRef(
+    `dropdown-label-${Math.random().toString(36).slice(2, 11)}`
+  );
   const isControlled = isControlledVariant(variant);
 
   useEffect(() => {
@@ -49,6 +58,27 @@ const Dropdown: React.FC<DropdownProps> = ({
   // selectedIndex prop이 제공되면 prop 사용, 아니면 내부 state 사용
   const currentSelectedIndex =
     selectedIndex >= 0 ? selectedIndex : internalSelectedIndex;
+  const isDropdownOpen = isControlled || isOpen;
+
+  // 드롭다운이 열릴 때 포커스 초기화
+  useEffect(() => {
+    if (isDropdownOpen) {
+      setFocusedIndex(currentSelectedIndex >= 0 ? currentSelectedIndex : 0);
+    } else {
+      setFocusedIndex(-1);
+    }
+  }, [isDropdownOpen, currentSelectedIndex]);
+
+  // 포커스된 옵션에 포커스 이동
+  useEffect(() => {
+    if (
+      isDropdownOpen &&
+      focusedIndex >= 0 &&
+      optionRefs.current[focusedIndex]
+    ) {
+      optionRefs.current[focusedIndex]?.focus();
+    }
+  }, [focusedIndex, isDropdownOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -61,6 +91,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         }
         setIsOpen(false);
         onToggleRef.current?.(false);
+        setFocusedIndex(-1);
       }
     };
 
@@ -87,6 +118,112 @@ const Dropdown: React.FC<DropdownProps> = ({
     if (!isControlled) {
       setIsOpen(false);
       onToggleRef.current?.(false);
+      setFocusedIndex(-1);
+      buttonRef.current?.focus();
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (!isDropdownOpen) {
+      // 드롭다운이 닫혀있을 때 Space나 Enter로 열기
+      if (
+        event.key === ' ' ||
+        event.key === 'Enter' ||
+        event.key === 'ArrowDown' ||
+        event.key === 'ArrowUp'
+      ) {
+        event.preventDefault();
+        if (!isControlled) {
+          setIsOpen(true);
+          onToggleRef.current?.(true);
+        }
+      }
+      return;
+    }
+
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        setFocusedIndex(prev => {
+          const nextIndex = prev < options.length - 1 ? prev + 1 : 0;
+          return nextIndex;
+        });
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        setFocusedIndex(prev => {
+          const nextIndex = prev > 0 ? prev - 1 : options.length - 1;
+          return nextIndex;
+        });
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        if (focusedIndex >= 0 && focusedIndex < options.length) {
+          handleSelect(options[focusedIndex], focusedIndex);
+        }
+        break;
+      case 'Escape':
+        event.preventDefault();
+        if (!isControlled) {
+          setIsOpen(false);
+          onToggleRef.current?.(false);
+          setFocusedIndex(-1);
+          buttonRef.current?.focus();
+        }
+        break;
+      case 'Home':
+        event.preventDefault();
+        setFocusedIndex(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        setFocusedIndex(options.length - 1);
+        break;
+    }
+  };
+
+  const handleOptionKeyDown = (
+    event: React.KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault();
+        setFocusedIndex(prev => {
+          const nextIndex = prev < options.length - 1 ? prev + 1 : 0;
+          return nextIndex;
+        });
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        setFocusedIndex(prev => {
+          const nextIndex = prev > 0 ? prev - 1 : options.length - 1;
+          return nextIndex;
+        });
+        break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        handleSelect(options[index], index);
+        break;
+      case 'Escape':
+        event.preventDefault();
+        if (!isControlled) {
+          setIsOpen(false);
+          onToggleRef.current?.(false);
+          setFocusedIndex(-1);
+          buttonRef.current?.focus();
+        }
+        break;
+      case 'Home':
+        event.preventDefault();
+        setFocusedIndex(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        setFocusedIndex(options.length - 1);
+        break;
     }
   };
 
@@ -97,7 +234,6 @@ const Dropdown: React.FC<DropdownProps> = ({
     (variant === 'unselected' ||
       variant === 'selecting' ||
       variant === 'scrollSelecting');
-  const isDropdownOpen = isControlled || isOpen;
 
   return (
     <div
@@ -105,14 +241,23 @@ const Dropdown: React.FC<DropdownProps> = ({
       className={`flex flex-col items-start p-0 gap-2 w-[147px] ${className}`}
       {...props}
     >
-      <label className="w-[147px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0">
+      <label
+        id={labelId.current}
+        className="w-[147px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
+      >
         {label}
       </label>
 
       <div className="flex flex-row items-center p-0 gap-3 w-[147px] h-11 flex-none order-1 self-stretch grow-0">
         <button
+          ref={buttonRef}
           type="button"
           onClick={handleToggle}
+          onKeyDown={handleKeyDown}
+          aria-haspopup="listbox"
+          aria-expanded={isDropdownOpen}
+          aria-labelledby={labelId.current}
+          aria-controls={isDropdownOpen ? listboxId.current : undefined}
           className="flex flex-row items-center justify-between px-3 py-3 pl-4 gap-2 w-full h-11 bg-gray-50 rounded-[5px] flex-none order-0 grow cursor-pointer hover:opacity-90 transition-opacity"
         >
           {showPlaceholder ? (
@@ -130,6 +275,9 @@ const Dropdown: React.FC<DropdownProps> = ({
 
       {isDropdownOpen && options.length > 0 && (
         <div
+          id={listboxId.current}
+          role="listbox"
+          aria-labelledby={labelId.current}
           className={`box-border flex flex-col items-start px-3 py-4 gap-4 w-[147px] bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)] flex-none order-2 self-stretch grow-0 ${
             variant === 'scrollSelecting' ? 'max-h-[340px] overflow-y-auto' : ''
           }`}
@@ -137,6 +285,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {options.map((option, index) => {
             const isSelected = index === currentSelectedIndex;
             const isLast = index === options.length - 1;
+            const optionId = `${listboxId.current}-option-${index}`;
 
             return (
               <div
@@ -146,9 +295,17 @@ const Dropdown: React.FC<DropdownProps> = ({
                 } flex-none self-stretch grow-0`}
               >
                 <button
+                  ref={el => {
+                    optionRefs.current[index] = el;
+                  }}
                   type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  id={optionId}
                   onClick={() => handleSelect(option, index)}
-                  className={`w-[123px] h-5 flex items-center flex-none order-0 self-stretch grow-0 text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity ${
+                  onKeyDown={e => handleOptionKeyDown(e, index)}
+                  tabIndex={focusedIndex === index ? 0 : -1}
+                  className={`w-[123px] h-5 flex items-center flex-none order-0 self-stretch grow-0 text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 ${
                     isSelected
                       ? 'text-16b text-indigo'
                       : 'text-16m text-gray-600'
