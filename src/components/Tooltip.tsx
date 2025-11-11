@@ -16,11 +16,11 @@ const Tooltip: React.FC<TooltipProps> = ({
     }
   };
 
-  const handleFocus = () => {
+  const showTooltip = () => {
     setIsVisible(true);
   };
 
-  const handleBlur = () => {
+  const hideTooltip = () => {
     setIsVisible(false);
   };
 
@@ -57,11 +57,11 @@ const Tooltip: React.FC<TooltipProps> = ({
   return (
     <div
       className={`relative inline-block ${className}`}
-      onMouseEnter={handleFocus}
-      onMouseLeave={handleBlur}
+      onMouseEnter={showTooltip}
+      onMouseLeave={hideTooltip}
       onKeyDown={handleKeyDown}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
+      onFocus={showTooltip}
+      onBlur={hideTooltip}
       aria-describedby={isVisible ? tooltipId : undefined}
     >
       {children}

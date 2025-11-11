@@ -52,14 +52,9 @@ export const Typing: Story = {
         onChange={e => setValue(e.target.value)}
         onSelectOption={option => {
           setValue(option);
-          console.log('Selected option:', option);
         }}
       />
     );
-  },
-  args: {
-    variant: 'typing',
-    options: ['AAABC', 'AABBYF', 'AACDDFG', 'AAGHR', 'AAATHCHYYU'],
   },
 };
 
@@ -76,7 +71,6 @@ export const NoResult: Story = {
         options={[]}
         onChange={e => setValue(e.target.value)}
         onAddNewItem={() => {
-          console.log('Add new item clicked');
           alert(`새 항목 추가: ${value}`);
         }}
       />
