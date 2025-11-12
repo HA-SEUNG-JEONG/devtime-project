@@ -57,7 +57,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
             onBlur={onBlur}
             placeholder={placeholder}
             autoFocus
-            className="text-16m text-gray-800 bg-transparent border-none outline-none flex items-center flex-1 w-full h-5 p-0"
+            className="text-16m text-gray-800 bg-transparent flex items-center flex-1 w-full h-5 p-0"
           />
         </div>
         {/* Text Field_button */}

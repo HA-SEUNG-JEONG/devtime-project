@@ -5,17 +5,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
       variant = 'ready',
-      value = '',
+      value,
       placeholder = 'Placeholder',
       className = '',
       onChange,
       onFocus,
       onBlur,
+      type = 'text',
       ...props
     },
     ref
   ) => {
-    const inputClasses = `flex flex-row items-center px-4 py-3 gap-[10px] h-11 bg-gray-50 rounded-[5px] text-16m border-none outline-none w-full ${
+    const inputClasses = `flex flex-row items-center px-4 py-3 gap-[10px] h-11 bg-gray-50 rounded-[5px] text-16m  w-full ${
       variant === 'ready'
         ? 'text-gray-300'
         : variant === 'typing'
@@ -23,11 +24,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           : 'text-gray-600'
     } ${className}`;
 
+    // value prop이 제공되면 controlled component로 동작, 없으면 uncontrolled
+    const inputProps = value !== undefined ? { value } : {};
+
     return (
       <input
         ref={ref}
-        type="text"
-        value={value}
+        type={type}
+        {...inputProps}
         onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
