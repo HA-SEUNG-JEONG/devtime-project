@@ -3,7 +3,12 @@ import { useFormContext } from 'react-hook-form';
 import Input from '../Input';
 import Button from '../Button';
 import { checkDuplicate } from '../../utils/signupApi';
-import { validateEmail, validateNickname } from '../../utils/validation';
+import {
+  validateEmail,
+  validateNickname,
+  validateEmailFormat,
+  validateNicknameFormat,
+} from '../../utils/validation';
 import type { SignupFormData } from '../../types/signup';
 
 interface DuplicateCheckFieldProps {
@@ -32,33 +37,22 @@ const DuplicateCheckField = ({
       ? validateEmail(fieldValue)
       : validateNickname(fieldValue);
 
-  const registerReturn =
-    fieldName === 'email'
-      ? register('email', {
-          required: '이메일을 입력해 주세요',
-          validate: {
-            emailFormat: (value: string) => {
-              if (!value || value.trim() === '') {
-                return '이메일을 입력해 주세요';
-              }
-              return (
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ||
-                '이메일 형식으로 작성해 주세요'
-              );
-            },
-          },
-        })
-      : register('nickname', {
-          required: '닉네임을 입력해 주세요',
-          validate: {
-            nicknameFormat: (value: string) => {
-              if (!value || value.trim() === '') {
-                return '닉네임을 입력해 주세요';
-              }
-              return true;
-            },
-          },
-        });
+  const registerOptions = {
+    email: {
+      required: '이메일을 입력해 주세요',
+      validate: {
+        emailFormat: validateEmailFormat,
+      },
+    },
+    nickname: {
+      required: '닉네임을 입력해 주세요',
+      validate: {
+        nicknameFormat: validateNicknameFormat,
+      },
+    },
+  };
+
+  const registerReturn = register(fieldName, registerOptions[fieldName]);
 
   const { onChange, onBlur, name, ref } = registerReturn;
 
@@ -67,7 +61,6 @@ const DuplicateCheckField = ({
     if (fieldValue) {
       setMessage('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldValue]);
 
   const handleCheckDuplicate = async () => {
@@ -98,11 +91,7 @@ const DuplicateCheckField = ({
     (showDuplicateError ? '중복을 확인해 주세요' : '');
 
   const inputClassName =
-    (hasError || showDuplicateError) && !displayMessage.includes('사용 가능')
-      ? 'border border-negative'
-      : '';
-
-  console.log(hasError);
+    hasError || showDuplicateError ? 'border border-negative' : '';
 
   return (
     <div className="flex flex-col items-start gap-2 w-[420px]">

@@ -34,7 +34,7 @@ const PasswordField = ({
                 (value.length >= 8 &&
                   /[a-zA-Z]/.test(value) &&
                   /[0-9]/.test(value)) ||
-                '비밀번호는 8자 이상, 영문과 숫자 조합이어야 합니다'
+                '비밀번호는 8자 이상, 영문과 숫자 조합이어야 합니다.'
               );
             },
           },

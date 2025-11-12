@@ -33,3 +33,27 @@ export const validatePassword = (password: string): boolean => {
 export const validateNickname = (nickname: string): boolean => {
   return nickname.trim() !== '';
 };
+
+/**
+ * react-hook-form용 이메일 validation 함수
+ * required 옵션과 함께 사용
+ */
+export const validateEmailFormat = (value: string): true | string => {
+  if (!value || value.trim() === '') {
+    return true; // required 옵션이 처리하므로 여기서는 통과
+  }
+  return (
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || '이메일 형식으로 작성해 주세요'
+  );
+};
+
+/**
+ * react-hook-form용 닉네임 validation 함수
+ * required 옵션과 함께 사용
+ */
+export const validateNicknameFormat = (value: string): true | string => {
+  if (!value || value.trim() === '') {
+    return true; // required 옵션이 처리하므로 여기서는 통과
+  }
+  return true;
+};
