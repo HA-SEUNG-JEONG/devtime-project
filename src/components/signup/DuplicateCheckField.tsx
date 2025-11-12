@@ -10,14 +10,12 @@ interface DuplicateCheckFieldProps {
   label: string;
   fieldName: 'email' | 'nickname';
   placeholder: string;
-  onStatusChange?: (isAvailable: boolean | null) => void;
 }
 
 const DuplicateCheckField = ({
   label,
   fieldName,
   placeholder,
-  onStatusChange,
 }: DuplicateCheckFieldProps) => {
   const {
     register,
@@ -26,7 +24,6 @@ const DuplicateCheckField = ({
   } = useFormContext<SignupFormData>();
 
   const [isChecking, setIsChecking] = useState(false);
-  const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [message, setMessage] = useState<string>('');
   const fieldValue = watch(fieldName);
 
@@ -67,9 +64,8 @@ const DuplicateCheckField = ({
 
   // 입력값이 변경되면 중복 확인 상태 초기화
   useEffect(() => {
-    if (isAvailable !== null && fieldValue) {
+    if (fieldValue) {
       setMessage('');
-      onStatusChange?.(null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fieldValue]);
@@ -85,10 +81,8 @@ const DuplicateCheckField = ({
     try {
       const result = await checkDuplicate(fieldName, fieldValue);
       setMessage(result.message);
-      onStatusChange?.(result.available);
     } catch (error) {
-      setMessage('중복 확인에 실패했습니다.');
-      onStatusChange?.(false);
+      setMessage((error as Error).message ?? '중복 확인에 실패했습니다.');
     } finally {
       setIsChecking(false);
     }

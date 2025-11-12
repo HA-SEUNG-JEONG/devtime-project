@@ -11,12 +11,7 @@ import type { SignupFormData } from '../types/signup';
 const Signup = () => {
   const navigate = useNavigate();
   const [isAgreed, setIsAgreed] = useState(false);
-  const [emailCheckStatus, setEmailCheckStatus] = useState<boolean | null>(
-    null
-  );
-  const [nicknameCheckStatus, setNicknameCheckStatus] = useState<
-    boolean | null
-  >(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<SignupFormData>({
@@ -36,11 +31,7 @@ const Signup = () => {
   } = methods;
 
   // 회원가입 버튼 활성화 조건
-  const isFormReady =
-    isValid &&
-    isAgreed &&
-    emailCheckStatus === true &&
-    nicknameCheckStatus === true;
+  const isFormReady = isValid && isAgreed;
 
   const onSubmit = async (data: SignupFormData) => {
     if (!isFormReady || isSubmitting) {
@@ -100,7 +91,6 @@ const Signup = () => {
               label="이메일"
               fieldName="email"
               placeholder="이메일을 입력하세요"
-              onStatusChange={isAvailable => setEmailCheckStatus(isAvailable)}
             />
 
             {/* 닉네임 입력 필드 */}
@@ -108,9 +98,6 @@ const Signup = () => {
               label="닉네임"
               fieldName="nickname"
               placeholder="닉네임을 입력하세요"
-              onStatusChange={isAvailable =>
-                setNicknameCheckStatus(isAvailable)
-              }
             />
 
             {/* 비밀번호 입력 필드 */}
