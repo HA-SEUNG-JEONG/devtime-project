@@ -22,15 +22,15 @@ const Button: React.FC<ButtonProps> = ({
       switch (priority) {
         case 'primary':
           // Primary Disabled
-          return `${baseClasses} bg-gray-400 text-white cursor-not-allowed`;
+          return `${baseClasses} bg-gray-400 text-white`;
         case 'secondary':
           // Secondary Disabled
-          return `${baseClasses} bg-gray-200 text-gray-400 cursor-not-allowed`;
+          return `${baseClasses} bg-gray-200 text-gray-400`;
         case 'tertiary':
           // Tertiary Disabled
-          return `${baseClasses} bg-gray-200 text-gray-400 cursor-not-allowed`;
+          return `${baseClasses} bg-gray-200 text-gray-400`;
         default:
-          return `${baseClasses} cursor-not-allowed`;
+          return `${baseClasses}`;
       }
     }
 
