@@ -10,8 +10,6 @@ import type { SignupFormData } from '../types/signup';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [isAgreed, setIsAgreed] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<SignupFormData>({
@@ -21,6 +19,7 @@ const Signup = () => {
       nickname: '',
       password: '',
       confirmPassword: '',
+      termsAgreed: false,
     },
   });
 
@@ -31,7 +30,7 @@ const Signup = () => {
   } = methods;
 
   // 회원가입 버튼 활성화 조건
-  const isFormReady = isValid && isAgreed;
+  const isFormReady = isValid;
 
   const onSubmit = async (data: SignupFormData) => {
     if (!isFormReady || isSubmitting) {
@@ -115,7 +114,7 @@ const Signup = () => {
             />
 
             {/* 이용약관 동의 */}
-            <TermsAgreement isAgreed={isAgreed} onAgreeChange={setIsAgreed} />
+            <TermsAgreement />
 
             {/* 회원가입 버튼 */}
             <Button

@@ -3,6 +3,7 @@ export interface SignupFormData {
   nickname: string;
   password: string;
   confirmPassword: string;
+  termsAgreed: boolean;
 }
 
 export interface CheckDuplicateResponse {
@@ -15,5 +16,3 @@ export interface SignupResponse {
   success: boolean;
   message?: string;
 }
-
-
