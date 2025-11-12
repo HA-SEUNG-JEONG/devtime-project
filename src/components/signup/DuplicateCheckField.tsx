@@ -83,7 +83,8 @@ const DuplicateCheckField = ({
 
   const hasError = errors[fieldName] !== undefined;
   const validationError = hasError ? errors[fieldName]?.message : undefined;
-  const showDuplicateError = isValid && !isChecking;
+  const isAvailable = message?.includes('사용 가능');
+  const showDuplicateError = isValid && !isChecking && !message;
 
   const displayMessage =
     message ||
@@ -91,7 +92,9 @@ const DuplicateCheckField = ({
     (showDuplicateError ? '중복을 확인해 주세요' : '');
 
   const inputClassName =
-    hasError || showDuplicateError ? 'border border-negative' : '';
+    (hasError || showDuplicateError) && !isAvailable
+      ? 'border border-negative'
+      : '';
 
   return (
     <div className="flex flex-col items-start gap-2 w-[420px]">

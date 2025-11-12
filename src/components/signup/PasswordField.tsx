@@ -59,11 +59,12 @@ const PasswordField = ({
 
   const { onChange, onBlur, name, ref } = registerReturn;
 
-  const hasError = errors[fieldName] !== undefined;
   const shouldShowError = isSubmitted || touchedFields[fieldName];
   const errorMessage = shouldShowError
     ? (errors[fieldName]?.message as string | undefined)
     : undefined;
+
+  const inputClassName = errorMessage ? 'border border-negative' : '';
 
   return (
     <div className="flex flex-col items-start gap-2 w-[420px]">
@@ -78,7 +79,7 @@ const PasswordField = ({
         variant={fieldValue ? 'typing' : 'ready'}
         type="password"
         placeholder={placeholder}
-        className={`w-full ${hasError && shouldShowError ? 'border border-negative' : ''}`}
+        className={`w-full ${inputClassName}`}
       />
       {errorMessage && (
         <span className="text-12m text-negative">{errorMessage}</span>
