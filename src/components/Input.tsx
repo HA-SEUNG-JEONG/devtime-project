@@ -11,6 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange,
       onFocus,
       onBlur,
+      type = 'text',
       ...props
     },
     ref
@@ -24,12 +25,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     } ${className}`;
 
     // value prop이 제공되면 controlled component로 동작, 없으면 uncontrolled
-    const inputProps = value !== undefined ? { value } : { defaultValue: '' };
+    const inputProps = value !== undefined ? { value } : {};
 
     return (
       <input
         ref={ref}
-        type="text"
+        type={type}
         {...inputProps}
         onChange={onChange}
         onFocus={onFocus}

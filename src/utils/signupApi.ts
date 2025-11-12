@@ -107,8 +107,3 @@ export const signup = async (
     };
   }
 };
-
-
-
-
-
