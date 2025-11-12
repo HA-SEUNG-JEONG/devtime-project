@@ -53,7 +53,7 @@ export const validateEmailFormat = (value: string): true | string => {
  */
 export const validateNicknameFormat = (value: string): true | string => {
   if (!value || value.trim() === '') {
-    return true; // required 옵션이 처리하므로 여기서는 통과
+    return '닉네임을 입력해 주세요';
   }
   return true;
 };
