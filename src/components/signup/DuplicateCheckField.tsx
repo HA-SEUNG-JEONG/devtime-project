@@ -29,7 +29,10 @@ const DuplicateCheckField = ({
   } = useFormContext<SignupFormData>();
 
   const [isChecking, setIsChecking] = useState(false);
-  const [message, setMessage] = useState<string>('');
+  const [checkResult, setCheckResult] = useState<{
+    available: boolean;
+    message: string;
+  } | null>(null);
   const fieldValue = watch(fieldName);
 
   const isValid =
@@ -59,7 +62,7 @@ const DuplicateCheckField = ({
   // 입력값이 변경되면 중복 확인 상태 초기화
   useEffect(() => {
     if (fieldValue) {
-      setMessage('');
+      setCheckResult(null);
     }
   }, [fieldValue]);
 
@@ -69,13 +72,16 @@ const DuplicateCheckField = ({
     }
 
     setIsChecking(true);
-    setMessage('');
+    setCheckResult(null);
 
     try {
-      const result = await checkDuplicate(fieldName, fieldValue);
-      setMessage(result.message);
+      const { available, message } = await checkDuplicate(
+        fieldName,
+        fieldValue
+      );
+      setCheckResult({ available, message });
     } catch (error) {
-      setMessage((error as Error).message ?? '중복 확인에 실패했습니다.');
+      setCheckResult({ available: false, message: (error as Error).message });
     } finally {
       setIsChecking(false);
     }
@@ -83,11 +89,11 @@ const DuplicateCheckField = ({
 
   const hasError = errors[fieldName] !== undefined;
   const validationError = hasError ? errors[fieldName]?.message : undefined;
-  const isAvailable = message?.includes('사용 가능');
-  const showDuplicateError = isValid && !isChecking && !message;
+  const isAvailable = checkResult?.available ?? false;
+  const showDuplicateError = isValid && !isChecking && !checkResult;
 
   const displayMessage =
-    message ||
+    checkResult?.message ||
     validationError ||
     (showDuplicateError ? '중복을 확인해 주세요' : '');
 
@@ -126,9 +132,7 @@ const DuplicateCheckField = ({
       {displayMessage && (
         <span
           className={`text-12m ${
-            displayMessage.includes('사용 가능')
-              ? 'text-positive'
-              : 'text-negative'
+            isAvailable ? 'text-positive' : 'text-negative'
           }`}
         >
           {displayMessage}
