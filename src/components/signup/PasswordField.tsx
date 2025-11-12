@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import Input from '../Input';
 import type { SignupFormData } from '../../types/signup';
+import { validatePassword } from '../../utils/validation';
 
 interface PasswordFieldProps {
   label: string;
@@ -31,9 +32,7 @@ const PasswordField = ({
                 return '비밀번호를 입력해 주세요';
               }
               return (
-                (value.length >= 8 &&
-                  /[a-zA-Z]/.test(value) &&
-                  /[0-9]/.test(value)) ||
+                validatePassword(value) ||
                 '비밀번호는 8자 이상, 영문과 숫자 조합이어야 합니다.'
               );
             },
@@ -48,7 +47,7 @@ const PasswordField = ({
               }
               // 비밀번호가 비어있으면 불일치 메시지를 표시하지 않음
               if (!formValues.password || formValues.password.trim() === '') {
-                return true;
+                return '비밀번호를 입력해 주세요';
               }
               return (
                 value === formValues.password || '비밀번호가 일치하지 않습니다'
