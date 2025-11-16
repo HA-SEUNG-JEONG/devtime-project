@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../public/vertical-logo.png';
+import Logo from '/vertical-logo.png';
 import Button from '../components/Button';
 import Input from '../components/Input';
-import SymbolLogo from '../../public/Symbol-Logo.png';
+import SymbolLogo from '/Symbol-Logo.png';
 
 const Login = () => {
   const navigate = useNavigate();
