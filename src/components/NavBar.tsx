@@ -6,7 +6,7 @@ interface NavBarProps {
   initialLoggedIn?: boolean;
 }
 
-const NavBar = ({ initialLoggedIn = true }: NavBarProps) => {
+const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const [userName] = useState('사용자'); // 로그인 상태일 때 표시할 사용자 이름 (향후 사용 예정)
