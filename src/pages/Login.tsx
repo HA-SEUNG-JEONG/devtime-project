@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../public/verticla-logo.png';
+import Logo from '../../public/vertical-logo.png';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import SymbolLogo from '../../public/Symbol-Logo.png';
