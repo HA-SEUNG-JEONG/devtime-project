@@ -4,6 +4,8 @@ import Logo from '/vertical-logo.png';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import SymbolLogo from '/Symbol-Logo.png';
+import { setTokens } from '../utils/auth';
+import { sanitizeEmail } from '../utils/sanitize';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +20,10 @@ const Login = () => {
       return;
     }
 
+    // 사용자 입력 sanitization (XSS 방어)
+    const cleanEmail = sanitizeEmail(email);
+    const cleanPassword = password.trim();
+
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_URL}/api/auth/login`,
@@ -26,14 +32,19 @@ const Login = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email, password }),
+          body: JSON.stringify({ email: cleanEmail, password: cleanPassword }),
         }
       );
 
       const data = await res.json();
 
       if (res.ok && data.success) {
-        console.log(data);
+        // 토큰 및 로그인 정보 저장
+        setTokens(data.accessToken, data.refreshToken, {
+          isFirstLogin: data.isFirstLogin,
+          isDuplicateLogin: data.isDuplicateLogin,
+        });
+
         // 로그인 성공 시 메인 페이지(타이머 페이지)로 이동
         navigate('/', { replace: true });
       } else {

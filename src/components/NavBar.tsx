@@ -1,19 +1,48 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
+import { isLoggedIn as checkIsLoggedIn, clearAuth } from '../utils/auth';
 
 interface NavBarProps {
   initialLoggedIn?: boolean;
 }
 
 const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    // auth 유틸리티로 로그인 상태 확인
+    return checkIsLoggedIn() || initialLoggedIn;
+  });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const [userName] = useState('사용자'); // 로그인 상태일 때 표시할 사용자 이름 (향후 사용 예정)
 
+  // 로그인 상태 변경 감지
+  useEffect(() => {
+    const handleLoginStatusChange = () => {
+      setIsLoggedIn(checkIsLoggedIn());
+    };
+
+    // storage 이벤트 리스너 등록 (다른 탭에서의 변경 감지)
+    window.addEventListener('storage', handleLoginStatusChange);
+
+    // 같은 탭 내에서의 변경 감지를 위한 커스텀 이벤트
+    window.addEventListener('loginStatusChanged', handleLoginStatusChange);
+
+    return () => {
+      window.removeEventListener('storage', handleLoginStatusChange);
+      window.removeEventListener('loginStatusChanged', handleLoginStatusChange);
+    };
+  }, []);
+
   const handleLogout = () => {
+    // 토큰 및 로그인 정보 제거
+    clearAuth();
+
     setIsLoggedIn(false);
     setIsMenuOpen(false);
+
+    // 로그인 페이지로 이동
+    navigate('/login');
   };
 
   const toggleMenu = () => {
@@ -49,10 +78,7 @@ const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
               <span className="text-14sb sm:text-16sb text-primary">
                 {/* img로 대체 */}
               </span>
-              <button
-                onClick={handleLogout}
-                className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2"
-              >
+              <button className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2">
                 DevTime
               </button>
             </>

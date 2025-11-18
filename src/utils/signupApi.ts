@@ -3,6 +3,7 @@ import type {
   SignupResponse,
   SignupFormData,
 } from '../types/signup';
+import { sanitizeEmail, sanitizeNickname } from './sanitize';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
@@ -66,17 +67,20 @@ export const signup = async (
   formData: SignupFormData
 ): Promise<SignupResponse> => {
   try {
+    // 사용자 입력 sanitization (XSS 방어)
+    const cleanData = {
+      email: sanitizeEmail(formData.email),
+      nickname: sanitizeNickname(formData.nickname),
+      password: formData.password.trim(), // 비밀번호는 특수문자 허용
+      confirmPassword: formData.confirmPassword.trim(),
+    };
+
     const response = await fetch(`${API_BASE_URL}/api/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email: formData.email,
-        nickname: formData.nickname,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-      }),
+      body: JSON.stringify(cleanData),
     });
 
     if (!response.ok) {
