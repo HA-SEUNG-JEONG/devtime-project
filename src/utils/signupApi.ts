@@ -102,6 +102,8 @@ export const signup = async (
     return {
       success: true,
       message: data.message || '회원가입이 완료되었습니다.',
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
     };
   } catch (error) {
     console.error('회원가입 에러:', error);
