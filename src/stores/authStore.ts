@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { 
-  isLoggedIn as checkIsLoggedIn, 
+import {
+  isLoggedIn as checkIsLoggedIn,
   logout as authLogout,
   setTokens,
-  getLoginData
+  getLoginData,
 } from '../utils/auth';
 
 interface LoginData {
@@ -14,22 +14,26 @@ interface LoginData {
 interface AuthState {
   isLoggedIn: boolean;
   loginData: LoginData | null;
-  
+
   // Actions
-  login: (accessToken: string, refreshToken: string, loginData?: LoginData) => void;
+  login: (
+    accessToken: string,
+    refreshToken: string,
+    loginData?: LoginData
+  ) => void;
   logout: () => Promise<void>;
   checkAuthStatus: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => {
+export const useAuthStore = create<AuthState>(set => {
   // storage 이벤트 리스너 (다른 탭에서의 변경 감지)
   if (typeof window !== 'undefined') {
-    window.addEventListener('storage', (e) => {
+    window.addEventListener('storage', e => {
       // localStorage의 토큰 변경 감지
       if (e.key === 'accessToken' || e.key === null) {
-        set({ 
+        set({
           isLoggedIn: checkIsLoggedIn(),
-          loginData: getLoginData()
+          loginData: getLoginData(),
         });
       }
     });
@@ -41,30 +45,33 @@ export const useAuthStore = create<AuthState>((set) => {
     loginData: getLoginData(),
 
     // 로그인
-    login: (accessToken: string, refreshToken: string, loginData?: LoginData) => {
+    login: (
+      accessToken: string,
+      refreshToken: string,
+      loginData?: LoginData
+    ) => {
       setTokens(accessToken, refreshToken, loginData);
-      set({ 
+      set({
         isLoggedIn: true,
-        loginData: loginData || null
+        loginData: loginData || null,
       });
     },
 
     // 로그아웃
     logout: async () => {
       await authLogout();
-      set({ 
+      set({
         isLoggedIn: false,
-        loginData: null
+        loginData: null,
       });
     },
 
     // 인증 상태 확인 (수동으로 동기화가 필요한 경우)
     checkAuthStatus: () => {
-      set({ 
+      set({
         isLoggedIn: checkIsLoggedIn(),
-        loginData: getLoginData()
+        loginData: getLoginData(),
       });
     },
   };
 });
-
