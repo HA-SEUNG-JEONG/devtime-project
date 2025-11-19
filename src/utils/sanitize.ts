@@ -31,42 +31,6 @@ export const sanitizeEmail = (email: string): string => {
 };
 
 /**
- * HTML 문자를 안전한 엔티티로 변환 (표시용)
- * 사용자가 입력한 텍스트를 화면에 표시할 때 사용
- */
-export const escapeHtml = (text: string): string => {
-  if (!text) return '';
-
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#x27;',
-    '/': '&#x2F;',
-  };
-
-  return text.replace(/[&<>"'/]/g, char => map[char] || char);
-};
-
-/**
- * URL 검증 및 정제
- */
-export const sanitizeUrl = (url: string): string => {
-  if (!url) return '';
-
-  // javascript:, data:, vbscript: 등 위험한 프로토콜 차단
-  const dangerousProtocols = /^(javascript|data|vbscript|file):/i;
-
-  if (dangerousProtocols.test(url)) {
-    console.warn('위험한 URL 프로토콜이 감지되어 차단되었습니다:', url);
-    return '';
-  }
-
-  return url.trim();
-};
-
-/**
  * 닉네임 입력값 정제
  * 특수문자를 제한하고 길이를 체크합니다.
  */

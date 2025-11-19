@@ -41,7 +41,7 @@ export const authFetch = async (
       // 토큰 갱신 실패 시 로그인 페이지로 리다이렉트
       clearAuth();
       window.location.href = '/login';
-      throw new Error('인증이 만료되었습니다. 다시 로그인해주세요.');
+      return new Response('Unauthorized', { status: 401 });
     }
   }
 

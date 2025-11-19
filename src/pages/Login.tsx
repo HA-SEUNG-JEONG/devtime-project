@@ -6,9 +6,12 @@ import Input from '../components/Input';
 import SymbolLogo from '/Symbol-Logo.png';
 import { setTokens } from '../utils/auth';
 import { sanitizeEmail } from '../utils/sanitize';
+import { api } from '../utils/api';
+import { useToast } from '../contexts/ToastContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -24,16 +27,10 @@ const Login = () => {
     const cleanPassword = password.trim();
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email: cleanEmail, password: cleanPassword }),
-        }
-      );
+      const res = await api.post('/api/auth/login', {
+        email: cleanEmail,
+        password: cleanPassword,
+      });
 
       const data = await res.json();
 
@@ -43,14 +40,23 @@ const Login = () => {
           isDuplicateLogin: data.isDuplicateLogin,
         });
 
+        // 중복 로그인 처리
+        if (data.isDuplicateLogin) {
+          // 중복 로그인 안내 메시지 표시
+          showToast(
+            '다른 기기에서 로그인되어 있습니다.\n해당 기기의 로그인이 해제됩니다.',
+            'warning'
+          );
+        }
+
         navigate('/', { replace: true });
       } else {
         // 로그인 실패
-        alert(data.message || '로그인 정보를 다시 확인해 주세요.');
+        showToast(data.message || '로그인 정보를 다시 확인해 주세요.', 'error');
       }
     } catch (error) {
       console.error('로그인 에러:', error);
-      alert('로그인 정보를 다시 확인해 주세요.');
+      showToast('로그인 정보를 다시 확인해 주세요.', 'error');
     }
   };
 

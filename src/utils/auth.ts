@@ -65,7 +65,17 @@ export const getRefreshToken = (): string | null => {
  */
 export const getLoginData = (): LoginData | null => {
   const data = localStorage.getItem(LOGIN_DATA_KEY);
-  return data ? JSON.parse(data) : null;
+  // return data ? JSON.parse(data) : null;
+  if (!data) {
+    return null;
+  }
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('로그인 데이터 파싱 실패:', error);
+    localStorage.removeItem(LOGIN_DATA_KEY);
+    return null;
+  }
 };
 
 /**

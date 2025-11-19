@@ -78,8 +78,11 @@ const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
               <span className="text-14sb sm:text-16sb text-primary">
                 {/* img로 대체 */}
               </span>
-              <button className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2">
-                DevTime
+              <button
+                onClick={handleLogout}
+                className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2"
+              >
+                로그아웃
               </button>
             </>
           ) : (
@@ -145,7 +148,7 @@ const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
                       onClick={handleLogout}
                       className="text-14sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2 text-left"
                     >
-                      DevTime
+                      로그아웃
                     </button>
                   </div>
                 </>
