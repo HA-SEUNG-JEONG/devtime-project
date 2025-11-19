@@ -56,7 +56,7 @@ const TimerAction: React.FC<TimerActionProps> = ({
   // 서브 액션 버튼 설정
   const subActions = [
     {
-      name: 'See TODO',
+      name: 'TODO',
       enabled: isSeeTodoEnabled,
       handler: onSeeTodo,
       label: '할 일 목록 보기',

@@ -3,10 +3,12 @@ import { useEffect } from 'react';
 import NavBar from './components/NavBar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile';
 import GuestRoute from './components/GuestRoute';
 import { ToastProvider } from './contexts/ToastContext';
 import Toast from './components/Toast';
 import { isLoggedIn, validateToken } from './utils/auth';
+import Home from './pages/Home';
 
 function App() {
   const navigate = useNavigate();
@@ -60,7 +62,9 @@ function App() {
             </GuestRoute>
           }
         />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NavBar />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </ToastProvider>
   );
