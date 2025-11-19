@@ -20,7 +20,6 @@ const Login = () => {
       return;
     }
 
-    // 사용자 입력 sanitization (XSS 방어)
     const cleanEmail = sanitizeEmail(email);
     const cleanPassword = password.trim();
 
@@ -39,13 +38,11 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        // 토큰 및 로그인 정보 저장
         setTokens(data.accessToken, data.refreshToken, {
           isFirstLogin: data.isFirstLogin,
           isDuplicateLogin: data.isDuplicateLogin,
         });
 
-        // 로그인 성공 시 메인 페이지(타이머 페이지)로 이동
         navigate('/', { replace: true });
       } else {
         // 로그인 실패
