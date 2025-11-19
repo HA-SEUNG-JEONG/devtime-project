@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
+import { useAuthStore } from '../stores/authStore';
 
-interface NavBarProps {
-  initialLoggedIn?: boolean;
-}
-
-const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(initialLoggedIn);
+const NavBar = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, logout } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // const [userName] = useState('사용자'); // 로그인 상태일 때 표시할 사용자 이름 (향후 사용 예정)
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    // authStore의 logout 함수 호출 (서버 로그아웃 + 상태 업데이트)
+    await logout();
     setIsMenuOpen(false);
+
+    // 로그인 페이지로 이동
+    navigate('/login');
   };
 
   const toggleMenu = () => {
@@ -53,7 +55,7 @@ const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
                 onClick={handleLogout}
                 className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2"
               >
-                DevTime
+                로그아웃
               </button>
             </>
           ) : (
@@ -119,7 +121,7 @@ const NavBar = ({ initialLoggedIn = false }: NavBarProps) => {
                       onClick={handleLogout}
                       className="text-14sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2 text-left"
                     >
-                      DevTime
+                      로그아웃
                     </button>
                   </div>
                 </>

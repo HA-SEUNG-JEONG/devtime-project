@@ -15,4 +15,6 @@ export interface CheckDuplicateResponse {
 export interface SignupResponse {
   success: boolean;
   message?: string;
+  accessToken?: string;
+  refreshToken?: string;
 }

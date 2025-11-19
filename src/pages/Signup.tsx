@@ -6,10 +6,13 @@ import PasswordField from '../components/signup/PasswordField';
 import TermsAgreement from '../components/signup/TermsAgreement';
 import Button from '../components/Button';
 import { signup } from '../utils/signupApi';
+import { setTokens } from '../utils/auth';
 import type { SignupFormData } from '../types/signup';
+import { useToast } from '../contexts/ToastContext';
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<SignupFormData>({
@@ -43,14 +46,21 @@ const Signup = () => {
       const result = await signup(data);
 
       if (result.success) {
-        // 회원가입 성공 시 로그인 페이지로 이동
-        navigate('/login', { replace: true });
+        // 회원가입 성공 시
+        // 토큰이 있으면 자동 로그인 (메인 페이지로 이동)
+        if (result.accessToken && result.refreshToken) {
+          setTokens(result.accessToken, result.refreshToken);
+          navigate('/', { replace: true });
+        } else {
+          // 토큰이 없으면 로그인 페이지로 이동
+          navigate('/login', { replace: true });
+        }
       } else {
-        alert(result.message || '회원가입에 실패했습니다.');
+        showToast(result.message || '회원가입에 실패했습니다.', 'error');
       }
     } catch (error) {
       console.error('회원가입 에러:', error);
-      alert('회원가입에 실패했습니다.');
+      showToast('회원가입에 실패했습니다.', 'error');
     } finally {
       setIsSubmitting(false);
     }
