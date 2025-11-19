@@ -42,8 +42,6 @@ export const setTokens = (
   if (loginData) {
     localStorage.setItem(LOGIN_DATA_KEY, JSON.stringify(loginData));
   }
-  // 로그인 상태 변경 이벤트 발생
-  window.dispatchEvent(new Event('loginStatusChanged'));
 };
 
 /**
@@ -86,14 +84,36 @@ export const isLoggedIn = (): boolean => {
 };
 
 /**
- * 로그아웃 - 토큰 및 로그인 정보 삭제
+ * 로그아웃 - 서버에 로그아웃 요청 및 토큰 삭제
+ */
+export const logout = async (): Promise<void> => {
+  const accessToken = getAccessToken();
+
+  // 서버에 로그아웃 요청
+  if (accessToken) {
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    } catch (error) {
+      console.error('로그아웃 API 호출 실패:', error);
+    }
+  }
+
+  // 로컬 토큰 및 로그인 정보 삭제
+  clearAuth();
+};
+
+/**
+ * 로컬 인증 정보 삭제 (토큰 및 로그인 정보)
  */
 export const clearAuth = () => {
   localStorage.removeItem(ACCESS_TOKEN_KEY);
   localStorage.removeItem(REFRESH_TOKEN_KEY);
   localStorage.removeItem(LOGIN_DATA_KEY);
-  // 로그아웃 이벤트 발생
-  window.dispatchEvent(new Event('loginStatusChanged'));
 };
 
 /**
@@ -132,12 +152,57 @@ export const refreshAccessToken = async (): Promise<string | null> => {
       }
     }
 
-    // 토큰 갱신 실패 시 로그아웃
-    clearAuth();
+    // 토큰 갱신 실패 시 로그아웃 (중복 로그인으로 인한 토큰 만료)
+    await logout();
     return null;
   } catch (error) {
     console.error('토큰 갱신 실패:', error);
-    clearAuth();
+    await logout();
     return null;
+  }
+};
+
+/**
+ * 토큰 유효성 검증
+ * RefreshToken으로 갱신을 시도하여 중복 로그인으로 인한 토큰 만료를 감지합니다.
+ *
+ * @returns 토큰이 유효하면 true, 무효하면 false
+ */
+export const validateToken = async (): Promise<boolean> => {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) {
+    return false;
+  }
+
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/auth/refresh`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ refreshToken }),
+      }
+    );
+
+    if (res.ok) {
+      const data = await res.json();
+      if (data.accessToken) {
+        localStorage.setItem(ACCESS_TOKEN_KEY, data.accessToken);
+        if (data.refreshToken) {
+          localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken);
+        }
+        return true;
+      }
+    }
+
+    // 토큰이 무효한 경우 (중복 로그인으로 만료됨)
+    await logout();
+    return false;
+  } catch (error) {
+    console.error('토큰 검증 실패:', error);
+    await logout();
+    return false;
   }
 };

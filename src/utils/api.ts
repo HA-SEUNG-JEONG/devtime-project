@@ -1,4 +1,4 @@
-import { getAccessToken, refreshAccessToken, clearAuth } from './auth';
+import { getAccessToken, refreshAccessToken, logout } from './auth';
 
 interface FetchOptions extends RequestInit {
   headers?: HeadersInit;
@@ -38,8 +38,8 @@ export const authFetch = async (
         headers,
       });
     } else {
-      // 토큰 갱신 실패 시 로그인 페이지로 리다이렉트
-      clearAuth();
+      // 토큰 갱신 실패 시 로그아웃 처리 및 로그인 페이지로 리다이렉트
+      await logout();
       window.location.href = '/login';
       return new Response('Unauthorized', { status: 401 });
     }
@@ -52,12 +52,34 @@ export const authFetch = async (
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 
 /**
+ * 인증이 필요 없는 공개 API 요청
+ */
+const publicFetch = async (
+  url: string,
+  options: FetchOptions = {}
+): Promise<Response> => {
+  return fetch(url, options);
+};
+
+/**
  * API 유틸리티 함수들
  */
 export const api = {
   // GET 요청
   get: async (endpoint: string, options?: FetchOptions) => {
-    return authFetch(`${API_BASE_URL}${endpoint}`, {
+    // 인증이 필요 없는 공개 API 엔드포인트 (쿼리 파라미터 제외하고 경로만 확인)
+    const publicGetEndpoints = [
+      '/api/signup/check-email',
+      '/api/signup/check-nickname',
+    ];
+    const endpointPath = endpoint.split('?')[0];
+    const isPublicEndpoint = publicGetEndpoints.some(
+      path => endpointPath === path
+    );
+
+    const fetchFn = isPublicEndpoint ? publicFetch : authFetch;
+
+    return fetchFn(`${API_BASE_URL}${endpoint}`, {
       ...options,
       method: 'GET',
     });
@@ -65,7 +87,13 @@ export const api = {
 
   // POST 요청
   post: async (endpoint: string, data?: unknown, options?: FetchOptions) => {
-    return authFetch(`${API_BASE_URL}${endpoint}`, {
+    // 인증이 필요 없는 공개 API 엔드포인트
+    const publicEndpoints = ['/api/auth/login', '/api/signup'];
+    const isPublicEndpoint = publicEndpoints.some(path => endpoint === path);
+
+    const fetchFn = isPublicEndpoint ? publicFetch : authFetch;
+
+    return fetchFn(`${API_BASE_URL}${endpoint}`, {
       ...options,
       method: 'POST',
       headers: {

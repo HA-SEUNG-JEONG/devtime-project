@@ -1,19 +1,33 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Logo from '/vertical-logo.png';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import SymbolLogo from '/Symbol-Logo.png';
-import { setTokens } from '../utils/auth';
 import { sanitizeEmail } from '../utils/sanitize';
 import { api } from '../utils/api';
 import { useToast } from '../contexts/ToastContext';
+import { useAuthStore } from '../stores/authStore';
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { showToast } = useToast();
+  const { login } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const messageShownRef = useRef(false);
+
+  // 중복 로그인으로 인한 강제 로그아웃 메시지 표시
+  useEffect(() => {
+    const state = location.state as { message?: string } | null;
+    if (state?.message && !messageShownRef.current) {
+      messageShownRef.current = true;
+      showToast(state.message, 'error');
+      // 메시지 표시 후 state 제거
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, location.pathname, navigate, showToast]);
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 
@@ -35,7 +49,8 @@ const Login = () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setTokens(data.accessToken, data.refreshToken, {
+        // authStore의 login 함수로 토큰 저장 및 상태 업데이트
+        login(data.accessToken, data.refreshToken, {
           isFirstLogin: data.isFirstLogin,
           isDuplicateLogin: data.isDuplicateLogin,
         });
@@ -44,7 +59,7 @@ const Login = () => {
         if (data.isDuplicateLogin) {
           // 중복 로그인 안내 메시지 표시
           showToast(
-            '다른 기기에서 로그인되어 있습니다.\n해당 기기의 로그인이 해제됩니다.',
+            '다른 기기에서 로그인되어 있습니다.\n다른 기기의 로그인이 해제됩니다.',
             'warning'
           );
         }
