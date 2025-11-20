@@ -93,14 +93,18 @@ export const api = {
 
     const fetchFn = isPublicEndpoint ? publicFetch : authFetch;
 
+    const isFormData = data instanceof FormData;
+    const headers = new Headers(options?.headers);
+
+    if (!isFormData) {
+      headers.set('Content-Type', 'application/json');
+    }
+
     return fetchFn(`${API_BASE_URL}${endpoint}`, {
       ...options,
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers,
-      },
-      body: JSON.stringify(data),
+      headers,
+      body: isFormData ? (data as FormData) : JSON.stringify(data),
     });
   },
 

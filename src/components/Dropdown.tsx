@@ -236,17 +236,17 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={`flex flex-col items-start p-0 gap-2 w-[147px] ${className}`}
+      className={`flex flex-col items-start p-0 gap-2 ${className}`}
       {...props}
     >
       <label
         id={labelId}
-        className="w-[147px] h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
+        className="w-full h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
       >
         {label}
       </label>
 
-      <div className="flex flex-row items-center p-0 gap-3 w-[147px] h-11 flex-none order-1 self-stretch grow-0">
+      <div className="flex flex-row items-center p-0 gap-3 w-full h-11 flex-none order-1 self-stretch grow-0">
         <button
           ref={buttonRef}
           type="button"
@@ -276,7 +276,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           id={listboxId}
           role="listbox"
           aria-labelledby={labelId}
-          className={`box-border flex flex-col items-start px-3 py-4 gap-4 w-[147px] bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)] flex-none order-2 self-stretch grow-0 ${
+          className={`box-border flex flex-col items-start px-3 py-4 gap-4 w-full bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)] flex-none order-2 self-stretch grow-0 ${
             variant === 'scrollSelecting' ? 'max-h-[340px] overflow-y-auto' : ''
           }`}
         >
@@ -288,7 +288,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             return (
               <div
                 key={index}
-                className={`flex flex-col items-start p-0 gap-4 w-[123px] ${
+                className={`flex flex-col items-start p-0 gap-4 w-full ${
                   isLast ? 'h-5' : 'h-9'
                 } flex-none self-stretch grow-0`}
               >
@@ -303,7 +303,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   onClick={() => handleSelect(option, index)}
                   onKeyDown={e => handleOptionKeyDown(e, index)}
                   tabIndex={focusedIndex === index ? 0 : -1}
-                  className={`w-[123px] h-5 flex items-center flex-none order-0 self-stretch grow-0 text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 ${
+                  className={`w-full h-5 flex items-center flex-none order-0 self-stretch grow-0 text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity ${
                     isSelected
                       ? 'text-16b text-indigo'
                       : 'text-16m text-gray-600'
@@ -312,7 +312,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                   {option}
                 </button>
                 {!isLast && (
-                  <div className="w-[123px] h-0 border border-gray-300 flex-none order-1 self-stretch grow-0" />
+                  <div className="w-full h-0 border border-gray-300 flex-none order-1 self-stretch grow-0" />
                 )}
               </div>
             );
