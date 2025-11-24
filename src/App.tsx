@@ -47,6 +47,7 @@ function App() {
     <ToastProvider>
       <Toast />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
           path="/signup"
           element={
@@ -72,7 +73,6 @@ function App() {
           }
         />
         <Route path="*" element={<NavBar />} />
-        <Route path="/" element={<Home />} />
       </Routes>
     </ToastProvider>
   );

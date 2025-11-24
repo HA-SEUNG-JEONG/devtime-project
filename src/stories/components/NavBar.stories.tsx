@@ -174,7 +174,7 @@ export const LoginStates: Story = {
             borderRadius: '8px',
           }}
         >
-          <NavBar initialLoggedIn={false} />
+          <NavBar />
         </div>
       </section>
 
@@ -200,7 +200,7 @@ export const LoginStates: Story = {
             borderRadius: '8px',
           }}
         >
-          <NavBar initialLoggedIn={true} />
+          <NavBar />
         </div>
       </section>
     </div>
