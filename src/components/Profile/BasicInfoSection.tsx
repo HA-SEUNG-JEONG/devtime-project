@@ -72,7 +72,7 @@ const BasicInfoSection = () => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="study-goal">공부 목표 </label>
+        <label htmlFor="study-goal">공부 목표</label>
         {/* 공부 목표 */}
         <Controller
           name="goal"
@@ -80,6 +80,7 @@ const BasicInfoSection = () => {
           rules={{ required: '공부 목표를 입력해 주세요.' }}
           render={({ field }) => (
             <Input
+              id="study-goal"
               placeholder="공부 목표를 입력해 주세요."
               className={inputClassName}
               {...field}
