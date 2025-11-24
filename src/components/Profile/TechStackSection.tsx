@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { api } from '../../utils/api';
+import { useToast } from '../../contexts/ToastContext';
+import { useDebounce } from '../../hooks/useDebounce';
 import Input from '../common/Input';
 import Chip from '../common/Chip';
 import type { ProfileFormValues } from '../../types/profile';
@@ -8,11 +10,19 @@ import type { ProfileFormValues } from '../../types/profile';
 const TechStackSection = () => {
   const { setValue, watch, setError, clearErrors } =
     useFormContext<ProfileFormValues>();
+  const { showToast } = useToast();
 
   const techStacks = watch('techStacks');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [autoCompleteTechStacks, setAutoCompleteTechStacks] = useState<
     { id: string; name: string }[]
   >([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isCreating, setIsCreating] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Debounce the search keyword
+  const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
   useEffect(() => {
     if (techStacks.length === 0) {
@@ -25,15 +35,37 @@ const TechStackSection = () => {
     }
   }, [techStacks, setError, clearErrors]);
 
-  const handleChangeStudyGoal = async (keyword: string) => {
-    if (!keyword) {
+  // Fetch tech stacks when debounced keyword changes
+  useEffect(() => {
+    if (!debouncedSearchKeyword) {
       setAutoCompleteTechStacks([]);
+      setSelectedIndex(-1);
       return;
     }
-    const res = await api.get(`/api/tech-stacks?keyword=${keyword}`);
-    const data = await res.json();
-    setAutoCompleteTechStacks(data.results);
-  };
+
+    const fetchTechStacks = async () => {
+      try {
+        const res = await api.get(
+          `/api/tech-stacks?keyword=${debouncedSearchKeyword}`
+        );
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch tech stacks');
+        }
+
+        const data = await res.json();
+        setAutoCompleteTechStacks(data.results || []);
+        setSelectedIndex(-1);
+      } catch (error) {
+        console.error('Tech stack search failed:', error);
+        showToast('기술 스택 검색에 실패했습니다.', 'error');
+        setAutoCompleteTechStacks([]);
+        setSelectedIndex(-1);
+      }
+    };
+
+    fetchTechStacks();
+  }, [debouncedSearchKeyword, showToast]);
 
   const handleAddTechStack = (techName: string) => {
     if (!techStacks.includes(techName)) {
@@ -41,6 +73,8 @@ const TechStackSection = () => {
       setValue('techStacks', newTechStacks);
     }
     setAutoCompleteTechStacks([]);
+    setSearchKeyword('');
+    setSelectedIndex(-1);
   };
 
   const handleDeleteTechStack = (index: number) => {
@@ -48,29 +82,120 @@ const TechStackSection = () => {
     setValue('techStacks', newTechStacks);
   };
 
+  const handleCreateNewTechStack = async () => {
+    if (!searchKeyword.trim()) return;
+
+    setIsCreating(true);
+    try {
+      const res = await api.post('/api/tech-stacks', {
+        name: searchKeyword.trim(),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to create tech stack');
+      }
+
+      const data = await res.json();
+      handleAddTechStack(data.name);
+      showToast('새로운 기술 스택이 생성되었습니다.', 'success');
+    } catch (error) {
+      console.error('Tech stack creation failed:', error);
+      showToast('기술 스택 생성에 실패했습니다.', 'error');
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const totalItems = autoCompleteTechStacks.length;
+  const showAddButton = searchKeyword && totalItems === 0;
+  const showDropdown = totalItems > 0 || showAddButton;
+
+  const handleArrowDown = () => {
+    const maxIndex = showAddButton ? 0 : totalItems - 1;
+    if (selectedIndex === -1) {
+      setSelectedIndex(0);
+    } else if (selectedIndex < maxIndex) {
+      setSelectedIndex(selectedIndex + 1);
+    }
+  };
+
+  const handleArrowUp = () => {
+    if (selectedIndex === 0) {
+      setSelectedIndex(-1);
+    } else if (selectedIndex > 0) {
+      setSelectedIndex(selectedIndex - 1);
+    }
+  };
+
+  const handleEnter = () => {
+    // 자동완성 항목 선택
+    if (selectedIndex >= 0 && selectedIndex < totalItems) {
+      handleAddTechStack(autoCompleteTechStacks[selectedIndex].name);
+      return;
+    }
+
+    // Add New Item 선택 또는 검색어만 있을 때 새 항목 생성
+    if (searchKeyword && totalItems === 0) {
+      handleCreateNewTechStack();
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      handleArrowDown();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      handleArrowUp();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      handleEnter();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="study-goal" className="text-14m text-gray-600">
+      <label htmlFor="tech-stack-input" className="text-14m text-gray-600">
         공부/사용 중인 기술 스택
       </label>
       <Input
-        id="study-goal"
-        onChange={e => handleChangeStudyGoal(e.target.value)}
+        ref={inputRef}
+        id="tech-stack-input"
+        onChange={e => setSearchKeyword(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder="기술 스택을 검색해 등록해 주세요."
         className="w-full"
       />
-      {autoCompleteTechStacks.length > 0 && (
+      {showDropdown && (
         <div className="box-border flex flex-col items-start px-3 py-4 gap-4 w-full bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)]">
-          {autoCompleteTechStacks.map(option => (
+          {autoCompleteTechStacks.map((option, index) => (
             <button
               key={option.id}
               type="button"
               onClick={() => handleAddTechStack(option.name)}
-              className="w-full h-5 text-16sb text-gray-800 flex items-center text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity"
+              className={`w-full min-h-[32px] px-3 py-2 text-16sb flex items-center text-left rounded-md transition-all ${
+                selectedIndex === index
+                  ? 'bg-blue-50 border-2 border-blue-500 text-blue-700 font-bold shadow-sm'
+                  : 'bg-transparent border-2 border-transparent text-gray-800 hover:bg-gray-50'
+              }`}
             >
               {option.name}
             </button>
           ))}
+          {showAddButton && (
+            <button
+              type="button"
+              onClick={handleCreateNewTechStack}
+              disabled={isCreating}
+              className={`w-full min-h-[32px] px-3 py-2 text-16sb flex items-center text-left rounded-md transition-all ${
+                selectedIndex === 0 && totalItems === 0
+                  ? 'bg-blue-50 border-2 border-blue-500 text-blue-700 font-bold shadow-sm'
+                  : 'bg-transparent border-2 border-transparent text-blue-600 hover:bg-blue-50'
+              } ${isCreating ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+            >
+              {isCreating ? '생성 중...' : `+ Add New Item "${searchKeyword}"`}
+            </button>
+          )}
         </div>
       )}
 
