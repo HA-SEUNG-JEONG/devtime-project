@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import GuestRoute from './components/GuestRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 import { ToastProvider } from './contexts/ToastContext';
 import Toast from './components/Toast';
 import { isLoggedIn, validateToken } from './utils/auth';
@@ -62,7 +63,14 @@ function App() {
             </GuestRoute>
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NavBar />} />
         <Route path="/" element={<Home />} />
       </Routes>
