@@ -1,4 +1,3 @@
-import React from 'react';
 import NavBar from '../components/common/NavBar';
 import Timer from '../components/common/Timer';
 import TimerAction from '../components/common/TimerAction';

@@ -9,3 +9,14 @@ export interface UserInfo {
     profileImage: string;
   };
 }
+
+export interface TechStack {
+  results: [
+    {
+      id: string;
+      name: string;
+      createdAt: string;
+      updatedAt: string;
+    },
+  ];
+}

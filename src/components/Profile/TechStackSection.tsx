@@ -6,6 +6,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 import Input from '../common/Input';
 import Chip from '../common/Chip';
 import type { ProfileFormValues } from '../../types/profile';
+import type { TechStack } from '../../types';
 
 const TechStackSection = () => {
   const { setValue, watch, setError, clearErrors } =
@@ -53,7 +54,8 @@ const TechStackSection = () => {
           throw new Error('Failed to fetch tech stacks');
         }
 
-        const data = await res.json();
+        const data: TechStack = await res.json();
+
         setAutoCompleteTechStacks(data.results || []);
         setSelectedIndex(-1);
       } catch (error) {
