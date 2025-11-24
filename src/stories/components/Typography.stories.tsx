@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Typography from '../../components/Typography';
+import Typography from '../../components/common/Typography';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

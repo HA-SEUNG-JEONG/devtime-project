@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Input from '../Input';
-import Button from '../Button';
+import Input from '../common/Input';
+import Button from '../common/Button';
 import { checkDuplicate } from '../../utils/signupApi';
 import {
   validateEmail,

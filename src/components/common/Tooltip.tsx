@@ -1,5 +1,5 @@
 import React, { useId, useState } from 'react';
-import type { TooltipProps, TooltipPosition } from '../types/tooltip';
+import type { TooltipProps, TooltipPosition } from '../../types/tooltip';
 
 const Tooltip: React.FC<TooltipProps> = ({
   children,

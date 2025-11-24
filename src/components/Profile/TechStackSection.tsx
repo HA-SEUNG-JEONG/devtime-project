@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { api } from '../../utils/api';
-import Input from '../Input';
-import Chip from '../Chip';
+import Input from '../common/Input';
+import Chip from '../common/Chip';
 import type { ProfileFormValues } from '../../types/profile';
 
 const TechStackSection = () => {

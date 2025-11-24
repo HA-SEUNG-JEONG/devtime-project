@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import Dropdown from '../Dropdown';
-import Input from '../Input';
+import Dropdown from '../common/Dropdown';
+import Input from '../common/Input';
 import {
   EXPERIENCE_OPTIONS,
   STUDY_PURPOSE_OPTIONS,

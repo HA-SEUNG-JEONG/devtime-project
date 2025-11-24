@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
-import type { DropdownProps } from '../types/dropdown';
+import type { DropdownProps } from '../../types/dropdown';
 
 const ChevronIcon = ({ isUp }: { isUp: boolean }) => (
   <div className="w-6 h-6 flex-none order-1 grow-0 flex items-center justify-center">

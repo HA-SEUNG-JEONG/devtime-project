@@ -1,13 +1,13 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import NavBar from './components/NavBar';
+import NavBar from './components/common/NavBar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
-import GuestRoute from './components/GuestRoute';
-import ProtectedRoute from './components/ProtectedRoute';
+import GuestRoute from './components/common/GuestRoute';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import { ToastProvider } from './contexts/ToastContext';
-import Toast from './components/Toast';
+import Toast from './components/common/Toast';
 import { isLoggedIn, validateToken } from './utils/auth';
 import Home from './pages/Home';
 

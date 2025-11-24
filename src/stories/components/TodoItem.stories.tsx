@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import TodoItem from '../../components/TodoItem';
+import TodoItem from '../../components/common/TodoItem';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

@@ -1,6 +1,6 @@
 import { useForm, FormProvider, type SubmitHandler } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
+import Button from '../components/common/Button';
 import { api } from '../utils/api';
 import { useToast } from '../contexts/ToastContext';
 import ProfileImageSection from '../components/Profile/ProfileImageSection';

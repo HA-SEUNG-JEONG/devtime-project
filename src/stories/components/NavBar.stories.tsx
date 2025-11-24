@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
+import NavBar from '../../components/common/NavBar';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

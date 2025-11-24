@@ -1,7 +1,7 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
-import Timer from '../components/Timer';
-import TimerAction from '../components/TimerAction';
+import NavBar from '../components/common/NavBar';
+import Timer from '../components/common/Timer';
+import TimerAction from '../components/common/TimerAction';
 
 const Home = () => {
   return (
