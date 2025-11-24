@@ -4,12 +4,15 @@ import Input from '../common/Input';
 import {
   EXPERIENCE_OPTIONS,
   STUDY_PURPOSE_OPTIONS,
+  OTHER_PURPOSE_OPTION,
 } from '../../constants/profileOptions';
 import type { ProfileFormValues } from '../../types/profile';
 
 const BasicInfoSection = () => {
   const { control, watch } = useFormContext<ProfileFormValues>();
   const purpose = watch('purpose');
+
+  const inputClassName = 'w-full text-gray-800 text-16sb';
 
   return (
     <div className="flex flex-col gap-8">
@@ -47,20 +50,20 @@ const BasicInfoSection = () => {
             />
           )}
         />
-        {purpose === '기타(직접 입력)' && (
+        {purpose === OTHER_PURPOSE_OPTION && (
           <Controller
             name="customPurpose"
             control={control}
             rules={{
               required:
-                purpose === '기타(직접 입력)'
+                purpose === OTHER_PURPOSE_OPTION
                   ? '기타 공부 목적을 입력해 주세요.'
                   : false,
             }}
             render={({ field }) => (
               <Input
                 placeholder="공부 목적을 입력해 주세요."
-                className="w-full"
+                className={inputClassName}
                 {...field}
               />
             )}
@@ -78,7 +81,7 @@ const BasicInfoSection = () => {
           render={({ field }) => (
             <Input
               placeholder="공부 목표를 입력해 주세요."
-              className="w-full"
+              className={inputClassName}
               {...field}
             />
           )}

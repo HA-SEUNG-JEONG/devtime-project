@@ -5,6 +5,7 @@ import Button from '../components/common/Button';
 import Dialog from '../components/common/Dialog';
 import { api } from '../utils/api';
 import { useToast } from '../contexts/ToastContext';
+import { OTHER_PURPOSE_OPTION } from '../constants/profileOptions';
 import ProfileImageSection from '../components/Profile/ProfileImageSection';
 import TechStackSection from '../components/Profile/TechStackSection';
 import BasicInfoSection from '../components/Profile/BasicInfoSection';
@@ -31,7 +32,7 @@ const Profile = () => {
       data;
 
     const finalPurpose =
-      purpose === '기타(직접 입력)' ? customPurpose : purpose;
+      purpose === OTHER_PURPOSE_OPTION ? customPurpose : purpose;
 
     try {
       const res = await api.post('/api/profile', {
