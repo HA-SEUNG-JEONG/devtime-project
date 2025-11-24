@@ -165,6 +165,7 @@ const TechStackSection = () => {
         onKeyDown={handleKeyDown}
         placeholder="기술 스택을 검색해 등록해 주세요."
         className="w-full"
+        value={searchKeyword}
       />
       {showDropdown && (
         <div className="box-border flex flex-col items-start px-3 py-4 gap-4 w-full bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)]">
