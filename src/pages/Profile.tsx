@@ -1,6 +1,8 @@
 import { useForm, FormProvider, type SubmitHandler } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/Button';
+import Dialog from '../components/common/Dialog';
 import { api } from '../utils/api';
 import { useToast } from '../contexts/ToastContext';
 import ProfileImageSection from '../components/Profile/ProfileImageSection';
@@ -11,6 +13,7 @@ import type { ProfileFormValues } from '../types/profile';
 const Profile = () => {
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const [showSkipDialog, setShowSkipDialog] = useState(false);
   const methods = useForm<ProfileFormValues>({
     defaultValues: {
       career: '',
@@ -103,15 +106,34 @@ const Profile = () => {
           {/* 건너뛰기 링크 */}
           <div className="flex flex-row items-center justify-center gap-2 mx-auto">
             <span className="text-16r text-gray-600">다음에 하시겠어요?</span>
-            <Link
-              to="/"
-              className="text-16b text-primary no-underline hover:text-primary-2 transition-colors"
+            <span
+              onClick={() => setShowSkipDialog(true)}
+              className="text-16b text-primary cursor-pointer hover:text-primary-2 transition-colors"
             >
               건너뛰기
-            </Link>
+            </span>
           </div>
         </div>
       </div>
+
+      {/* 건너뛰기 확인 모달 */}
+      {showSkipDialog && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setShowSkipDialog(false)}
+        >
+          <div onClick={e => e.stopPropagation()}>
+            <Dialog
+              title="프로필 설정을 건너뛸까요?"
+              body="프로필 정보를 입력하지 않으면 학습 기록이 랭킹에 등재될 수 없습니다. 나중에 마이페이지에서 프로필을 설정할 수 있습니다."
+              cancelLabel="취소"
+              confirmLabel="건너뛰기"
+              onCancel={() => setShowSkipDialog(false)}
+              onConfirm={() => navigate('/timer')}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

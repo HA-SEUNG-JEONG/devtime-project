@@ -11,9 +11,14 @@ interface LoginData {
   isDuplicateLogin: boolean;
 }
 
+interface UserInfo {
+  nickname: string;
+}
+
 interface AuthState {
   isLoggedIn: boolean;
   loginData: LoginData | null;
+  userInfo: UserInfo | null;
 
   // Actions
   login: (
@@ -23,6 +28,7 @@ interface AuthState {
   ) => void;
   logout: () => Promise<void>;
   checkAuthStatus: () => void;
+  setUserInfo: (userInfo: UserInfo) => void;
 }
 
 export const useAuthStore = create<AuthState>(set => {
@@ -43,6 +49,7 @@ export const useAuthStore = create<AuthState>(set => {
     // 초기 상태
     isLoggedIn: checkIsLoggedIn(),
     loginData: getLoginData(),
+    userInfo: null,
 
     // 로그인
     login: (
@@ -63,6 +70,7 @@ export const useAuthStore = create<AuthState>(set => {
       set({
         isLoggedIn: false,
         loginData: null,
+        userInfo: null,
       });
     },
 
@@ -72,6 +80,11 @@ export const useAuthStore = create<AuthState>(set => {
         isLoggedIn: checkIsLoggedIn(),
         loginData: getLoginData(),
       });
+    },
+
+    // 유저 정보 설정
+    setUserInfo: (userInfo: UserInfo) => {
+      set({ userInfo });
     },
   };
 });
