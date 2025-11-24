@@ -88,7 +88,8 @@ const Profile = () => {
       });
       const { presignedUrl, key } = await res.json();
 
-      const uploadResponse = await api.put(presignedUrl, {
+      const uploadResponse = await fetch(presignedUrl, {
+        method: 'PUT',
         headers: {
           'Content-Type': type,
         },
