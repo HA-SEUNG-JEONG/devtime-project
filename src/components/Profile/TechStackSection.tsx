@@ -50,8 +50,11 @@ const TechStackSection = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-14m text-gray-600">공부/사용 중인 기술 스택</label>
+      <label htmlFor="study-goal" className="text-14m text-gray-600">
+        공부/사용 중인 기술 스택
+      </label>
       <Input
+        id="study-goal"
         onChange={e => handleChangeStudyGoal(e.target.value)}
         placeholder="기술 스택을 검색해 등록해 주세요."
         className="w-full"
