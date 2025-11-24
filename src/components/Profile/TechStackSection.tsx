@@ -76,7 +76,7 @@ const TechStackSection = () => {
         <div className="flex flex-wrap gap-2">
           {techStacks.map((tech, index) => (
             <Chip
-              key={index}
+              key={tech}
               label={tech}
               deletable={true}
               onDelete={() => handleDeleteTechStack(index)}
