@@ -241,6 +241,7 @@ const Dropdown: React.FC<DropdownProps> = ({
     >
       <label
         id={labelId}
+        htmlFor={`${baseId}-dropdown-button`}
         className="w-full h-[18px] text-14m text-gray-600 flex items-center flex-none order-0 self-stretch grow-0"
       >
         {label}
@@ -248,6 +249,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
       <div className="flex flex-row items-center p-0 gap-3 w-full h-11 flex-none order-1 self-stretch grow-0">
         <button
+          id={`${baseId}-dropdown-button`}
           ref={buttonRef}
           type="button"
           onClick={handleToggle}
