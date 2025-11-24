@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
 import { useAuthStore } from '../../stores/authStore';
 import { api } from '../../utils/api';
+import type { UserInfo } from '../../types';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -18,8 +19,10 @@ const NavBar = () => {
         try {
           const response = await api.get('/api/profile');
           if (response.ok) {
-            const data = await response.json();
-            setUserInfo({ nickname: data.nickname });
+            const data: UserInfo = await response.json();
+            if (data && typeof data.nickname === 'string') {
+              setUserInfo({ nickname: data.nickname });
+            }
           }
         } catch (error) {
           console.error('Failed to fetch user info:', error);
@@ -28,7 +31,7 @@ const NavBar = () => {
     };
 
     fetchUserInfo();
-  }, [isLoggedIn, userInfo, setUserInfo]);
+  }, [isLoggedIn, userInfo]);
 
   // 프로필 드롭다운 외부 클릭 감지
   useEffect(() => {
