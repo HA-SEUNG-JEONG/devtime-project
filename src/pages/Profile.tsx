@@ -1,17 +1,47 @@
 import { useState, useRef, type ChangeEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { useForm, Controller, type SubmitHandler } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import Dropdown from '../components/Dropdown';
 import Button from '../components/Button';
 import Chip from '../components/Chip';
 import Input from '../components/Input';
 import { api } from '../utils/api';
+import {
+  EXPERIENCE_OPTIONS,
+  MAX_IMAGE_SIZE,
+  STUDY_PURPOSE_OPTIONS,
+} from '../constants/profileOptions';
+
+interface ProfileFormValues {
+  career: string;
+  purpose: string;
+  customPurpose: string;
+  goal: string;
+  techStacks: string[];
+  profileImage: string | null;
+}
 
 const Profile = () => {
-  const [techStacks, setTechStacks] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const { control, handleSubmit, setValue, watch } = useForm<ProfileFormValues>(
+    {
+      defaultValues: {
+        career: '',
+        purpose: '',
+        customPurpose: '',
+        goal: '',
+        techStacks: [],
+        profileImage: null,
+      },
+    }
+  );
+
+  const techStacks = watch('techStacks');
+  const purpose = watch('purpose');
+
   const [autoCompleteTechStacks, setAutoCompleteTechStacks] = useState<
     { id: string; name: string }[]
   >([]);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(
     null
   );
@@ -30,14 +60,16 @@ const Profile = () => {
 
     const file = files[0];
 
+    const { name, type, size } = files[0];
+
     // 파일 크기 검증 (5MB)
-    if (file.size > 5 * 1024 * 1024) {
+    if (size > MAX_IMAGE_SIZE) {
       alert('5MB 이하의 이미지만 업로드 가능합니다.');
       return;
     }
 
     // 파일 형식 검증
-    if (!['image/png', 'image/jpeg'].includes(file.type)) {
+    if (!['image/png', 'image/jpeg'].includes(type)) {
       alert('PNG 또는 JPG 형식의 이미지만 업로드 가능합니다.');
       return;
     }
@@ -51,15 +83,14 @@ const Profile = () => {
 
     try {
       const res = await api.post('/api/file/presigned-url', {
-        fileName: file.name,
-        contentType: file.type,
+        fileName: name,
+        contentType: type,
       });
-      const data = await res.json();
+      const { presignedUrl, key } = await res.json();
 
-      const uploadResponse = await fetch(data.presignedUrl, {
-        method: 'PUT',
+      const uploadResponse = await api.put(presignedUrl, {
         headers: {
-          'Content-Type': file.type,
+          'Content-Type': type,
         },
         body: file,
       });
@@ -69,7 +100,7 @@ const Profile = () => {
       }
 
       // 3. key 저장 (나중에 프로필 저장 시 사용)
-      setProfileImage(data.key);
+      setValue('profileImage', key);
     } catch (error) {
       console.error('File upload failed:', error);
       alert('이미지 업로드에 실패했습니다. S3 CORS 설정을 확인해주세요.');
@@ -79,6 +110,48 @@ const Profile = () => {
 
   const handleImageAreaClick = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleAddTechStack = (techName: string) => {
+    const newTechStacks = [...techStacks, techName];
+    setValue('techStacks', newTechStacks, {
+      shouldValidate: true,
+    });
+    setAutoCompleteTechStacks([]);
+  };
+
+  const handleDeleteTechStack = (index: number) => {
+    const newTechStacks = techStacks.filter((_, i) => i !== index);
+    setValue('techStacks', newTechStacks, {
+      shouldValidate: true,
+    });
+  };
+
+  const onSubmit: SubmitHandler<ProfileFormValues> = async data => {
+    const { career, purpose, customPurpose, goal, techStacks, profileImage } =
+      data;
+
+    const finalPurpose =
+      purpose === '기타(직접 입력)' ? customPurpose : purpose;
+
+    try {
+      const res = await api.post('/api/profile', {
+        career,
+        purpose: finalPurpose,
+        goal,
+        techStacks,
+        profileImage,
+      });
+
+      if (res.ok) {
+        navigate('/timer');
+      } else {
+        alert('프로필 저장에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('Profile save failed:', error);
+      alert('프로필 저장 중 오류가 발생했습니다.');
+    }
   };
   return (
     <div className="relative w-full min-h-screen bg-white flex">
@@ -105,39 +178,74 @@ const Profile = () => {
           </h1>
 
           {/* 개발 경력 */}
-          <Dropdown
-            label="개발 경력"
-            placeholder="개발 경력을 선택해 주세요."
-            options={[
-              '경력 없음',
-              '0 - 3년',
-              '4 - 7년',
-              '8 - 10년',
-              '11년 이상',
-            ]}
-            className="w-full"
+          <Controller
+            name="career"
+            control={control}
+            rules={{ required: '개발 경력을 선택해 주세요.' }}
+            render={({ field }) => (
+              <Dropdown
+                label="개발 경력"
+                placeholder="개발 경력을 선택해 주세요."
+                options={EXPERIENCE_OPTIONS}
+                className="w-full"
+                onSelect={field.onChange}
+                value={field.value}
+              />
+            )}
           />
 
           {/* 공부 목적 */}
-          <Dropdown
-            label="공부 목적"
-            placeholder="공부의 목적을 선택해 주세요."
-            options={[
-              '취업 준비',
-              '이직 준비',
-              '단순 개발 역량 향상',
-              '회사 내 프로젝트 원활하게 수행',
-              '기타(직접 입력)',
-            ]}
-            className="w-full"
-          />
+          <div className="flex flex-col gap-2">
+            <Controller
+              name="purpose"
+              control={control}
+              rules={{ required: '공부 목적을 선택해 주세요.' }}
+              render={({ field }) => (
+                <Dropdown
+                  label="공부 목적"
+                  placeholder="공부의 목적을 선택해 주세요."
+                  options={STUDY_PURPOSE_OPTIONS}
+                  className="w-full"
+                  onSelect={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {purpose === '기타(직접 입력)' && (
+              <Controller
+                name="customPurpose"
+                control={control}
+                rules={{
+                  required:
+                    purpose === '기타(직접 입력)'
+                      ? '기타 공부 목적을 입력해 주세요.'
+                      : false,
+                }}
+                render={({ field }) => (
+                  <Input
+                    placeholder="공부 목적을 입력해 주세요."
+                    className="w-full"
+                    {...field}
+                  />
+                )}
+              />
+            )}
+          </div>
 
           <div className="flex flex-col gap-2">
             <label htmlFor="study-goal">공부 목표 </label>
             {/* 공부 목표 */}
-            <Input
-              placeholder="공부 목표를 입력해 주세요."
-              className="w-full"
+            <Controller
+              name="goal"
+              control={control}
+              rules={{ required: '공부 목표를 입력해 주세요.' }}
+              render={({ field }) => (
+                <Input
+                  placeholder="공부 목표를 입력해 주세요."
+                  className="w-full"
+                  {...field}
+                />
+              )}
             />
           </div>
 
@@ -157,10 +265,7 @@ const Profile = () => {
                   <button
                     key={option.id}
                     type="button"
-                    onClick={() => {
-                      setTechStacks([...techStacks, option.name]);
-                      setAutoCompleteTechStacks([]);
-                    }}
+                    onClick={() => handleAddTechStack(option.name)}
                     className="w-full h-5 text-16sb text-gray-800 flex items-center text-left bg-transparent border-none cursor-pointer hover:opacity-80 transition-opacity"
                   >
                     {option.name}
@@ -177,9 +282,7 @@ const Profile = () => {
                     key={index}
                     label={tech}
                     deletable={true}
-                    onDelete={() => {
-                      setTechStacks(techStacks.filter((_, i) => i !== index));
-                    }}
+                    onDelete={() => handleDeleteTechStack(index)}
                   />
                 ))}
               </div>
@@ -234,7 +337,20 @@ const Profile = () => {
           </div>
 
           {/* 시작하기 버튼 */}
-          <Button type="button" priority="primary" className="w-full h-12">
+          <Button
+            onClick={handleSubmit(onSubmit, errors => {
+              if (errors.career) alert(errors.career.message);
+              else if (errors.purpose) alert(errors.purpose.message);
+              else if (errors.customPurpose)
+                alert(errors.customPurpose.message);
+              else if (errors.goal) alert(errors.goal.message);
+              else if (techStacks.length === 0)
+                alert('최소 하나 이상의 기술 스택을 선택해 주세요.');
+            })}
+            type="button"
+            priority="primary"
+            className="w-full h-12"
+          >
             시작하기
           </Button>
 
