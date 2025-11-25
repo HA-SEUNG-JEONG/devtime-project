@@ -13,7 +13,7 @@ const ChipList = ({
         <div className="flex flex-wrap gap-2">
           {techStacks.map((tech, index) => (
             <Chip
-              key={tech}
+              key={`${tech}-${index}`}
               label={tech}
               deletable={true}
               onDelete={() => onDelete(index)}
