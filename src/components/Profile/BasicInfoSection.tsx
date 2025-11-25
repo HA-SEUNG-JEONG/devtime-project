@@ -7,10 +7,19 @@ import {
   OTHER_PURPOSE_OPTION,
 } from '../../constants/profileOptions';
 import type { ProfileFormValues } from '../../types/profile';
+import { useEffect } from 'react';
 
 const BasicInfoSection = () => {
-  const { control, watch } = useFormContext<ProfileFormValues>();
+  const { control, watch, setValue, clearErrors } =
+    useFormContext<ProfileFormValues>();
   const purpose = watch('purpose');
+
+  useEffect(() => {
+    if (purpose !== OTHER_PURPOSE_OPTION) {
+      setValue('customPurpose', '');
+      clearErrors('customPurpose');
+    }
+  }, [purpose, setValue, clearErrors]);
 
   const inputClassName = 'w-full text-gray-800 text-16sb';
 
