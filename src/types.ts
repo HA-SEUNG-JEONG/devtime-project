@@ -10,20 +10,17 @@ export interface UserInfo {
   };
 }
 
-export interface TechStack {
-  results: {
-    id: string;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-  }[];
+export interface TechStackItem {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export interface AddTechStack {
-  techStacks: {
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-    id: string;
-  };
+export interface TechStackSearchResponse {
+  results: TechStackItem[];
+}
+
+export interface TechStackCreateResponse {
+  techStack: TechStackItem;
 }

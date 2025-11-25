@@ -1,5 +1,5 @@
 import React from 'react';
-import type { RankingItemProps } from '../../types/rankingItem';
+import type { RankingItemProps } from '@/types/rankingItem';
 
 const RankingItem: React.FC<RankingItemProps> = ({
   rank,

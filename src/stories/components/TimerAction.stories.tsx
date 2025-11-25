@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import TimerAction from '../../components/common/TimerAction';
+import TimerAction from '@/components/common/TimerAction';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

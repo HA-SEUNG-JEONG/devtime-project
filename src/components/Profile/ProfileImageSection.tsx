@@ -1,9 +1,9 @@
 import { useRef, useState, type ChangeEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { useToast } from '../../contexts/ToastContext';
-import { api } from '../../utils/api';
-import { MAX_IMAGE_SIZE } from '../../constants/profileOptions';
-import type { ProfileFormValues } from '../../types/profile';
+import { useToast } from '@/contexts/ToastContext';
+import { api } from '@/utils/api';
+import { MAX_IMAGE_SIZE } from '@/constants/profileOptions';
+import type { ProfileFormValues } from '@/types/profile';
 
 const ProfileImageSection = () => {
   const { setValue } = useFormContext<ProfileFormValues>();

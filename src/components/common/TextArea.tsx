@@ -1,5 +1,5 @@
 import React from 'react';
-import type { TextAreaProps } from '../../types/textArea';
+import type { TextAreaProps } from '@/types/textArea';
 
 const TextArea: React.FC<TextAreaProps> = ({
   variant = 'ready',

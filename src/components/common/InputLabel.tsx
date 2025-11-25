@@ -1,5 +1,5 @@
 import React from 'react';
-import type { InputLabelProps } from '../../types/inputLabel';
+import type { InputLabelProps } from '@/types/inputLabel';
 
 const InputLabel: React.FC<InputLabelProps> = ({
   variant = 'placeholder',

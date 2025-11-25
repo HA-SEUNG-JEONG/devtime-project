@@ -1,12 +1,12 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import Dropdown from '../common/Dropdown';
-import Input from '../common/Input';
+import Dropdown from '@/components/common/Dropdown';
+import Input from '@/components/common/Input';
 import {
   EXPERIENCE_OPTIONS,
   STUDY_PURPOSE_OPTIONS,
   OTHER_PURPOSE_OPTION,
-} from '../../constants/profileOptions';
-import type { ProfileFormValues } from '../../types/profile';
+} from '@/constants/profileOptions';
+import type { ProfileFormValues } from '@/types/profile';
 import { useEffect } from 'react';
 
 const BasicInfoSection = () => {

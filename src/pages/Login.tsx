@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Logo from '/vertical-logo.png';
-import Button from '../components/common/Button';
-import Input from '../components/common/Input';
+import Button from '@/components/common/Button';
+import Input from '@/components/common/Input';
 import SymbolLogo from '/Symbol-Logo.png';
-import { sanitizeEmail } from '../utils/sanitize';
-import { api } from '../utils/api';
-import { useToast } from '../contexts/ToastContext';
-import { useAuthStore } from '../stores/authStore';
+import { sanitizeEmail } from '@/utils/sanitize';
+import { api } from '@/utils/api';
+import { useToast } from '@/contexts/ToastContext';
+import { useAuthStore } from '@/stores/authStore';
 
 const Login = () => {
   const navigate = useNavigate();

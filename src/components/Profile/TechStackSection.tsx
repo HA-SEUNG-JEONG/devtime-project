@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, type KeyboardEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { api } from '../../utils/api';
-import { useToast } from '../../contexts/ToastContext';
-import { useDebounce } from '../../hooks/useDebounce';
-import Input from '../common/Input';
-import type { ProfileFormValues } from '../../types/profile';
-import type { AddTechStack, TechStack } from '../../types';
+import { api } from '@/utils/api';
+import { useToast } from '@/contexts/ToastContext';
+import { useDebounce } from '@/hooks/useDebounce';
+import Input from '@/components/common/Input';
+import type { ProfileFormValues } from '@/types/profile';
+import type { TechStackSearchResponse, TechStackCreateResponse } from '@/types';
 import ChipList from './ChipList';
 
 const TechStackSection = () => {
@@ -16,7 +16,7 @@ const TechStackSection = () => {
 
   const [searchKeyword, setSearchKeyword] = useState('');
   const [autoCompleteTechStacks, setAutoCompleteTechStacks] = useState<
-    TechStack['results']
+    TechStackSearchResponse['results']
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isCreating, setIsCreating] = useState(false);
@@ -55,7 +55,7 @@ const TechStackSection = () => {
           throw new Error('Failed to fetch tech stacks');
         }
 
-        const data: TechStack = await res.json();
+        const data: TechStackSearchResponse = await res.json();
 
         setAutoCompleteTechStacks(data.results || []);
         setSelectedIndex(-1);
@@ -101,8 +101,8 @@ const TechStackSection = () => {
         };
       }
 
-      const data: AddTechStack = await res.json();
-      handleAddTechStack(data.techStacks.name);
+      const data: TechStackCreateResponse = await res.json();
+      handleAddTechStack(data.techStack.name);
       showToast('새로운 기술 스택이 생성되었습니다.', 'success');
     } catch (error) {
       console.error('Tech stack creation failed:', error);

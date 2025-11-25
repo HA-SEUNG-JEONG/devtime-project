@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
-import Checkbox from '../common/Checkbox';
-import type { SignupFormData } from '../../types/signup';
+import Checkbox from '@/components/common/Checkbox';
+import type { SignupFormData } from '@/types/signup';
 
 const TermsAgreement = () => {
   const { register, watch, setValue } = useFormContext<SignupFormData>();

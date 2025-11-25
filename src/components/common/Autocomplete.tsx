@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AutocompleteProps } from '../../types/autocomplete';
+import type { AutocompleteProps } from '@/types/autocomplete';
 
 const Autocomplete: React.FC<AutocompleteProps> = ({
   label = 'Autocomplete Label',

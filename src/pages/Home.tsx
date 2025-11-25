@@ -1,6 +1,6 @@
-import NavBar from '../components/common/NavBar';
-import Timer from '../components/common/Timer';
-import TimerAction from '../components/common/TimerAction';
+import NavBar from '@/components/common/NavBar';
+import Timer from '@/components/common/Timer';
+import TimerAction from '@/components/common/TimerAction';
 
 const Home = () => {
   return (

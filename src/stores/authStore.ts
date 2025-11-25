@@ -4,7 +4,7 @@ import {
   logout as authLogout,
   setTokens,
   getLoginData,
-} from '../utils/auth';
+} from '@/utils/auth';
 
 interface LoginData {
   isFirstLogin: boolean;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import DuplicateCheckField from '../components/signup/DuplicateCheckField';
-import PasswordField from '../components/signup/PasswordField';
-import TermsAgreement from '../components/signup/TermsAgreement';
-import Button from '../components/common/Button';
-import { signup } from '../utils/signupApi';
-import type { SignupFormData } from '../types/signup';
-import { useToast } from '../contexts/ToastContext';
+import DuplicateCheckField from '@/components/signup/DuplicateCheckField';
+import PasswordField from '@/components/signup/PasswordField';
+import TermsAgreement from '@/components/signup/TermsAgreement';
+import Button from '@/components/common/Button';
+import { signup } from '@/utils/signupApi';
+import type { SignupFormData } from '@/types/signup';
+import { useToast } from '@/contexts/ToastContext';
 
 const Signup = () => {
   const navigate = useNavigate();

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import Input from '../common/Input';
-import Button from '../common/Button';
-import { checkDuplicate } from '../../utils/signupApi';
+import Input from '@/components/common/Input';
+import Button from '@/components/common/Button';
+import { checkDuplicate } from '@/utils/signupApi';
 import {
   validateEmail,
   validateNickname,
   validateEmailFormat,
   validateNicknameFormat,
-} from '../../utils/validation';
-import type { SignupFormData } from '../../types/signup';
+} from '@/utils/validation';
+import type { SignupFormData } from '@/types/signup';
 
 interface DuplicateCheckFieldProps {
   label: string;

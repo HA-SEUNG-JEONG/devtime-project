@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import TextArea from '../../components/common/TextArea';
+import TextArea from '@/components/common/TextArea';
 
 const meta = {
   title: 'Components/TextArea',

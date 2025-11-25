@@ -1,8 +1,8 @@
 import type {
+  SignupFormData,
   CheckDuplicateResponse,
   SignupResponse,
-  SignupFormData,
-} from '../types/signup';
+} from '@/types/signup';
 import { sanitizeEmail, sanitizeNickname } from './sanitize';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';

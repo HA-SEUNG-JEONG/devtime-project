@@ -1,7 +1,7 @@
 import { useFormContext } from 'react-hook-form';
-import Input from '../common/Input';
-import type { SignupFormData } from '../../types/signup';
-import { validatePassword } from '../../utils/validation';
+import Input from '@/components/common/Input';
+import type { SignupFormData } from '@/types/signup';
+import { validatePassword } from '@/utils/validation';
 
 interface PasswordFieldProps {
   label: string;

@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { isLoggedIn } from '../../utils/auth';
+import { isLoggedIn } from '@/utils/auth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

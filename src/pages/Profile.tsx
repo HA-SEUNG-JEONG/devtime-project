@@ -1,15 +1,15 @@
 import { useForm, FormProvider, type SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/common/Button';
-import Dialog from '../components/common/Dialog';
-import { api } from '../utils/api';
-import { useToast } from '../contexts/ToastContext';
-import { OTHER_PURPOSE_OPTION } from '../constants/profileOptions';
-import ProfileImageSection from '../components/Profile/ProfileImageSection';
-import TechStackSection from '../components/Profile/TechStackSection';
-import BasicInfoSection from '../components/Profile/BasicInfoSection';
-import type { ProfileFormValues } from '../types/profile';
+import Button from '@/components/common/Button';
+import Dialog from '@/components/common/Dialog';
+import { api } from '@/utils/api';
+import { useToast } from '@/contexts/ToastContext';
+import { OTHER_PURPOSE_OPTION } from '@/constants/profileOptions';
+import ProfileImageSection from '@/components/Profile/ProfileImageSection';
+import TechStackSection from '@/components/Profile/TechStackSection';
+import BasicInfoSection from '@/components/Profile/BasicInfoSection';
+import type { ProfileFormValues } from '@/types/profile';
 
 const Profile = () => {
   const navigate = useNavigate();

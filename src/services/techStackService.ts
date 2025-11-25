@@ -1,5 +1,5 @@
-import { api } from '../utils/api';
-import type { TechStack } from '../types';
+import { api } from '@/utils/api';
+import type { TechStackSearchResponse } from '@/types';
 
 export interface TechStackItem {
   id: string;
@@ -28,7 +28,7 @@ export const techStackService = {
         throw new Error('Failed to fetch tech stacks');
       }
 
-      const data: TechStack = await res.json();
+      const data: TechStackSearchResponse = await res.json();
       return data.results || [];
     } catch (error) {
       console.error('Tech stack search failed:', error);

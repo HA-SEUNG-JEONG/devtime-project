@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
-import { useAuthStore } from '../../stores/authStore';
-import { api } from '../../utils/api';
-import type { UserInfo } from '../../types';
+import { useAuthStore } from '@/stores/authStore';
+import { api } from '@/utils/api';
+import type { UserInfo } from '@/types';
 
 const NavBar = () => {
   const navigate = useNavigate();
