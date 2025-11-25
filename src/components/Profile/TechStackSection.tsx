@@ -48,7 +48,7 @@ const TechStackSection = () => {
     const fetchTechStacks = async () => {
       try {
         const res = await api.get(
-          `/api/tech-stacks?keyword=${debouncedSearchKeyword}`
+          `/api/tech-stacks?keyword=${encodeURIComponent(debouncedSearchKeyword)}`
         );
 
         if (!res.ok) {

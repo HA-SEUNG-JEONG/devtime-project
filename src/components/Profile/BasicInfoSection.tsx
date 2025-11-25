@@ -54,14 +54,10 @@ const BasicInfoSection = () => {
           <Controller
             name="customPurpose"
             control={control}
-            rules={{
-              required:
-                purpose === OTHER_PURPOSE_OPTION
-                  ? '기타 공부 목적을 입력해 주세요.'
-                  : false,
-            }}
+            rules={{ required: '기타 공부 목적을 입력해 주세요.' }}
             render={({ field }) => (
               <Input
+                aria-label="공부 목적"
                 placeholder="공부 목적을 입력해 주세요."
                 className={inputClassName}
                 {...field}
@@ -80,6 +76,7 @@ const BasicInfoSection = () => {
           rules={{ required: '공부 목표를 입력해 주세요.' }}
           render={({ field }) => (
             <Input
+              aria-label="공부 목표"
               id="study-goal"
               placeholder="공부 목표를 입력해 주세요."
               className={inputClassName}
