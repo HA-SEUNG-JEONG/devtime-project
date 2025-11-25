@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import NavBar from './components/common/NavBar';
 import Login from './pages/Login';
@@ -13,7 +13,6 @@ import Home from './pages/Home';
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // 중복 로그인 감지를 위한 주기적 토큰 검증
   useEffect(() => {
@@ -77,5 +76,4 @@ function App() {
     </ToastProvider>
   );
 }
-
 export default App;
