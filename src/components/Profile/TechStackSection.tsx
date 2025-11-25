@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type KeyboardEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { api } from '../../utils/api';
 import { useToast } from '../../contexts/ToastContext';
@@ -145,7 +145,7 @@ const TechStackSection = () => {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       handleArrowDown();
