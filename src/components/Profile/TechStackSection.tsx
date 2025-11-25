@@ -14,9 +14,10 @@ const TechStackSection = () => {
   const { showToast } = useToast();
 
   const techStacks = watch('techStacks');
+
   const [searchKeyword, setSearchKeyword] = useState('');
   const [autoCompleteTechStacks, setAutoCompleteTechStacks] = useState<
-    { id: string; name: string }[]
+    TechStack['results']
   >([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isCreating, setIsCreating] = useState(false);

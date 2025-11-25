@@ -11,12 +11,10 @@ export interface UserInfo {
 }
 
 export interface TechStack {
-  results: [
-    {
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    },
-  ];
+  results: {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
 }
