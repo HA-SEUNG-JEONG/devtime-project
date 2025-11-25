@@ -41,7 +41,7 @@ function App() {
     }, 3600000); // 1시간
 
     return () => clearInterval(intervalId);
-  }, [navigate, location.pathname]);
+  }, [navigate]);
 
   return (
     <ToastProvider>
