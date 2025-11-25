@@ -18,3 +18,12 @@ export interface TechStack {
     updatedAt: string;
   }[];
 }
+
+export interface AddTechStack {
+  techStacks: {
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    id: string;
+  };
+}
