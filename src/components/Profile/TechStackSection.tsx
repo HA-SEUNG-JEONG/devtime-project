@@ -11,7 +11,6 @@ import type { TechStack } from '../../types';
 const TechStackSection = () => {
   const { setValue, watch, setError, clearErrors } =
     useFormContext<ProfileFormValues>();
-  const { showToast } = useToast();
 
   const techStacks = watch('techStacks');
 
@@ -23,6 +22,7 @@ const TechStackSection = () => {
   const [isCreating, setIsCreating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { showToast } = useToast();
   // Debounce the search keyword
   const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
 
@@ -61,7 +61,6 @@ const TechStackSection = () => {
         setSelectedIndex(-1);
       } catch (error) {
         console.error('Tech stack search failed:', error);
-        showToast('기술 스택 검색에 실패했습니다.', 'error');
         setAutoCompleteTechStacks([]);
         setSelectedIndex(-1);
       }
@@ -95,7 +94,11 @@ const TechStackSection = () => {
       });
 
       if (!res.ok) {
-        throw new Error('Failed to create tech stack');
+        const errorData = await res.json();
+        throw {
+          statusCode: res.status,
+          message: errorData.message || 'Failed to create tech stack',
+        };
       }
 
       const data = await res.json();
@@ -103,7 +106,6 @@ const TechStackSection = () => {
       showToast('새로운 기술 스택이 생성되었습니다.', 'success');
     } catch (error) {
       console.error('Tech stack creation failed:', error);
-      showToast('기술 스택 생성에 실패했습니다.', 'error');
     } finally {
       setIsCreating(false);
     }
