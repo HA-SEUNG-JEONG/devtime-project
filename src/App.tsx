@@ -38,7 +38,7 @@ function App() {
           });
         }
       }
-    }, 5000); // 5초
+    }, 3600000); // 1시간
 
     return () => clearInterval(intervalId);
   }, [navigate, location.pathname]);
