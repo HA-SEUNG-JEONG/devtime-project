@@ -10,7 +10,7 @@ const Chip: React.FC<ChipProps> = ({
   const baseClasses =
     'box-border flex flex-row justify-center items-center bg-primary-10 border border-primary rounded-[5px]';
 
-  const chipClasses = `${baseClasses} gap-2 ${className}`;
+  const chipClasses = `${baseClasses} gap-2 p-3 ${className}`;
 
   return (
     <div className={chipClasses}>
