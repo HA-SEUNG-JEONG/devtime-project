@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import Input from '../../components/Input';
+import Input from '@/components/common/Input';
 
 const meta = {
   title: 'Components/Input',
@@ -102,4 +102,3 @@ export const AllStates: Story = {
     </div>
   ),
 };
-

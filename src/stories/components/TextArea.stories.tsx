@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import TextArea from '../../components/TextArea';
+import TextArea from '@/components/common/TextArea';
 
 const meta = {
   title: 'Components/TextArea',
@@ -62,7 +62,8 @@ export const Typing: Story = {
 export const Typed: Story = {
   args: {
     variant: 'typed',
-    value: 'Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed',
+    value:
+      'Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed',
   },
 };
 
@@ -96,4 +97,3 @@ export const AllStates: Story = {
     );
   },
 };
-

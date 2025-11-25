@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Dropdown from '../../components/Dropdown';
+import Dropdown from '@/components/common/Dropdown';
 
 const meta = {
   title: 'Components/Dropdown',
@@ -11,7 +11,13 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['unselected', 'selected', 'selecting', 'scrollSelecting', 'reselecting'],
+      options: [
+        'unselected',
+        'selected',
+        'selecting',
+        'scrollSelecting',
+        'reselecting',
+      ],
       description: 'Dropdown의 상태',
     },
     label: {
@@ -46,7 +52,14 @@ export const Unselected: Story = {
     variant: 'unselected',
     label: 'Dropdown Label',
     placeholder: 'Placeholder',
-    options: ['First Item', 'Second Item', 'Third Item', 'Fourth Item', 'Fifth Item', 'Last Item'],
+    options: [
+      'First Item',
+      'Second Item',
+      'Third Item',
+      'Fourth Item',
+      'Fifth Item',
+      'Last Item',
+    ],
   },
 };
 
@@ -57,7 +70,14 @@ export const Selected: Story = {
     label: 'Dropdown Label',
     value: 'First Item',
     placeholder: 'Placeholder',
-    options: ['First Item', 'Second Item', 'Third Item', 'Fourth Item', 'Fifth Item', 'Last Item'],
+    options: [
+      'First Item',
+      'Second Item',
+      'Third Item',
+      'Fourth Item',
+      'Fifth Item',
+      'Last Item',
+    ],
     selectedIndex: 0,
   },
 };
@@ -68,7 +88,14 @@ export const Selecting: Story = {
     variant: 'selecting',
     label: 'Dropdown Label',
     placeholder: 'Placeholder',
-    options: ['First Item', 'Second Item', 'Third Item', 'Fourth Item', 'Fifth Item', 'Last Item'],
+    options: [
+      'First Item',
+      'Second Item',
+      'Third Item',
+      'Fourth Item',
+      'Fifth Item',
+      'Last Item',
+    ],
   },
 };
 
@@ -110,8 +137,14 @@ export const Reselecting: Story = {
     label: 'Dropdown Label',
     value: 'First Item',
     placeholder: 'Placeholder',
-    options: ['First Item', 'Second Item', 'Third Item', 'Fourth Item', 'Fifth Item', 'Last Item'],
+    options: [
+      'First Item',
+      'Second Item',
+      'Third Item',
+      'Fourth Item',
+      'Fifth Item',
+      'Last Item',
+    ],
     selectedIndex: 0,
   },
 };
-

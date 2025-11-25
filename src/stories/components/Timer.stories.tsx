@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Timer from '../../components/Timer';
+import Timer from '@/components/common/Timer';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

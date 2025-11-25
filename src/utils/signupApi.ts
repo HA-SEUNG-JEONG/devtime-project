@@ -1,8 +1,8 @@
 import type {
+  SignupFormData,
   CheckDuplicateResponse,
   SignupResponse,
-  SignupFormData,
-} from '../types/signup';
+} from '@/types/signup';
 import { sanitizeEmail, sanitizeNickname } from './sanitize';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
@@ -102,6 +102,8 @@ export const signup = async (
     return {
       success: true,
       message: data.message || '회원가입이 완료되었습니다.',
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
     };
   } catch (error) {
     console.error('회원가입 에러:', error);

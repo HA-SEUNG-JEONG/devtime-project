@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { isLoggedIn } from '../utils/auth';
+import { isLoggedIn } from '@/utils/auth';
 
 interface GuestRouteProps {
   children: React.ReactNode;
@@ -20,4 +20,3 @@ const GuestRoute = ({ children }: GuestRouteProps) => {
 };
 
 export default GuestRoute;
-

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import RankingItem from '../../components/RankingItem';
+import RankingItem from '@/components/common/RankingItem';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { InputLabelProps } from '../types/inputLabel';
+import type { InputLabelProps } from '@/types/inputLabel';
 
 const InputLabel: React.FC<InputLabelProps> = ({
   variant = 'placeholder',
@@ -15,7 +15,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
   ...props
 }) => {
   // Frame 240129 스타일 - 기본 컨테이너
-  const containerClasses = `flex flex-row items-center gap-3 w-[208px] h-11 ${className}`;
+  const containerClasses = `flex flex-row items-center gap-3 h-11 ${className}`;
 
   // Placeholder 상태 - Frame 240129
   if (variant === 'placeholder') {

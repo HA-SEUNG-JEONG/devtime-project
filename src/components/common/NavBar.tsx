@@ -1,18 +1,63 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
-import { useAuthStore } from '../stores/authStore';
+import { useAuthStore } from '@/stores/authStore';
+import { api } from '@/utils/api';
+import type { UserInfo } from '@/types';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, logout } = useAuthStore();
+  const { isLoggedIn, logout, userInfo, setUserInfo } = useAuthStore();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  // const [userName] = useState('사용자'); // 로그인 상태일 때 표시할 사용자 이름 (향후 사용 예정)
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
+
+  // 유저 정보 가져오기
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (isLoggedIn && !userInfo) {
+        try {
+          const response = await api.get('/api/profile');
+          if (response.ok) {
+            const data: UserInfo = await response.json();
+            if (data && typeof data.nickname === 'string') {
+              setUserInfo({ nickname: data.nickname });
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch user info:', error);
+        }
+      }
+    };
+
+    fetchUserInfo();
+  }, [isLoggedIn, userInfo]);
+
+  // 프로필 드롭다운 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        profileDropdownRef.current &&
+        !profileDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+
+    if (isProfileDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isProfileDropdownOpen]);
 
   const handleLogout = async () => {
     // authStore의 logout 함수 호출 (서버 로그아웃 + 상태 업데이트)
     await logout();
     setIsMenuOpen(false);
+    setIsProfileDropdownOpen(false);
 
     // 로그인 페이지로 이동
     navigate('/login');
@@ -47,17 +92,55 @@ const NavBar = () => {
         {/* 오른쪽: 사용자 액션 (데스크톱) */}
         <div className="hidden sm:flex items-center gap-2 sm:gap-6 lg:gap-[48px] shrink-0">
           {isLoggedIn ? (
-            <>
-              <span className="text-14sb sm:text-16sb text-primary">
-                {/* img로 대체 */}
-              </span>
+            <div
+              className="relative flex items-center gap-2 "
+              ref={profileDropdownRef}
+            >
               <button
-                onClick={handleLogout}
-                className="text-14sb sm:text-16sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2"
+                onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer border-0 transition-all duration-200 hover:bg-gray-300"
+                aria-label="프로필 메뉴"
               >
-                로그아웃
+                <img src="/user.png" alt="프로필" className="w-6 h-6" />
               </button>
-            </>
+              {/* 프로필 드롭다운 */}
+
+              {isProfileDropdownOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-[130px] bg-white border border-[#CCD0D6] rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)] z-50"
+                  style={{ boxSizing: 'border-box' }}
+                >
+                  <div className="flex flex-col p-[16px_12px] gap-4">
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-2 text-14sb text-primary no-underline transition-colors duration-200 hover:text-[var(--color-primary-2)]"
+                      onClick={() => setIsProfileDropdownOpen(false)}
+                    >
+                      <img
+                        src="/user.png"
+                        alt="마이페이지"
+                        className="w-5 h-5"
+                      />
+                      <span>마이페이지</span>
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 text-14sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-[var(--color-primary-2)] text-left"
+                    >
+                      <img
+                        src="/logout.png"
+                        alt="로그아웃"
+                        className="w-5 h-5"
+                      />
+                      <span>로그아웃</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+              <span className="text-16sb text-indigo">
+                {userInfo?.nickname || '사용자'}
+              </span>
+            </div>
           ) : (
             <>
               <Link to="/login" className={linkClassName}>

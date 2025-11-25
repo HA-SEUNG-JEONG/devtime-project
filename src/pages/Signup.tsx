@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
-import DuplicateCheckField from '../components/signup/DuplicateCheckField';
-import PasswordField from '../components/signup/PasswordField';
-import TermsAgreement from '../components/signup/TermsAgreement';
-import Button from '../components/Button';
-import { signup } from '../utils/signupApi';
-import { setTokens } from '../utils/auth';
-import type { SignupFormData } from '../types/signup';
-import { useToast } from '../contexts/ToastContext';
+import DuplicateCheckField from '@/components/signup/DuplicateCheckField';
+import PasswordField from '@/components/signup/PasswordField';
+import TermsAgreement from '@/components/signup/TermsAgreement';
+import Button from '@/components/common/Button';
+import { signup } from '@/utils/signupApi';
+import type { SignupFormData } from '@/types/signup';
+import { useToast } from '@/contexts/ToastContext';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -46,15 +45,7 @@ const Signup = () => {
       const result = await signup(data);
 
       if (result.success) {
-        // 회원가입 성공 시
-        // 토큰이 있으면 자동 로그인 (메인 페이지로 이동)
-        if (result.accessToken && result.refreshToken) {
-          setTokens(result.accessToken, result.refreshToken);
-          navigate('/', { replace: true });
-        } else {
-          // 토큰이 없으면 로그인 페이지로 이동
-          navigate('/login', { replace: true });
-        }
+        navigate('/login', { replace: true });
       } else {
         showToast(result.message || '회원가입에 실패했습니다.', 'error');
       }

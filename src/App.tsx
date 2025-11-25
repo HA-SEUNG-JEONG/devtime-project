@@ -1,16 +1,18 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import NavBar from './components/NavBar';
+import NavBar from './components/common/NavBar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import GuestRoute from './components/GuestRoute';
+import Profile from './pages/Profile';
+import GuestRoute from './components/common/GuestRoute';
+import ProtectedRoute from './components/common/ProtectedRoute';
 import { ToastProvider } from './contexts/ToastContext';
-import Toast from './components/Toast';
+import Toast from './components/common/Toast';
 import { isLoggedIn, validateToken } from './utils/auth';
+import Home from './pages/Home';
 
 function App() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   // 중복 로그인 감지를 위한 주기적 토큰 검증
   useEffect(() => {
@@ -35,15 +37,16 @@ function App() {
           });
         }
       }
-    }, 5000); // 5초
+    }, 3600000); // 1시간
 
     return () => clearInterval(intervalId);
-  }, [navigate, location.pathname]);
+  }, [navigate]);
 
   return (
     <ToastProvider>
       <Toast />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
           path="/signup"
           element={
@@ -60,10 +63,17 @@ function App() {
             </GuestRoute>
           }
         />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<NavBar />} />
       </Routes>
     </ToastProvider>
   );
 }
-
 export default App;

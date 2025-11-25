@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { MemoryRouter } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
+import NavBar from '@/components/common/NavBar';
 // colors.css와 font.css는 index.css에서 import됨
 
 const meta = {
@@ -174,7 +174,7 @@ export const LoginStates: Story = {
             borderRadius: '8px',
           }}
         >
-          <NavBar initialLoggedIn={false} />
+          <NavBar />
         </div>
       </section>
 
@@ -200,7 +200,7 @@ export const LoginStates: Story = {
             borderRadius: '8px',
           }}
         >
-          <NavBar initialLoggedIn={true} />
+          <NavBar />
         </div>
       </section>
     </div>

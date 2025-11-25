@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
-import Checkbox from '../../components/Checkbox';
+import Checkbox from '@/components/common/Checkbox';
 
 const meta = {
   title: 'Components/Checkbox',
@@ -76,7 +76,14 @@ export const AllStates: Story = {
     onChange: fn(),
   },
   render: () => (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div
+      style={{
+        padding: '24px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+      }}
+    >
       <section>
         <h2
           style={{
@@ -89,11 +96,27 @@ export const AllStates: Story = {
           Regular (18px)
         </h2>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              alignItems: 'center',
+            }}
+          >
             <Checkbox usage="regular" checked={false} onChange={fn()} />
-            <span style={{ fontSize: '12px', color: '#6B7280' }}>Unselected</span>
+            <span style={{ fontSize: '12px', color: '#6B7280' }}>
+              Unselected
+            </span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              alignItems: 'center',
+            }}
+          >
             <Checkbox usage="regular" checked={true} onChange={fn()} />
             <span style={{ fontSize: '12px', color: '#6B7280' }}>Selected</span>
           </div>
@@ -112,11 +135,27 @@ export const AllStates: Story = {
           TODO (36px)
         </h2>
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              alignItems: 'center',
+            }}
+          >
             <Checkbox usage="todo" checked={false} onChange={fn()} />
-            <span style={{ fontSize: '12px', color: '#6B7280' }}>Unselected</span>
+            <span style={{ fontSize: '12px', color: '#6B7280' }}>
+              Unselected
+            </span>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'center' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '8px',
+              alignItems: 'center',
+            }}
+          >
             <Checkbox usage="todo" checked={true} onChange={fn()} />
             <span style={{ fontSize: '12px', color: '#6B7280' }}>Selected</span>
           </div>
@@ -147,7 +186,9 @@ export const AllStates: Story = {
             }}
           >
             <Checkbox usage="todo" checked={false} onChange={fn()} />
-            <span style={{ fontSize: '12px', color: '#FFFFFF' }}>TODO Unselected</span>
+            <span style={{ fontSize: '12px', color: '#FFFFFF' }}>
+              TODO Unselected
+            </span>
           </div>
           <div
             style={{
@@ -161,11 +202,12 @@ export const AllStates: Story = {
             }}
           >
             <Checkbox usage="todo" checked={true} onChange={fn()} />
-            <span style={{ fontSize: '12px', color: '#FFFFFF' }}>TODO Selected</span>
+            <span style={{ fontSize: '12px', color: '#FFFFFF' }}>
+              TODO Selected
+            </span>
           </div>
         </div>
       </section>
     </div>
   ),
 };
-

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import InputLabel from '../../components/InputLabel';
+import InputLabel from '@/components/common/InputLabel';
 
 const meta = {
   title: 'Components/InputLabel',

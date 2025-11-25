@@ -1,5 +1,5 @@
 import React from 'react';
-import type { ButtonProps, ButtonPriority } from '../types/button';
+import type { ButtonProps, ButtonPriority } from '@/types/button';
 
 const Button: React.FC<ButtonProps> = ({
   priority = 'primary',
