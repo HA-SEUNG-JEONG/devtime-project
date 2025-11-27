@@ -1,12 +1,5 @@
 import { api } from '@/utils/api';
-import type { TechStackSearchResponse } from '@/types';
-
-export interface TechStackItem {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { TechStackItem, TechStackSearchResponse } from '@/types';
 
 /**
  * Tech Stack API Service

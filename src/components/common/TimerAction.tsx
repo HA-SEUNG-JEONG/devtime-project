@@ -20,9 +20,11 @@ const TimerAction: React.FC<TimerActionProps> = ({
   onSeeTodo,
   onReset,
 }) => {
-  const isStartEnabled = state === 'ready' || state === 'in-progress';
+  // 타이머를 재생할려면 오늘의 목표와 최소 한 개 이상의 할 일 목록이 작성되어야 함
+
+  const isStartEnabled = state === 'ready';
   const isPauseEnabled = state === 'paused';
-  const isFinishEnabled = state === 'paused' || state === 'in-progress';
+  const isFinishEnabled = state === 'in-progress';
 
   const isSeeTodoEnabled = state === 'paused' || state === 'in-progress';
   const isResetEnabled = state === 'paused' || state === 'in-progress';
