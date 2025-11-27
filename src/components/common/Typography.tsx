@@ -11,24 +11,24 @@ const typographyInfo: Record<
   { fontSize: string; fontWeight: string; lineHeight: string }
 > = {
   'text-36b': {
-    fontSize: '1.5rem (24px)',
+    fontSize: '2.25rem (24px)',
     fontWeight: '700',
-    lineHeight: '1.875rem (30px)',
+    lineHeight: '2.875rem (46px)',
   },
   'text-36sb': {
-    fontSize: '1.5rem (24px)',
+    fontSize: '2.25rem (24px)',
     fontWeight: '600',
-    lineHeight: '1.875rem (30px)',
+    lineHeight: '2.875rem (46px)',
   },
   'text-36m': {
-    fontSize: '1.5rem (24px)',
+    fontSize: '2.25rem (24px)',
     fontWeight: '500',
-    lineHeight: '1.875rem (30px)',
+    lineHeight: '2.875rem (46px)',
   },
   'text-36r': {
-    fontSize: '1.5rem (24px)',
+    fontSize: '2.25rem (24px)',
     fontWeight: '400',
-    lineHeight: '1.875rem (30px)',
+    lineHeight: '2.875rem (46px)',
   },
   'text-24b': {
     fontSize: '1.5rem (24px)',
