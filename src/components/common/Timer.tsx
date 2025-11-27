@@ -1,3 +1,5 @@
+// 시간, 분, 단위는 변해야 함
+
 import React from 'react';
 
 export interface TimerProps {
