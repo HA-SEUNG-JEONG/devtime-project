@@ -102,3 +102,149 @@ export const AllStates: Story = {
     </div>
   ),
 };
+
+// 추가 버튼과 함께 사용 - 기본 (Input 내부)
+export const WithAddButton: Story = {
+  render: () => (
+    <div className="w-[400px]">
+      <Input
+        variant="ready"
+        placeholder="항목을 입력하세요"
+        rightElement={
+          <button
+            type="button"
+            className="text-16sb text-primary hover:text-primary-dark transition-colors whitespace-nowrap"
+          >
+            추가
+          </button>
+        }
+      />
+    </div>
+  ),
+};
+
+// 추가 버튼과 함께 사용 - 인터랙티브 (Input 내부)
+export const WithAddButtonInteractive: Story = {
+  render: () => {
+    const [value, setValue] = useState('');
+    const [items, setItems] = useState<string[]>([]);
+
+    const handleAdd = () => {
+      if (value.trim()) {
+        setItems([...items, value]);
+        setValue('');
+      }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        handleAdd();
+      }
+    };
+
+    return (
+      <div className="flex flex-col gap-4 w-[400px]">
+        <Input
+          variant={value ? 'typing' : 'ready'}
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="항목을 입력하세요"
+          rightElement={
+            <button
+              type="button"
+              onClick={handleAdd}
+              disabled={!value.trim()}
+              className="text-16sb text-primary hover:text-primary-dark disabled:text-gray-400 transition-colors whitespace-nowrap"
+            >
+              추가
+            </button>
+          }
+        />
+        {items.length > 0 && (
+          <div className="flex flex-col gap-2 mt-2">
+            <p className="text-sm text-gray-600">추가된 항목:</p>
+            <ul className="flex flex-col gap-1">
+              {items.map((item, index) => (
+                <li
+                  key={index}
+                  className="text-sm text-gray-800 p-2 bg-gray-50 rounded"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  },
+};
+
+// 할일 추가 예제 (Input 내부)
+export const AddTodoExample: Story = {
+  render: () => {
+    const [todoText, setTodoText] = useState('');
+    const [todos, setTodos] = useState<Array<{ id: number; text: string }>>([]);
+
+    const handleAddTodo = () => {
+      if (todoText.trim()) {
+        setTodos([...todos, { id: Date.now(), text: todoText }]);
+        setTodoText('');
+      }
+    };
+
+    const handleRemoveTodo = (id: number) => {
+      setTodos(todos.filter(todo => todo.id !== id));
+    };
+
+    return (
+      <div className="flex flex-col gap-4 w-[500px]">
+        <h3 className="text-lg font-semibold text-gray-800">할일 목록</h3>
+        <Input
+          variant={todoText ? 'typing' : 'ready'}
+          value={todoText}
+          onChange={e => setTodoText(e.target.value)}
+          onKeyPress={e => {
+            if (e.key === 'Enter') handleAddTodo();
+          }}
+          placeholder="할일을 입력하세요"
+          rightElement={
+            <button
+              type="button"
+              onClick={handleAddTodo}
+              disabled={!todoText.trim()}
+              className="text-16sb text-primary hover:text-primary-dark disabled:text-gray-400 transition-colors whitespace-nowrap"
+            >
+              추가
+            </button>
+          }
+        />
+        {todos.length > 0 && (
+          <div className="flex flex-col gap-2">
+            {todos.map(todo => (
+              <div
+                key={todo.id}
+                className="flex flex-row items-center justify-between p-3 bg-gray-50 rounded-[5px]"
+              >
+                <span className="text-16m text-gray-800">{todo.text}</span>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTodo(todo.id)}
+                  className="text-14m text-red-500 hover:text-red-700"
+                >
+                  삭제
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        {todos.length === 0 && (
+          <p className="text-sm text-gray-400 text-center py-8">
+            할일을 추가해보세요!
+          </p>
+        )}
+      </div>
+    );
+  },
+};

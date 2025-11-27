@@ -10,30 +10,146 @@ const typographyInfo: Record<
   string,
   { fontSize: string; fontWeight: string; lineHeight: string }
 > = {
-  'text-24b': { fontSize: '1.5rem (24px)', fontWeight: '700', lineHeight: '1.875rem (30px)' },
-  'text-24sb': { fontSize: '1.5rem (24px)', fontWeight: '600', lineHeight: '1.875rem (30px)' },
-  'text-24m': { fontSize: '1.5rem (24px)', fontWeight: '500', lineHeight: '1.875rem (30px)' },
-  'text-24r': { fontSize: '1.5rem (24px)', fontWeight: '400', lineHeight: '1.875rem (30px)' },
-  'text-20b': { fontSize: '1.25rem (20px)', fontWeight: '700', lineHeight: '1.5rem (24px)' },
-  'text-20sb': { fontSize: '1.25rem (20px)', fontWeight: '600', lineHeight: '1.5rem (24px)' },
-  'text-20m': { fontSize: '1.25rem (20px)', fontWeight: '500', lineHeight: '1.5rem (24px)' },
-  'text-20r': { fontSize: '1.25rem (20px)', fontWeight: '400', lineHeight: '1.5rem (24px)' },
-  'text-18b': { fontSize: '1.125rem (18px)', fontWeight: '700', lineHeight: '1.375rem (22px)' },
-  'text-18sb': { fontSize: '1.125rem (18px)', fontWeight: '600', lineHeight: '1.375rem (22px)' },
-  'text-18m': { fontSize: '1.125rem (18px)', fontWeight: '500', lineHeight: '1.375rem (22px)' },
-  'text-18r': { fontSize: '1.125rem (18px)', fontWeight: '400', lineHeight: '1.375rem (22px)' },
-  'text-16b': { fontSize: '1rem (16px)', fontWeight: '700', lineHeight: '1.25rem (20px)' },
-  'text-16sb': { fontSize: '1rem (16px)', fontWeight: '600', lineHeight: '1.25rem (20px)' },
-  'text-16m': { fontSize: '1rem (16px)', fontWeight: '500', lineHeight: '1.25rem (20px)' },
-  'text-16r': { fontSize: '1rem (16px)', fontWeight: '400', lineHeight: '1.25rem (20px)' },
-  'text-14b': { fontSize: '0.875rem (14px)', fontWeight: '700', lineHeight: '1.125rem (18px)' },
-  'text-14sb': { fontSize: '0.875rem (14px)', fontWeight: '600', lineHeight: '1.125rem (18px)' },
-  'text-14m': { fontSize: '0.875rem (14px)', fontWeight: '500', lineHeight: '1.125rem (18px)' },
-  'text-14r': { fontSize: '0.875rem (14px)', fontWeight: '400', lineHeight: '1.125rem (18px)' },
-  'text-12b': { fontSize: '0.75rem (12px)', fontWeight: '700', lineHeight: '1rem (16px)' },
-  'text-12sb': { fontSize: '0.75rem (12px)', fontWeight: '600', lineHeight: '1rem (16px)' },
-  'text-12m': { fontSize: '0.75rem (12px)', fontWeight: '500', lineHeight: '1rem (16px)' },
-  'text-12r': { fontSize: '0.75rem (12px)', fontWeight: '400', lineHeight: '1rem (16px)' },
+  'text-36b': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '700',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-36sb': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '600',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-36m': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '500',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-36r': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '400',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-24b': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '700',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-24sb': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '600',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-24m': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '500',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-24r': {
+    fontSize: '1.5rem (24px)',
+    fontWeight: '400',
+    lineHeight: '1.875rem (30px)',
+  },
+  'text-20b': {
+    fontSize: '1.25rem (20px)',
+    fontWeight: '700',
+    lineHeight: '1.5rem (24px)',
+  },
+  'text-20sb': {
+    fontSize: '1.25rem (20px)',
+    fontWeight: '600',
+    lineHeight: '1.5rem (24px)',
+  },
+  'text-20m': {
+    fontSize: '1.25rem (20px)',
+    fontWeight: '500',
+    lineHeight: '1.5rem (24px)',
+  },
+  'text-20r': {
+    fontSize: '1.25rem (20px)',
+    fontWeight: '400',
+    lineHeight: '1.5rem (24px)',
+  },
+  'text-18b': {
+    fontSize: '1.125rem (18px)',
+    fontWeight: '700',
+    lineHeight: '1.375rem (22px)',
+  },
+  'text-18sb': {
+    fontSize: '1.125rem (18px)',
+    fontWeight: '600',
+    lineHeight: '1.375rem (22px)',
+  },
+  'text-18m': {
+    fontSize: '1.125rem (18px)',
+    fontWeight: '500',
+    lineHeight: '1.375rem (22px)',
+  },
+  'text-18r': {
+    fontSize: '1.125rem (18px)',
+    fontWeight: '400',
+    lineHeight: '1.375rem (22px)',
+  },
+  'text-16b': {
+    fontSize: '1rem (16px)',
+    fontWeight: '700',
+    lineHeight: '1.25rem (20px)',
+  },
+  'text-16sb': {
+    fontSize: '1rem (16px)',
+    fontWeight: '600',
+    lineHeight: '1.25rem (20px)',
+  },
+  'text-16m': {
+    fontSize: '1rem (16px)',
+    fontWeight: '500',
+    lineHeight: '1.25rem (20px)',
+  },
+  'text-16r': {
+    fontSize: '1rem (16px)',
+    fontWeight: '400',
+    lineHeight: '1.25rem (20px)',
+  },
+  'text-14b': {
+    fontSize: '0.875rem (14px)',
+    fontWeight: '700',
+    lineHeight: '1.125rem (18px)',
+  },
+  'text-14sb': {
+    fontSize: '0.875rem (14px)',
+    fontWeight: '600',
+    lineHeight: '1.125rem (18px)',
+  },
+  'text-14m': {
+    fontSize: '0.875rem (14px)',
+    fontWeight: '500',
+    lineHeight: '1.125rem (18px)',
+  },
+  'text-14r': {
+    fontSize: '0.875rem (14px)',
+    fontWeight: '400',
+    lineHeight: '1.125rem (18px)',
+  },
+  'text-12b': {
+    fontSize: '0.75rem (12px)',
+    fontWeight: '700',
+    lineHeight: '1rem (16px)',
+  },
+  'text-12sb': {
+    fontSize: '0.75rem (12px)',
+    fontWeight: '600',
+    lineHeight: '1rem (16px)',
+  },
+  'text-12m': {
+    fontSize: '0.75rem (12px)',
+    fontWeight: '500',
+    lineHeight: '1rem (16px)',
+  },
+  'text-12r': {
+    fontSize: '0.75rem (12px)',
+    fontWeight: '400',
+    lineHeight: '1rem (16px)',
+  },
 };
 
 const Typography: React.FC<TypographyProps> = ({
@@ -89,4 +205,3 @@ const Typography: React.FC<TypographyProps> = ({
 };
 
 export default Typography;
-
