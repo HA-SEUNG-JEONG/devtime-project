@@ -13,6 +13,8 @@ const BG_GRAY_200 = 'bg-gray-200';
 const TEXT_WHITE = 'text-white';
 const TEXT_GRAY_400 = 'text-gray-400';
 
+import { cn } from '@/lib/utils';
+
 export type TodoItemStatus =
   | 'list-adding'
   | 'typing'
@@ -45,20 +47,25 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   // 공통 스타일
   const baseContainerClasses =
-    'flex flex-row justify-center items-center p-4 sm:p-5 lg:p-6 gap-3 sm:gap-4 lg:gap-4 w-full sm:w-[400px] lg:w-[568px] h-auto sm:h-[64px] lg:h-[72px] rounded-[8px]';
+    'flex flex-row justify-center items-center p-4 sm:p-5 lg:p-6 gap-3 sm:gap-4 lg:gap-4 w-full h-auto sm:h-[64px] lg:h-[72px] rounded-[8px]';
 
   // 상태별 배경색 및 텍스트 색상 클래스 - 상수 사용으로 Tailwind가 인식 가능
   const getContainerClasses = (status: TodoItemStatus): string => {
-    const base = `${baseContainerClasses} shadow-[0px_8px_8px_rgba(0,0,0,0.05)] ${className}`;
+    let base = cn(
+      baseContainerClasses,
+      'w-full',
+      'shadow-[0px_8px_8px_rgba(0,0,0,0.05)]',
+      className
+    );
 
     if (status === 'checked') {
-      return `${base} ${BG_GRAY_400} ${TEXT_WHITE}`;
+      return cn(base, BG_GRAY_400, TEXT_WHITE);
     }
     if (status === 'failed') {
-      return `${base} ${BG_GRAY_200} ${TEXT_GRAY_400}`;
+      return cn(base, BG_GRAY_200, TEXT_GRAY_400);
     }
     // list-adding, typing, checkable, completed
-    return `${base} ${BG_PRIMARY} ${TEXT_WHITE}`;
+    return cn(base, BG_PRIMARY, TEXT_WHITE);
   };
 
   // 텍스트 색상 클래스 - 상수 사용으로 Tailwind가 인식 가능
@@ -168,7 +175,11 @@ const TodoItem: React.FC<TodoItemProps> = ({
         <Checkbox
           usage="todo"
           checked={true}
-          onChange={() => {}}
+          onChange={checked => {
+            if (onCheck) {
+              onCheck();
+            }
+          }}
           className="flex-none"
         />
       )}

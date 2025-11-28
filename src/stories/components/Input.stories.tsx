@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import Input from '@/components/common/Input';
+import { Input } from '@/components/ui/input';
 
 const meta = {
   title: 'Components/Input',
@@ -11,18 +11,18 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
+    type: {
       control: 'select',
-      options: ['ready', 'typing', 'typed'],
-      description: 'Input의 상태 (Ready, Typing, Typed)',
-    },
-    value: {
-      control: 'text',
-      description: '입력된 값',
+      options: ['text', 'email', 'password', 'number', 'tel', 'url'],
+      description: 'Input 타입',
     },
     placeholder: {
       control: 'text',
       description: '플레이스홀더 텍스트',
+    },
+    disabled: {
+      control: 'boolean',
+      description: '비활성화 상태',
     },
   },
 } satisfies Meta<typeof Input>;
@@ -30,221 +30,94 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// State=Ready - Placeholder 상태
-export const Ready: Story = {
+// 기본 Input
+export const Default: Story = {
   args: {
-    variant: 'ready',
-    placeholder: 'Placeholder',
+    placeholder: '입력하세요...',
   },
 };
 
-// State=Typing - 입력 중 상태 (실제 입력 가능)
-export const Typing: Story = {
-  render: args => {
-    const [value, setValue] = useState('');
-    return (
-      <Input
-        {...args}
-        variant="typing"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        placeholder="Placeholder"
-      />
-    );
-  },
-  args: {
-    variant: 'typing',
-    placeholder: 'Placeholder',
-  },
-};
-
-// State=Typed - 입력 완료 상태
-export const Typed: Story = {
-  args: {
-    variant: 'typed',
-    value: 'Typed',
-  },
-};
-
-// 커스텀 플레이스홀더
-export const CustomPlaceholder: Story = {
-  args: {
-    variant: 'ready',
-    placeholder: '검색어를 입력하세요',
-  },
-};
-
-// 커스텀 너비
-export const CustomWidth: Story = {
-  args: {
-    variant: 'ready',
-    placeholder: 'Placeholder',
-    className: 'w-[300px]',
-  },
-};
-
-// 모든 상태 비교
-export const AllStates: Story = {
+// 다양한 타입
+export const Types: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full max-w-[300px]">
       <div>
-        <p className="mb-2 text-sm text-gray-600">Ready State</p>
-        <Input variant="ready" placeholder="Placeholder" />
+        <label className="block text-sm text-gray-600 mb-2">Text</label>
+        <Input type="text" placeholder="텍스트를 입력하세요" />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-600">Typing State</p>
-        <Input variant="typing" placeholder="Placeholder" value="Typing" />
+        <label className="block text-sm text-gray-600 mb-2">Email</label>
+        <Input type="email" placeholder="이메일을 입력하세요" />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-600">Typed State</p>
-        <Input variant="typed" value="Typed" />
+        <label className="block text-sm text-gray-600 mb-2">Password</label>
+        <Input type="password" placeholder="비밀번호를 입력하세요" />
+      </div>
+      <div>
+        <label className="block text-sm text-gray-600 mb-2">Number</label>
+        <Input type="number" placeholder="숫자를 입력하세요" />
       </div>
     </div>
   ),
 };
 
-// 추가 버튼과 함께 사용 - 기본 (Input 내부)
-export const WithAddButton: Story = {
+// 비활성화 상태
+export const Disabled: Story = {
+  args: {
+    placeholder: '비활성화된 입력 필드',
+    disabled: true,
+    value: '비활성화된 값',
+  },
+};
+
+// 인터랙티브 예제
+export const Interactive: Story = {
+  render: () => {
+    const InteractiveComponent = () => {
+      const [value, setValue] = useState('');
+      return (
+        <div className="flex flex-col gap-4 w-full max-w-[300px]">
+          <Input
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            placeholder="입력해보세요..."
+          />
+          <div className="text-sm text-gray-600">
+            입력된 값: <strong>{value || '(없음)'}</strong>
+          </div>
+        </div>
+      );
+    };
+    return <InteractiveComponent />;
+  },
+};
+
+// 다양한 크기
+export const Sizes: Story = {
   render: () => (
-    <div className="w-[400px]">
-      <Input
-        variant="ready"
-        placeholder="항목을 입력하세요"
-        rightElement={
-          <button
-            type="button"
-            className="text-16sb text-primary hover:text-primary-dark transition-colors whitespace-nowrap"
-          >
-            추가
-          </button>
-        }
-      />
+    <div className="flex flex-col gap-4 w-full max-w-[300px]">
+      <div>
+        <label className="block text-sm text-gray-600 mb-2">기본 크기</label>
+        <Input placeholder="기본 크기" />
+      </div>
+      <div>
+        <label className="block text-sm text-gray-600 mb-2">작은 크기</label>
+        <Input placeholder="작은 크기" className="h-8 text-sm" />
+      </div>
+      <div>
+        <label className="block text-sm text-gray-600 mb-2">큰 크기</label>
+        <Input placeholder="큰 크기" className="h-12 text-lg" />
+      </div>
     </div>
   ),
 };
 
-// 추가 버튼과 함께 사용 - 인터랙티브 (Input 내부)
-export const WithAddButtonInteractive: Story = {
-  render: () => {
-    const [value, setValue] = useState('');
-    const [items, setItems] = useState<string[]>([]);
-
-    const handleAdd = () => {
-      if (value.trim()) {
-        setItems([...items, value]);
-        setValue('');
-      }
-    };
-
-    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === 'Enter') {
-        handleAdd();
-      }
-    };
-
-    return (
-      <div className="flex flex-col gap-4 w-[400px]">
-        <Input
-          variant={value ? 'typing' : 'ready'}
-          value={value}
-          onChange={e => setValue(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="항목을 입력하세요"
-          rightElement={
-            <button
-              type="button"
-              onClick={handleAdd}
-              disabled={!value.trim()}
-              className="text-16sb text-primary hover:text-primary-dark disabled:text-gray-400 transition-colors whitespace-nowrap"
-            >
-              추가
-            </button>
-          }
-        />
-        {items.length > 0 && (
-          <div className="flex flex-col gap-2 mt-2">
-            <p className="text-sm text-gray-600">추가된 항목:</p>
-            <ul className="flex flex-col gap-1">
-              {items.map((item, index) => (
-                <li
-                  key={index}
-                  className="text-sm text-gray-800 p-2 bg-gray-50 rounded"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    );
-  },
-};
-
-// 할일 추가 예제 (Input 내부)
-export const AddTodoExample: Story = {
-  render: () => {
-    const [todoText, setTodoText] = useState('');
-    const [todos, setTodos] = useState<Array<{ id: number; text: string }>>([]);
-
-    const handleAddTodo = () => {
-      if (todoText.trim()) {
-        setTodos([...todos, { id: Date.now(), text: todoText }]);
-        setTodoText('');
-      }
-    };
-
-    const handleRemoveTodo = (id: number) => {
-      setTodos(todos.filter(todo => todo.id !== id));
-    };
-
-    return (
-      <div className="flex flex-col gap-4 w-[500px]">
-        <h3 className="text-lg font-semibold text-gray-800">할일 목록</h3>
-        <Input
-          variant={todoText ? 'typing' : 'ready'}
-          value={todoText}
-          onChange={e => setTodoText(e.target.value)}
-          onKeyPress={e => {
-            if (e.key === 'Enter') handleAddTodo();
-          }}
-          placeholder="할일을 입력하세요"
-          rightElement={
-            <button
-              type="button"
-              onClick={handleAddTodo}
-              disabled={!todoText.trim()}
-              className="text-16sb text-primary hover:text-primary-dark disabled:text-gray-400 transition-colors whitespace-nowrap"
-            >
-              추가
-            </button>
-          }
-        />
-        {todos.length > 0 && (
-          <div className="flex flex-col gap-2">
-            {todos.map(todo => (
-              <div
-                key={todo.id}
-                className="flex flex-row items-center justify-between p-3 bg-gray-50 rounded-[5px]"
-              >
-                <span className="text-16m text-gray-800">{todo.text}</span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveTodo(todo.id)}
-                  className="text-14m text-red-500 hover:text-red-700"
-                >
-                  삭제
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        {todos.length === 0 && (
-          <p className="text-sm text-gray-400 text-center py-8">
-            할일을 추가해보세요!
-          </p>
-        )}
-      </div>
-    );
+// 에러 상태
+export const Error: Story = {
+  args: {
+    placeholder: '에러 상태',
+    'aria-invalid': true,
+    defaultValue: '잘못된 입력',
   },
 };
