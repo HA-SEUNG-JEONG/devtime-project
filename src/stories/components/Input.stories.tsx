@@ -42,20 +42,32 @@ export const Types: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-full max-w-[300px]">
       <div>
-        <label className="block text-sm text-gray-600 mb-2">Text</label>
-        <Input type="text" placeholder="텍스트를 입력하세요" />
+        <label htmlFor="text" className="block text-sm text-gray-600 mb-2">
+          Text
+        </label>
+        <Input id="text" type="text" placeholder="텍스트를 입력하세요" />
       </div>
       <div>
-        <label className="block text-sm text-gray-600 mb-2">Email</label>
-        <Input type="email" placeholder="이메일을 입력하세요" />
+        <label htmlFor="email" className="block text-sm text-gray-600 mb-2">
+          Email
+        </label>
+        <Input id="email" type="email" placeholder="이메일을 입력하세요" />
       </div>
       <div>
-        <label className="block text-sm text-gray-600 mb-2">Password</label>
-        <Input type="password" placeholder="비밀번호를 입력하세요" />
+        <label htmlFor="password" className="block text-sm text-gray-600 mb-2">
+          Password
+        </label>
+        <Input
+          id="password"
+          type="password"
+          placeholder="비밀번호를 입력하세요"
+        />
       </div>
       <div>
-        <label className="block text-sm text-gray-600 mb-2">Number</label>
-        <Input type="number" placeholder="숫자를 입력하세요" />
+        <label htmlFor="number" className="block text-sm text-gray-600 mb-2">
+          Number
+        </label>
+        <Input id="number" type="number" placeholder="숫자를 입력하세요" />
       </div>
     </div>
   ),
@@ -98,16 +110,35 @@ export const Sizes: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-full max-w-[300px]">
       <div>
-        <label className="block text-sm text-gray-600 mb-2">기본 크기</label>
-        <Input placeholder="기본 크기" />
+        <label
+          htmlFor="default-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          기본 크기
+        </label>
+        <Input id="default-size" placeholder="기본 크기" />
       </div>
       <div>
-        <label className="block text-sm text-gray-600 mb-2">작은 크기</label>
-        <Input placeholder="작은 크기" className="h-8 text-sm" />
+        <label
+          htmlFor="small-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          작은 크기
+        </label>
+        <Input
+          id="small-size"
+          placeholder="작은 크기"
+          className="h-8 text-sm"
+        />
       </div>
       <div>
-        <label className="block text-sm text-gray-600 mb-2">큰 크기</label>
-        <Input placeholder="큰 크기" className="h-12 text-lg" />
+        <label
+          htmlFor="large-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          큰 크기
+        </label>
+        <Input id="large-size" placeholder="큰 크기" className="h-12 text-lg" />
       </div>
     </div>
   ),
