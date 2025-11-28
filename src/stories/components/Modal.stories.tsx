@@ -137,7 +137,7 @@ export const TodayGoal: Story = {
           <div className="flex flex-col gap-2 shrink-0">
             <p className="text-14m text-gray-600">할 일 목록</p>
             <div className="bg-gray-50 rounded-[5px] p-4 flex justify-between items-center w-full">
-              <span className="text-16m text-gray-800 break-words flex-1 min-w-0">
+              <span className="text-16m text-gray-800 wrap-break-word flex-1 min-w-0">
                 {goal}
               </span>
               <button className="text-16sb text-primary shrink-0 ml-2">
