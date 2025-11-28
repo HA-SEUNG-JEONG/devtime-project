@@ -9,6 +9,7 @@ const TextArea: React.FC<TextAreaProps> = ({
   onChange,
   onFocus,
   onBlur,
+  maxLength,
   ...props
 }) => {
   // TextArea 컨테이너 스타일 - 세 가지 상태에서 동일한 사이즈 유지
@@ -35,6 +36,7 @@ const TextArea: React.FC<TextAreaProps> = ({
           onFocus={onFocus}
           onBlur={onBlur}
           placeholder={placeholder}
+          maxLength={maxLength}
           autoFocus
           className="text-16m text-[#1F2937] bg-transparent border-none outline-none flex-1 w-full p-0 resize-none overflow-y-auto"
           style={{

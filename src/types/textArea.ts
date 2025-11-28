@@ -11,4 +11,5 @@ export interface TextAreaProps
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+  maxLength?: number;
 }
