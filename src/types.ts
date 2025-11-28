@@ -24,3 +24,8 @@ export interface TechStackSearchResponse {
 export interface TechStackCreateResponse {
   techStack: TechStackItem;
 }
+
+export interface TimerRequest {
+  todayGoal: string;
+  tasks: string[];
+}

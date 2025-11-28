@@ -225,11 +225,11 @@
 
 ```javascript
 await fetch(presignedUrl, {
-  method: "PUT",
+  method: 'PUT',
   headers: {
-    "Content-Type": file.type
+    'Content-Type': file.type,
   },
-  body: file // 사용자가 직접 업로드 한 이미지 파일 데이터
+  body: file, // 사용자가 직접 업로드 한 이미지 파일 데이터
 });
 ```
 
@@ -252,10 +252,10 @@ await fetch(presignedUrl, {
 - DevTime의 S3 버킷의 이미지 조회를 위한 공개 URL(`https://dev-time-bucket.s3.ap-northeast-2.amazonaws.com`) 뒤에 전달받은 `profileImage` 경로를 붙여주는 식으로 이미지 정보를 확인 가능합니다(아래 예시 코드 참고):
 
 ```javascript
-const response = await fetch("/api/profile", {
+const response = await fetch('/api/profile', {
   headers: {
-    Authorization: `Bearer ${token}`
-  }
+    Authorization: `Bearer ${token}`,
+  },
 });
 
 const data = await response.json();
@@ -297,7 +297,7 @@ const imageUrl = `https://dev-time-bucket.s3.ap-northeast-2.amazonaws.com/${data
 - 로그인 한 유저가 타이머 페이지의 재생 버튼(▶︎)을 누르면 타이머를 시작할 수 있습니다.
 - 타이머를 재생하기 위해선 '오늘의 목표'와 '할 일 목록'을 작성해야 합니다.
 - 타이머 페이지의 재생 버튼(▶︎)을 누르면 '오늘의 목표'와 '할 일 목록'을 작성할 수 있는 모달 창이 나옵니다.
-- '오늘의 목표'와 최소 한 개 이상의 '할 일 목록'이 작성돼야 '타이머 시작하기' 버튼이 활성화됩니다.
+- '오늘의 목표'와 최소 한 개 이상의 '할 일 목록'이 작성돼야 '타이머 시작하기' 버튼이 활성화됩니다. (O)
 - 타이머를 시작할 때 작성한 '오늘의 목표'는 타이머 시작 이후에 수정이 불가능합니다.
 - '할 일 목록'은 타이머 시작 이후 추가, 삭제, 수정이 가능합니다.
 - '오늘의 목표'와 '할 일 목록' 입력 시 글자수 제한은 **30자**입니다(최대 30자 이상 값을 입력할 수 없습니다).

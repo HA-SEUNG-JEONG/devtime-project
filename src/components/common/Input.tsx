@@ -20,7 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ref
   ) => {
     const containerClasses = cn(
-      'flex flex-row items-center px-4 py-3 gap-[10px] h-11 bg-gray-50 rounded-[5px] w-full',
+      'flex flex-row items-center py-3 gap-[10px] h-11 bg-gray-50 rounded-[5px] w-full',
       className
     );
 

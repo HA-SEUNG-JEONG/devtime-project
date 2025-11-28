@@ -11,6 +11,7 @@ import Toast from './components/common/Toast';
 import { TooltipProvider } from './components/ui/tooltip';
 import { isLoggedIn, validateToken } from './utils/auth';
 import Home from './pages/Home';
+import TimerPage from './components/timer/TimerPage';
 
 function App() {
   const navigate = useNavigate();
@@ -22,7 +23,6 @@ function App() {
       return;
     }
 
-    // 5초마다 토큰 유효성 검증 (중복 로그인 감지)
     const intervalId = setInterval(async () => {
       if (isLoggedIn()) {
         const isValid = await validateToken();
@@ -70,6 +70,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/timer"
+            element={
+              <ProtectedRoute>
+                <TimerPage />
               </ProtectedRoute>
             }
           />
