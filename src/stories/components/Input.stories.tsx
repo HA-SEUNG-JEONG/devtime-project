@@ -66,7 +66,7 @@ export const Disabled: Story = {
   args: {
     placeholder: '비활성화된 입력 필드',
     disabled: true,
-    value: '비활성화된 값',
+    defaultValue: '비활성화된 값',
   },
 };
 
