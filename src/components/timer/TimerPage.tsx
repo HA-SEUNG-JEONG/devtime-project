@@ -8,8 +8,6 @@ const TimerPage = () => {
   const {
     timerState,
     elapsedSeconds,
-    todayGoal,
-    tasks,
     startTimer,
     pauseTimer,
     resumeTimer,
