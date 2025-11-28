@@ -10,7 +10,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         duration: 3000,
         classNames: {
           toast:
-            'min-w-[300px] max-w-[500px] px-4 py-3 rounded-lg shadow-lg flex items-center justify-between gap-3 animate-[slideIn_0.3s_ease-out]',
+            'px-4 py-3 rounded-lg shadow-lg flex items-center justify-start gap-3 animate-[slideIn_0.3s_ease-out]',
           success:
             'bg-green-50 text-green-800 border border-green-200 [&>div]:text-green-800',
           error:

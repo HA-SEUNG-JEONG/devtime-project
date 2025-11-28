@@ -7,17 +7,18 @@ const InputLabel: React.FC<InputLabelProps> = ({
   placeholder = 'Placeholder',
   showAddButton = true,
   buttonText = 'Button',
+  helperText,
+  maxLength,
   className = '',
   onChange,
   onFocus,
   onBlur,
   onButtonClick,
+  onHelperTextClick,
   ...props
 }) => {
-  // Frame 240129 스타일 - 기본 컨테이너
   const containerClasses = `flex flex-row items-center gap-3 h-11 ${className}`;
 
-  // Placeholder 상태 - Frame 240129
   if (variant === 'placeholder') {
     return (
       <div className={containerClasses} {...props}>
@@ -28,7 +29,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
           </span>
         </div>
         {/* Text Field_button */}
-        {showAddButton && (
+        {/* {showAddButton && (
           <button
             type="button"
             onClick={onButtonClick}
@@ -38,7 +39,7 @@ const InputLabel: React.FC<InputLabelProps> = ({
               {buttonText}
             </span>
           </button>
-        )}
+        )} */}
       </div>
     );
   }
@@ -56,22 +57,26 @@ const InputLabel: React.FC<InputLabelProps> = ({
             onFocus={onFocus}
             onBlur={onBlur}
             placeholder={placeholder}
+            maxLength={maxLength}
             autoFocus
             className="text-16m text-gray-800 bg-transparent flex items-center flex-1 w-full h-5 p-0"
           />
+          {helperText && (
+            <button
+              type="button"
+              onClick={onHelperTextClick}
+              disabled={!value.trim()}
+              className={`text-16m flex items-center flex-none bg-transparent border-0 p-0 ${
+                !value.trim()
+                  ? 'text-[#CCD0D6] cursor-not-allowed opacity-50'
+                  : 'text-[#CCD0D6] hover:text-primary active:text-primary cursor-pointer'
+              }`}
+            >
+              {helperText}
+            </button>
+          )}
         </div>
         {/* Text Field_button */}
-        {showAddButton && (
-          <button
-            type="button"
-            onClick={onButtonClick}
-            className="flex flex-row justify-center items-center px-4 py-3 gap-2 w-[76px] h-11 bg-primary-10 rounded-[5px] flex-none hover:bg-primary-10/90 active:bg-primary-10/90 transition-colors"
-          >
-            <span className="text-14sb text-primary flex items-center text-center">
-              {buttonText}
-            </span>
-          </button>
-        )}
       </div>
     );
   }

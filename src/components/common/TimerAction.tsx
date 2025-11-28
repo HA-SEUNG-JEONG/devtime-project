@@ -1,11 +1,15 @@
 // TimerAction의 초기 상태는 ready? paused? in-progress?
-import React from 'react';
+import React, { useState } from 'react';
+import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
+import Button from './Button';
+import InputLabel from './InputLabel';
+import TodoItem from './TodoItem';
 
 export type TimerState = 'ready' | 'paused' | 'in-progress';
 
 export interface TimerActionProps {
   state: TimerState;
-  onStart?: () => void;
+  onStart?: (goal: string, tasks: string[]) => void;
   onPause?: () => void;
   onFinish?: () => void;
   onSeeTodo?: () => void;
@@ -21,20 +25,74 @@ const TimerAction: React.FC<TimerActionProps> = ({
   onReset,
 }) => {
   // 타이머를 재생할려면 오늘의 목표와 최소 한 개 이상의 할 일 목록이 작성되어야 함
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [goal, setGoal] = useState('');
+  const [todoList, setTodoList] = useState('');
+  const [todoItems, setTodoItems] = useState<
+    Array<{
+      id: string;
+      text: string;
+      status:
+        | 'list-adding'
+        | 'typing'
+        | 'checkable'
+        | 'checked'
+        | 'completed'
+        | 'failed';
+    }>
+  >([]);
 
   const isStartEnabled = state === 'ready';
-  const isPauseEnabled = state === 'paused';
-  const isFinishEnabled = state === 'in-progress';
+  const isPauseEnabled = state === 'in-progress' || state === 'paused';
+  const isFinishEnabled = state === 'in-progress' || state === 'paused';
 
   const isSeeTodoEnabled = state === 'paused' || state === 'in-progress';
   const isResetEnabled = state === 'paused' || state === 'in-progress';
+
+  const handleStartClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalConfirm = () => {
+    if (goal.trim() && todoItems.length > 0) {
+      const tasks = todoItems.map(item => item.text);
+      onStart?.(goal.trim(), tasks);
+      setIsModalOpen(false);
+      setGoal('');
+      setTodoList('');
+      setTodoItems([]);
+    }
+  };
+
+  const handleModalCancel = () => {
+    setIsModalOpen(false);
+    setGoal('');
+    setTodoList('');
+    setTodoItems([]);
+  };
+
+  const handleAddTodo = () => {
+    if (todoList.trim()) {
+      const newTodo = {
+        id: Date.now().toString(),
+        text: todoList.trim(),
+        status: 'list-adding' as const,
+      };
+      setTodoItems([...todoItems, newTodo]);
+      setTodoList('');
+    }
+  };
+
+  const handleDeleteTodo = (id: string) => {
+    setTodoItems(todoItems.filter(item => item.id !== id));
+  };
 
   // 메인 액션 버튼 설정
   const mainActions = [
     {
       name: 'start',
       enabled: isStartEnabled,
-      handler: onStart,
+      handler: handleStartClick,
       label: '타이머 시작',
     },
     {
@@ -60,7 +118,7 @@ const TimerAction: React.FC<TimerActionProps> = ({
       label: '할 일 목록 보기',
     },
     {
-      name: 'Reset',
+      name: 'reset',
       enabled: isResetEnabled,
       handler: onReset,
       label: '타이머 초기화',
@@ -118,6 +176,74 @@ const TimerAction: React.FC<TimerActionProps> = ({
           </button>
         ))}
       </div>
+
+      {/* 타이머 시작 모달 */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="flex flex-col p-4 sm:p-6 gap-4 sm:gap-6 w-full sm:w-[400px] lg:w-[500px]">
+          <div className="flex flex-col gap-4 sm:gap-5">
+            {/* 오늘의 목표 */}
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="goal"
+                className="text-14m sm:text-16m text-gray-900"
+              >
+                오늘의 목표
+              </label>
+              <InputLabel
+                variant="typing"
+                value={goal}
+                onChange={e => setGoal(e.target.value)}
+                placeholder="오늘의 목표를 입력하세요"
+                maxLength={30}
+                className="w-full"
+              />
+            </div>
+
+            {/* 할 일 목록 */}
+            <div className="flex flex-col gap-2">
+              <label className="text-14m sm:text-16m text-gray-900">
+                할 일 목록
+              </label>
+              <InputLabel
+                variant="typing"
+                value={todoList}
+                onChange={e => setTodoList(e.target.value)}
+                placeholder="할 일 목록을 입력하세요"
+                helperText="추가"
+                onHelperTextClick={handleAddTodo}
+                maxLength={30}
+                className="w-full"
+              />
+              {/* TodoItem 리스트 */}
+              {todoItems.length > 0 && (
+                <div className="flex flex-col gap-2 mt-2">
+                  {todoItems.map(item => (
+                    <TodoItem
+                      key={item.id}
+                      status={item.status}
+                      text={item.text}
+                      onDelete={() => handleDeleteTodo(item.id)}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <DialogFooter className="flex-row items-start gap-4 sm:gap-4 sm:justify-end">
+            <Button priority="tertiary" onClick={handleModalCancel}>
+              취소
+            </Button>
+            <Button
+              priority="primary"
+              onClick={handleModalConfirm}
+              disabled={!goal.trim() || todoItems.length === 0}
+            >
+              시작하기
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

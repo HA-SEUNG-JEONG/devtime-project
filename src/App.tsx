@@ -73,6 +73,14 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/timer"
+            element={
+              <ProtectedRoute>
+                <TimerPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NavBar />} />
         </Routes>
       </TooltipProvider>
