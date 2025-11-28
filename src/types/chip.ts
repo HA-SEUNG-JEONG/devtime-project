@@ -4,3 +4,4 @@ export interface ChipProps {
   onDelete?: () => void;
   className?: string;
 }
+

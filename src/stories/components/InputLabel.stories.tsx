@@ -51,21 +51,24 @@ export const Placeholder: Story = {
 // Frame 240129 - Typing 상태 (입력 중) - 실제 입력 가능
 export const Typing: Story = {
   render: args => {
-    const [value, setValue] = useState('');
-    return (
-      <InputLabel
-        {...args}
-        variant="typing"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        showAddButton={true}
-        placeholder="Placeholder"
-        buttonText="Button"
-        onButtonClick={() => {
-          console.log('Button clicked!', value);
-        }}
-      />
-    );
+    const TypingComponent = () => {
+      const [value, setValue] = useState('');
+      return (
+        <InputLabel
+          {...args}
+          variant="typing"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          showAddButton={true}
+          placeholder="Placeholder"
+          buttonText="Button"
+          onButtonClick={() => {
+            console.log('Button clicked!', value);
+          }}
+        />
+      );
+    };
+    return <TypingComponent />;
   },
   args: {
     variant: 'typing',

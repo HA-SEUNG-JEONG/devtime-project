@@ -118,23 +118,16 @@ const Profile = () => {
       </div>
 
       {/* 건너뛰기 확인 모달 */}
-      {showSkipDialog && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          onClick={() => setShowSkipDialog(false)}
-        >
-          <div onClick={e => e.stopPropagation()}>
-            <Dialog
-              title="프로필 설정을 건너뛸까요?"
-              body="프로필 정보를 입력하지 않으면 학습 기록이 랭킹에 등재될 수 없습니다. 나중에 마이페이지에서 프로필을 설정할 수 있습니다."
-              cancelLabel="취소"
-              confirmLabel="건너뛰기"
-              onCancel={() => setShowSkipDialog(false)}
-              onConfirm={() => navigate('/timer')}
-            />
-          </div>
-        </div>
-      )}
+      <Dialog
+        open={showSkipDialog}
+        onOpenChange={setShowSkipDialog}
+        title="프로필 설정을 건너뛸까요?"
+        body="프로필 정보를 입력하지 않으면 학습 기록이 랭킹에 등재될 수 없습니다. 나중에 마이페이지에서 프로필을 설정할 수 있습니다."
+        cancelLabel="취소"
+        confirmLabel="건너뛰기"
+        onCancel={() => setShowSkipDialog(false)}
+        onConfirm={() => navigate('/timer')}
+      />
     </div>
   );
 };

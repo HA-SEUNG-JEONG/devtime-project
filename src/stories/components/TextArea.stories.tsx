@@ -41,16 +41,19 @@ export const Ready: Story = {
 // State=Typing - 입력 중 상태 (실제 입력 가능)
 export const Typing: Story = {
   render: args => {
-    const [value, setValue] = useState('Typing');
-    return (
-      <TextArea
-        {...args}
-        variant="typing"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        placeholder="Placeholder"
-      />
-    );
+    const TypingComponent = () => {
+      const [value, setValue] = useState('Typing');
+      return (
+        <TextArea
+          {...args}
+          variant="typing"
+          value={value}
+          onChange={e => setValue(e.target.value)}
+          placeholder="Placeholder"
+        />
+      );
+    };
+    return <TypingComponent />;
   },
   args: {
     variant: 'typing',
@@ -70,30 +73,33 @@ export const Typed: Story = {
 // 모든 상태를 한 번에 보기
 export const AllStates: Story = {
   render: () => {
-    const [typingValue, setTypingValue] = useState('Typing');
-    return (
-      <div className="flex flex-col gap-6 p-8">
-        <div>
-          <h3 className="text-16sb text-[#1F2937] mb-2">State=Ready</h3>
-          <TextArea variant="ready" placeholder="Placeholder" />
+    const AllStatesComponent = () => {
+      const [typingValue, setTypingValue] = useState('Typing');
+      return (
+        <div className="flex flex-col gap-6 p-8">
+          <div>
+            <h3 className="text-16sb text-[#1F2937] mb-2">State=Ready</h3>
+            <TextArea variant="ready" placeholder="Placeholder" />
+          </div>
+          <div>
+            <h3 className="text-16sb text-[#1F2937] mb-2">State=Typing</h3>
+            <TextArea
+              variant="typing"
+              value={typingValue}
+              onChange={e => setTypingValue(e.target.value)}
+              placeholder="Placeholder"
+            />
+          </div>
+          <div>
+            <h3 className="text-16sb text-[#1F2937] mb-2">State=Typed</h3>
+            <TextArea
+              variant="typed"
+              value="Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed"
+            />
+          </div>
         </div>
-        <div>
-          <h3 className="text-16sb text-[#1F2937] mb-2">State=Typing</h3>
-          <TextArea
-            variant="typing"
-            value={typingValue}
-            onChange={e => setTypingValue(e.target.value)}
-            placeholder="Placeholder"
-          />
-        </div>
-        <div>
-          <h3 className="text-16sb text-[#1F2937] mb-2">State=Typed</h3>
-          <TextArea
-            variant="typed"
-            value="Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed Typed"
-          />
-        </div>
-      </div>
-    );
+      );
+    };
+    return <AllStatesComponent />;
   },
 };

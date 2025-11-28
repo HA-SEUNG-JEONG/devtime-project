@@ -8,5 +8,5 @@ export interface InputProps
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  rightElement?: React.ReactNode;
 }
-

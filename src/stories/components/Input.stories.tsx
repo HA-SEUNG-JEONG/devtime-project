@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
 
-import Input from '@/components/common/Input';
+import { Input } from '@/components/ui/input';
 
 const meta = {
   title: 'Components/Input',
@@ -11,18 +11,18 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    variant: {
+    type: {
       control: 'select',
-      options: ['ready', 'typing', 'typed'],
-      description: 'Input의 상태 (Ready, Typing, Typed)',
-    },
-    value: {
-      control: 'text',
-      description: '입력된 값',
+      options: ['text', 'email', 'password', 'number', 'tel', 'url'],
+      description: 'Input 타입',
     },
     placeholder: {
       control: 'text',
       description: '플레이스홀더 텍스트',
+    },
+    disabled: {
+      control: 'boolean',
+      description: '비활성화 상태',
     },
   },
 } satisfies Meta<typeof Input>;
@@ -30,75 +30,125 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// State=Ready - Placeholder 상태
-export const Ready: Story = {
+// 기본 Input
+export const Default: Story = {
   args: {
-    variant: 'ready',
-    placeholder: 'Placeholder',
+    placeholder: '입력하세요...',
   },
 };
 
-// State=Typing - 입력 중 상태 (실제 입력 가능)
-export const Typing: Story = {
-  render: args => {
-    const [value, setValue] = useState('');
-    return (
-      <Input
-        {...args}
-        variant="typing"
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        placeholder="Placeholder"
-      />
-    );
-  },
-  args: {
-    variant: 'typing',
-    placeholder: 'Placeholder',
-  },
-};
-
-// State=Typed - 입력 완료 상태
-export const Typed: Story = {
-  args: {
-    variant: 'typed',
-    value: 'Typed',
-  },
-};
-
-// 커스텀 플레이스홀더
-export const CustomPlaceholder: Story = {
-  args: {
-    variant: 'ready',
-    placeholder: '검색어를 입력하세요',
-  },
-};
-
-// 커스텀 너비
-export const CustomWidth: Story = {
-  args: {
-    variant: 'ready',
-    placeholder: 'Placeholder',
-    className: 'w-[300px]',
-  },
-};
-
-// 모든 상태 비교
-export const AllStates: Story = {
+// 다양한 타입
+export const Types: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 w-full max-w-[300px]">
       <div>
-        <p className="mb-2 text-sm text-gray-600">Ready State</p>
-        <Input variant="ready" placeholder="Placeholder" />
+        <label htmlFor="text" className="block text-sm text-gray-600 mb-2">
+          Text
+        </label>
+        <Input id="text" type="text" placeholder="텍스트를 입력하세요" />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-600">Typing State</p>
-        <Input variant="typing" placeholder="Placeholder" value="Typing" />
+        <label htmlFor="email" className="block text-sm text-gray-600 mb-2">
+          Email
+        </label>
+        <Input id="email" type="email" placeholder="이메일을 입력하세요" />
       </div>
       <div>
-        <p className="mb-2 text-sm text-gray-600">Typed State</p>
-        <Input variant="typed" value="Typed" />
+        <label htmlFor="password" className="block text-sm text-gray-600 mb-2">
+          Password
+        </label>
+        <Input
+          id="password"
+          type="password"
+          placeholder="비밀번호를 입력하세요"
+        />
+      </div>
+      <div>
+        <label htmlFor="number" className="block text-sm text-gray-600 mb-2">
+          Number
+        </label>
+        <Input id="number" type="number" placeholder="숫자를 입력하세요" />
       </div>
     </div>
   ),
+};
+
+// 비활성화 상태
+export const Disabled: Story = {
+  args: {
+    placeholder: '비활성화된 입력 필드',
+    disabled: true,
+    defaultValue: '비활성화된 값',
+  },
+};
+
+// 인터랙티브 예제
+export const Interactive: Story = {
+  render: () => {
+    const InteractiveComponent = () => {
+      const [value, setValue] = useState('');
+      return (
+        <div className="flex flex-col gap-4 w-full max-w-[300px]">
+          <Input
+            type="text"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            placeholder="입력해보세요..."
+          />
+          <div className="text-sm text-gray-600">
+            입력된 값: <strong>{value || '(없음)'}</strong>
+          </div>
+        </div>
+      );
+    };
+    return <InteractiveComponent />;
+  },
+};
+
+// 다양한 크기
+export const Sizes: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4 w-full max-w-[300px]">
+      <div>
+        <label
+          htmlFor="default-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          기본 크기
+        </label>
+        <Input id="default-size" placeholder="기본 크기" />
+      </div>
+      <div>
+        <label
+          htmlFor="small-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          작은 크기
+        </label>
+        <Input
+          id="small-size"
+          placeholder="작은 크기"
+          className="h-8 text-sm"
+        />
+      </div>
+      <div>
+        <label
+          htmlFor="large-size"
+          className="block text-sm text-gray-600 mb-2"
+        >
+          큰 크기
+        </label>
+        <Input id="large-size" placeholder="큰 크기" className="h-12 text-lg" />
+      </div>
+    </div>
+  ),
+};
+
+// 에러 상태
+export const Error: Story = {
+  args: {
+    placeholder: '에러 상태',
+    'aria-invalid': true,
+    defaultValue: '잘못된 입력',
+  },
 };

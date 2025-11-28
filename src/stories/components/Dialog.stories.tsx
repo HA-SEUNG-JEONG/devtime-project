@@ -10,6 +10,10 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
+    open: {
+      control: 'boolean',
+      description: '다이얼로그 표시 여부',
+    },
     title: {
       control: 'text',
       description: '다이얼로그 제목',
@@ -26,6 +30,10 @@ const meta = {
       control: 'text',
       description: '확인 버튼 텍스트',
     },
+    onOpenChange: {
+      action: 'open changed',
+      description: '다이얼로그 열림/닫힘 상태 변경 핸들러',
+    },
     onCancel: {
       action: 'cancel clicked',
       description: '취소 버튼 클릭 핸들러',
@@ -36,6 +44,8 @@ const meta = {
     },
   },
   args: {
+    open: true,
+    onOpenChange: fn(),
     onCancel: fn(),
     onConfirm: fn(),
   },

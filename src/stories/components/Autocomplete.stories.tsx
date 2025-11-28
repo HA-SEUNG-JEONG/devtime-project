@@ -40,41 +40,47 @@ export const Ready: Story = {
 // State=Typing - 입력 중 상태 (드롭다운 목록 표시)
 export const Typing: Story = {
   render: args => {
-    const [value, setValue] = useState('A');
-    const options = ['AAABC', 'AABBYF', 'AACDDFG', 'AAGHR', 'AAATHCHYYU'];
+    const TypingComponent = () => {
+      const [value, setValue] = useState('A');
+      const options = ['AAABC', 'AABBYF', 'AACDDFG', 'AAGHR', 'AAATHCHYYU'];
 
-    return (
-      <Autocomplete
-        {...args}
-        variant="typing"
-        value={value}
-        options={options}
-        onChange={e => setValue(e.target.value)}
-        onSelectOption={option => {
-          setValue(option);
-        }}
-      />
-    );
+      return (
+        <Autocomplete
+          {...args}
+          variant="typing"
+          value={value}
+          options={options}
+          onChange={e => setValue(e.target.value)}
+          onSelectOption={option => {
+            setValue(option);
+          }}
+        />
+      );
+    };
+    return <TypingComponent />;
   },
 };
 
 // State=NoResult - 결과 없음 상태 (Add New Item 옵션 표시)
 export const NoResult: Story = {
   render: args => {
-    const [value, setValue] = useState('XYZ');
+    const NoResultComponent = () => {
+      const [value, setValue] = useState('XYZ');
 
-    return (
-      <Autocomplete
-        {...args}
-        variant="noResult"
-        value={value}
-        options={[]}
-        onChange={e => setValue(e.target.value)}
-        onAddNewItem={() => {
-          alert(`새 항목 추가: ${value}`);
-        }}
-      />
-    );
+      return (
+        <Autocomplete
+          {...args}
+          variant="noResult"
+          value={value}
+          options={[]}
+          onChange={e => setValue(e.target.value)}
+          onAddNewItem={() => {
+            alert(`새 항목 추가: ${value}`);
+          }}
+        />
+      );
+    };
+    return <NoResultComponent />;
   },
   args: {
     variant: 'noResult',
@@ -84,55 +90,58 @@ export const NoResult: Story = {
 // Interactive Example - 실제 사용 예시
 export const Interactive: Story = {
   render: () => {
-    const [value, setValue] = useState('');
-    const allOptions = [
-      'AAABC',
-      'AABBYF',
-      'AACDDFG',
-      'AAGHR',
-      'AAATHCHYYU',
-      'Apple',
-      'Banana',
-      'Cherry',
-      'Date',
-      'Elderberry',
-    ];
+    const InteractiveComponent = () => {
+      const [value, setValue] = useState('');
+      const allOptions = [
+        'AAABC',
+        'AABBYF',
+        'AACDDFG',
+        'AAGHR',
+        'AAATHCHYYU',
+        'Apple',
+        'Banana',
+        'Cherry',
+        'Date',
+        'Elderberry',
+      ];
 
-    // 입력값에 따라 필터링된 옵션 표시
-    const filteredOptions = value
-      ? allOptions.filter(option =>
-          option.toLowerCase().includes(value.toLowerCase())
-        )
-      : [];
+      // 입력값에 따라 필터링된 옵션 표시
+      const filteredOptions = value
+        ? allOptions.filter(option =>
+            option.toLowerCase().includes(value.toLowerCase())
+          )
+        : [];
 
-    let variant: 'ready' | 'typing' | 'noResult' = 'ready';
-    if (filteredOptions.length > 0) {
-      variant = 'typing';
-    } else if (value) {
-      variant = 'noResult';
-    }
+      let variant: 'ready' | 'typing' | 'noResult' = 'ready';
+      if (filteredOptions.length > 0) {
+        variant = 'typing';
+      } else if (value) {
+        variant = 'noResult';
+      }
 
-    return (
-      <div className="flex flex-col gap-4">
-        <Autocomplete
-          variant={variant}
-          value={value}
-          options={filteredOptions}
-          onChange={e => setValue(e.target.value)}
-          onSelectOption={option => {
-            setValue(option);
-          }}
-          onAddNewItem={() => {
-            setValue('');
-          }}
-        />
-        <div className="text-sm text-gray-600 mt-4">
-          <p>입력값: {value || '(없음)'}</p>
-          <p>필터링된 옵션: {filteredOptions.length}개</p>
-          <p>상태: {variant}</p>
+      return (
+        <div className="flex flex-col gap-4">
+          <Autocomplete
+            variant={variant}
+            value={value}
+            options={filteredOptions}
+            onChange={e => setValue(e.target.value)}
+            onSelectOption={option => {
+              setValue(option);
+            }}
+            onAddNewItem={() => {
+              setValue('');
+            }}
+          />
+          <div className="text-sm text-gray-600 mt-4">
+            <p>입력값: {value || '(없음)'}</p>
+            <p>필터링된 옵션: {filteredOptions.length}개</p>
+            <p>상태: {variant}</p>
+          </div>
         </div>
-      </div>
-    );
+      );
+    };
+    return <InteractiveComponent />;
   },
 };
 

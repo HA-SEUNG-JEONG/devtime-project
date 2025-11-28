@@ -8,6 +8,7 @@ import GuestRoute from './components/common/GuestRoute';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import { ToastProvider } from './contexts/ToastContext';
 import Toast from './components/common/Toast';
+import { TooltipProvider } from './components/ui/tooltip';
 import { isLoggedIn, validateToken } from './utils/auth';
 import Home from './pages/Home';
 
@@ -44,35 +45,37 @@ function App() {
 
   return (
     <ToastProvider>
-      <Toast />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/signup"
-          element={
-            <GuestRoute>
-              <Signup />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <GuestRoute>
-              <Login />
-            </GuestRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        />
-        <Route path="*" element={<NavBar />} />
-      </Routes>
+      <TooltipProvider>
+        <Toast />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/signup"
+            element={
+              <GuestRoute>
+                <Signup />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<NavBar />} />
+        </Routes>
+      </TooltipProvider>
     </ToastProvider>
   );
 }
