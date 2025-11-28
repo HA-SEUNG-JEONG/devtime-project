@@ -4,6 +4,7 @@ import { api } from '@/utils/api';
 import { useToast } from '@/contexts/ToastContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import Input from '@/components/common/Input';
+import { Select, SelectContent, SelectItem } from '@/components/ui/select';
 import type { ProfileFormValues } from '@/types/profile';
 import type { TechStackSearchResponse, TechStackCreateResponse } from '@/types';
 import ChipList from './ChipList';
@@ -21,10 +22,15 @@ const TechStackSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [isCreating, setIsCreating] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [inputWidth, setInputWidth] = useState<number | undefined>(undefined);
 
   const { showToast } = useToast();
   // Debounce the search keyword
   const debouncedSearchKeyword = useDebounce(searchKeyword, 300);
+
+  const totalItems = autoCompleteTechStacks.length;
+  const showAddButton = searchKeyword && totalItems === 0;
+  const showDropdown = totalItems > 0 || showAddButton;
 
   useEffect(() => {
     if (techStacks.length === 0) {
@@ -36,6 +42,13 @@ const TechStackSection = () => {
       clearErrors('techStacks');
     }
   }, [techStacks, setError, clearErrors]);
+
+  // Update input width when input element is available
+  useEffect(() => {
+    if (inputRef.current) {
+      setInputWidth(inputRef.current.offsetWidth);
+    }
+  }, [showDropdown]);
 
   // Fetch tech stacks when debounced keyword changes
   useEffect(() => {
@@ -111,10 +124,6 @@ const TechStackSection = () => {
     }
   };
 
-  const totalItems = autoCompleteTechStacks.length;
-  const showAddButton = searchKeyword && totalItems === 0;
-  const showDropdown = totalItems > 0 || showAddButton;
-
   const handleArrowDown = () => {
     const maxIndex = showAddButton ? 0 : totalItems - 1;
     if (selectedIndex === -1) {
@@ -159,51 +168,72 @@ const TechStackSection = () => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 relative">
       <label htmlFor="tech-stack-input" className="text-14m text-gray-600">
         공부/사용 중인 기술 스택
       </label>
-      <Input
-        ref={inputRef}
-        id="tech-stack-input"
-        onChange={e => setSearchKeyword(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="기술 스택을 검색해 등록해 주세요."
-        className="w-full"
-        value={searchKeyword}
-      />
-      {showDropdown && (
-        <div className="box-border flex flex-col items-start px-3 py-4 gap-4 w-full bg-white border border-gray-300 rounded-[5px] shadow-[0px_8px_8px_rgba(0,0,0,0.05)]">
-          {autoCompleteTechStacks.map((option, index) => (
-            <button
-              key={option.id}
-              type="button"
-              onClick={() => handleAddTechStack(option.name)}
-              className={`w-full min-h-[32px] px-3 py-2 text-16sb flex items-center text-left rounded-md transition-all ${
-                selectedIndex === index
-                  ? 'bg-blue-50 border-2 border-blue-500 text-blue-700 font-bold shadow-sm'
-                  : 'bg-transparent border-2 border-transparent text-gray-800 hover:bg-gray-50'
-              }`}
+      <div className="relative">
+        <Input
+          ref={inputRef}
+          id="tech-stack-input"
+          onChange={e => setSearchKeyword(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="기술 스택을 검색해 등록해 주세요."
+          className="w-full"
+          value={searchKeyword}
+        />
+        {showDropdown && (
+          <Select open={true} onOpenChange={() => {}}>
+            <SelectContent
+              style={{ width: inputWidth }}
+              position="popper"
+              sideOffset={4}
+              onCloseAutoFocus={e => e.preventDefault()}
+              onEscapeKeyDown={e => {
+                e.preventDefault();
+                inputRef.current?.focus();
+              }}
             >
-              {option.name}
-            </button>
-          ))}
-          {showAddButton && (
-            <button
-              type="button"
-              onClick={handleCreateNewTechStack}
-              disabled={isCreating}
-              className={`w-full min-h-[32px] px-3 py-2 text-16sb flex items-center text-left rounded-md transition-all ${
-                selectedIndex === 0 && totalItems === 0
-                  ? 'bg-blue-50 border-2 border-blue-500 text-blue-700 font-bold shadow-sm'
-                  : 'bg-transparent border-2 border-transparent text-blue-600 hover:bg-blue-50'
-              } ${isCreating ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-            >
-              {isCreating ? '생성 중...' : `+ Add New Item "${searchKeyword}"`}
-            </button>
-          )}
-        </div>
-      )}
+              {autoCompleteTechStacks.map((option, index) => (
+                <SelectItem
+                  key={option.id}
+                  value={option.id}
+                  onSelect={e => {
+                    e.preventDefault();
+                    handleAddTechStack(option.name);
+                  }}
+                  className={
+                    selectedIndex === index
+                      ? 'bg-accent text-accent-foreground'
+                      : ''
+                  }
+                >
+                  {option.name}
+                </SelectItem>
+              ))}
+              {showAddButton && (
+                <SelectItem
+                  value="__create_new__"
+                  onSelect={e => {
+                    e.preventDefault();
+                    handleCreateNewTechStack();
+                  }}
+                  disabled={isCreating}
+                  className={
+                    selectedIndex === 0 && totalItems === 0
+                      ? 'bg-accent text-accent-foreground'
+                      : 'text-blue-600'
+                  }
+                >
+                  {isCreating
+                    ? '생성 중...'
+                    : `+ Add New Item "${searchKeyword}"`}
+                </SelectItem>
+              )}
+            </SelectContent>
+          </Select>
+        )}
+      </div>
 
       <ChipList techStacks={techStacks} onDelete={handleDeleteTechStack} />
     </div>

@@ -12,7 +12,7 @@ const TextArea: React.FC<TextAreaProps> = ({
   ...props
 }) => {
   // TextArea 컨테이너 스타일 - 세 가지 상태에서 동일한 사이즈 유지
-  const baseContainerClasses = `flex flex-row items-start px-3 sm:px-4 gap-[10px] w-full sm:w-[400px] lg:w-[568px] h-auto sm:h-[84px] bg-[#F9FAFB] rounded-[5px] ${className}`;
+  const baseContainerClasses = `flex flex-row items-start px-3 sm:px-4 gap-[10px] w-full h-auto sm:h-[84px] bg-[#F9FAFB] rounded-[5px] ${className}`;
 
   // Ready 상태 - Placeholder만 표시
   if (variant === 'ready') {

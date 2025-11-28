@@ -1,43 +1,35 @@
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useCallback } from 'react';
+import { toast as sonnerToast } from 'sonner';
 
-interface Toast {
-  id: number;
-  message: string;
-  type: 'info' | 'success' | 'warning' | 'error';
-}
+type ToastType = 'info' | 'success' | 'warning' | 'error';
 
 interface ToastContextType {
-  toasts: Toast[];
-  showToast: (message: string, type?: Toast['type']) => void;
-  removeToast: (id: number) => void;
+  showToast: (message: string, type?: ToastType) => void;
 }
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-  const [toasts, setToasts] = useState<Toast[]>([]);
-  const [nextId, setNextId] = useState(1);
-
-  const showToast = useCallback(
-    (message: string, type: Toast['type'] = 'info') => {
-      const id = nextId;
-      setNextId((prev) => prev + 1);
-      setToasts((prev) => [...prev, { id, message, type }]);
-
-      // 3초 후 자동으로 제거
-      setTimeout(() => {
-        setToasts((prev) => prev.filter((toast) => toast.id !== id));
-      }, 3000);
-    },
-    [nextId]
-  );
-
-  const removeToast = useCallback((id: number) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  const showToast = useCallback((message: string, type: ToastType = 'info') => {
+    switch (type) {
+      case 'success':
+        sonnerToast.success(message);
+        break;
+      case 'warning':
+        sonnerToast.warning(message);
+        break;
+      case 'error':
+        sonnerToast.error(message);
+        break;
+      case 'info':
+      default:
+        sonnerToast.info(message);
+        break;
+    }
   }, []);
 
   return (
-    <ToastContext.Provider value={{ toasts, showToast, removeToast }}>
+    <ToastContext.Provider value={{ showToast }}>
       {children}
     </ToastContext.Provider>
   );

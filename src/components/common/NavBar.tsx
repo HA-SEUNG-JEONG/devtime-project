@@ -68,7 +68,7 @@ const NavBar = () => {
   };
 
   const linkClassName =
-    'text-14sb sm:text-16sb text-primary no-underline transition-colors duration-200 hover:text-[var(--color-primary-2)]';
+    'text-14sb sm:text-16sb text-primary no-underline transition-colors duration-200 hover:text-primary-2';
 
   return (
     <nav className="w-full p-0 mt-4">
@@ -113,7 +113,7 @@ const NavBar = () => {
                   <div className="flex flex-col p-[16px_12px] gap-4">
                     <Link
                       to="/profile"
-                      className="flex items-center gap-2 text-14sb text-primary no-underline transition-colors duration-200 hover:text-[var(--color-primary-2)]"
+                      className="flex items-center gap-2 text-14sb text-primary no-underline transition-colors duration-200 hover:text-primary-2"
                       onClick={() => setIsProfileDropdownOpen(false)}
                     >
                       <img
@@ -125,7 +125,7 @@ const NavBar = () => {
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex items-center gap-2 text-14sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-[var(--color-primary-2)] text-left"
+                      className="flex items-center gap-2 text-14sb text-primary bg-transparent border-0 cursor-pointer p-0 transition-colors duration-200 hover:text-primary-2 text-left"
                     >
                       <img
                         src="/logout.png"
