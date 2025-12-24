@@ -9,6 +9,7 @@ const MoreIcon = ({ size = 24, className }: IconProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-label="더보기"
     >
       <path
         d="M8 12C8 12.8284 7.32843 13.5 6.5 13.5C5.67157 13.5 5 12.8284 5 12C5 11.1716 5.67157 10.5 6.5 10.5C7.32843 10.5 8 11.1716 8 12Z"

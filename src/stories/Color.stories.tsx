@@ -15,6 +15,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+const grayColorMap: Record<string, string> = {
+  White: "#FFFFFF",
+  "50": "#F9FAFB",
+  "100": "#F3F4F6",
+  "200": "#E5E7EB",
+  "300": "#D1D5DB",
+  "400": "#9CA3AF",
+  "500": "#6B7280",
+  "600": "#4B5563",
+  "700": "#374151",
+  "800": "#1f2937"
+};
+
 export const PrimaryColors: Story = {
   render: () => (
     <div className="p-8">
@@ -105,9 +118,7 @@ export const GrayScale: Story = {
           <div key={color.label}>
             <div
               className={`w-16 h-16 rounded-lg border ${
-                color.value === "#FFFFFF"
-                  ? "bg-white"
-                  : `bg-gray-${color.label}`
+                grayColorMap[color.label]
               }`}
             />
             <p className="mt-1 text-xs font-medium">{color.label}</p>
@@ -130,12 +141,12 @@ export const StateColors: Story = {
           <p className="text-xs text-gray-500">#968DA8</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0 hover:bg-[#0000001A]" />
+          <div className="w-24 h-24 rounded-lg bg-primary-0 hover:bg-hover" />
           <p className="mt-2 text-sm font-medium">Hover (B10%)</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-primary-0 active:bg-[#0000001A]" />
+          <div className="w-24 h-24 rounded-lg bg-primary-0 active:bg-active" />
           <p className="mt-2 text-sm font-medium">Active B10%</p>
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
