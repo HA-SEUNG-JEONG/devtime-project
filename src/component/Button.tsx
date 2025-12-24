@@ -5,6 +5,7 @@ export interface ButtonProps {
   onClick?: () => void;
   variant: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
+  className?: string;
 }
 
 /** Primary UI component for user interaction */
@@ -12,6 +13,7 @@ export const Button = ({
   label,
   variant = "primary",
   disabled = false,
+  className,
   ...props
 }: ButtonProps) => {
   const baseClasses = "px-4 py-3 rounded-[5px]";
@@ -26,7 +28,7 @@ export const Button = ({
 
   return (
     <button
-      className={`${cn(baseClasses, variantClasses)} text-body-b w-full`}
+      className={`${cn(baseClasses, variantClasses)} text-body-b w-full ${className}`}
       onClick={props.onClick}
       disabled={disabled}
       {...props}
