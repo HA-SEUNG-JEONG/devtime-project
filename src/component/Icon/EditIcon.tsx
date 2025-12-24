@@ -9,6 +9,7 @@ const EditIcon = ({ size = 24, className }: IconProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      aria-label="수정"
     >
       <path
         fillRule="evenodd"
