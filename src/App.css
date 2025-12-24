@@ -99,28 +99,30 @@
 
   --color-white: #ffffff;
   --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
+  --color-gray-100: #f0f2f5;
   --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-400: #9ca3af;
-  --color-gray-500: #6b7280;
+  --color-gray-300: #ccd0d6;
+  --color-gray-400: #969da8;
+  --color-gray-500: #717887;
   --color-gray-600: #4b5563;
-  --color-gray-700: #374151;
+  --color-gray-700: #394252;
   --color-gray-800: #1f2937;
+
+  --color-gray-dark: #f0f2f5;
 
   --color-secondary-indigo: #023e99;
   --color-secondary-informative: #2683e8;
   --color-secondary-negative: #dc2626;
-  --color-secondary-notice: #f8bf24;
+  --color-secondary-notice: #fbbf24;
   --color-secondary-positive: #22c55e;
   --color-secondary-fuchsia: #fd28ec;
 
   --color-secondary-indigo-light: #a3c3ff;
-  --color-secondary-informative-light: #93caff;
-  --color-secondary-negative-light: #fca5a5;
-  --color-secondary-notice-light: #fde68a;
-  --color-secondary-positive-light: #86efac;
-  --color-secondary-fuchsia-light: #f9a8f4;
+  --color-secondary-informative-light: #53b2ff;
+  --color-secondary-negative-light: #ff6363;
+  --color-secondary-notice-light: #ffdb7f;
+  --color-secondary-positive-light: #62ec95;
+  --color-secondary-fuchsia-light: #ff87f5;
 
   --color-disabled: #969da8;
   --color-hover: rgba(76, 121, 255, 0.1);
@@ -225,145 +227,166 @@
 }
 
 @layer utilities {
-  .text-heading-b {
+  .typography-heading-b {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.875rem;
   }
 
-  .text-heading-s {
+  .typography-heading-s {
     font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.875rem;
   }
 
-  .text-heading-m {
+  .typography-heading-m {
     font-size: 1.5rem;
     font-weight: 500;
     line-height: 1.875rem;
   }
 
-  .text-heading-r {
+  .typography-heading-r {
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.875rem;
   }
 
-  .text-title-b {
+  .typography-title-b {
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 1.5rem;
   }
 
-  .text-title-s {
+  .typography-title-s {
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 1.5rem;
   }
 
-  .text-title-m {
+  .typography-title-m {
     font-size: 1.25rem;
     font-weight: 500;
     line-height: 1.5rem;
   }
 
-  .text-title-r {
+  .typography-title-r {
     font-size: 1.25rem;
     font-weight: 400;
     line-height: 1.5rem;
   }
 
-  .text-subtitle-b {
+  .typography-subtitle-b {
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-s {
+  .typography-subtitle-s {
     font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-m {
+  .typography-subtitle-m {
     font-size: 1.125rem;
     font-weight: 500;
     line-height: 1.375rem;
   }
 
-  .text-subtitle-r {
+  .typography-subtitle-r {
     font-size: 1.125rem;
     font-weight: 400;
     line-height: 1.375rem;
   }
 
-  .text-body-b {
+  .typography-body-b {
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.125rem;
   }
 
-  .text-body-s {
+  .typography-body-s {
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.125rem;
   }
 
-  .text-body-m {
+  .typography-body-m {
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.125rem;
   }
 
-  .text-body-r {
+  .typography-body-r {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.125rem;
   }
 
-  .text-caption-b {
+  .typography-body-small-b {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1rem;
+  }
+  .typography-body-small-s {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1rem;
+  }
+  .typography-body-small-m {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1rem;
+  }
+  .typography-body-small-r {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1rem;
+  }
+
+  .typography-caption-b {
     font-size: 0.75rem;
     font-weight: 700;
     line-height: 1rem;
   }
 
-  .text-caption-s {
+  .typography-caption-s {
     font-size: 0.75rem;
     font-weight: 600;
     line-height: 1rem;
   }
 
-  .text-caption-m {
+  .typography-caption-m {
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1rem;
   }
 
-  .text-caption-r {
+  .typography-caption-r {
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 1rem;
   }
 
-  .text-label-b {
+  .typography-label-b {
     font-size: 0.625rem;
     font-weight: 700;
     line-height: 0.75rem;
   }
 
-  .text-label-s {
+  .typography-label-s {
     font-size: 0.625rem;
     font-weight: 600;
     line-height: 0.75rem;
   }
 
-  .text-label-m {
+  .typography-label-m {
     font-size: 0.625rem;
     font-weight: 500;
     line-height: 0.75rem;
   }
 
-  .text-label-r {
+  .typography-label-r {
     font-size: 0.625rem;
     font-weight: 400;
     line-height: 0.75rem;

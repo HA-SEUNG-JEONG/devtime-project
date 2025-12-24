@@ -70,7 +70,7 @@ export function Color() {
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-notice"></div>
             <div className="text-xs font-medium">Notice</div>
-            <div className="text-xs text-gray-500">#F8BF24</div>
+            <div className="text-xs text-gray-500">#FBBF24</div>
           </div>
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-positive"></div>
@@ -92,27 +92,27 @@ export function Color() {
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-informative-light"></div>
             <div className="text-xs font-medium">Informative</div>
-            <div className="text-xs text-gray-500">#93CAFF</div>
+            <div className="text-xs text-gray-500">#53B2FF</div>
           </div>
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-negative-light"></div>
             <div className="text-xs font-medium">Negative</div>
-            <div className="text-xs text-gray-500">#FCA5A5</div>
+            <div className="text-xs text-gray-500">#FF6363</div>
           </div>
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-notice-light"></div>
             <div className="text-xs font-medium">Notice</div>
-            <div className="text-xs text-gray-500">#FDE68A</div>
+            <div className="text-xs text-gray-500">#FFDB7F</div>
           </div>
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-positive-light"></div>
             <div className="text-xs font-medium">Positive</div>
-            <div className="text-xs text-gray-500">#86EFAC</div>
+            <div className="text-xs text-gray-500">#62EC95</div>
           </div>
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-secondary-fuchsia-light"></div>
             <div className="text-xs font-medium">Fuchsia</div>
-            <div className="text-xs text-gray-500">#F9A8F4</div>
+            <div className="text-xs text-gray-500">#FF87F5</div>
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@ export function Color() {
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-100"></div>
             <div className="text-xs font-medium">100</div>
-            <div className="text-xs text-gray-500">#F3F4F6</div>
+            <div className="text-xs text-gray-500">#F0F2F5</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-200"></div>
@@ -144,31 +144,31 @@ export function Color() {
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-300"></div>
             <div className="text-xs font-medium">300</div>
-            <div className="text-xs text-gray-500">#D1D5DB</div>
+            <div className="text-xs text-gray-500">#CCD0D6</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-400"></div>
             <div className="text-xs font-medium">400</div>
-            <div className="text-xs text-gray-500">#9CA3AF</div>
+            <div className="text-xs text-gray-500">#969DA8</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-500"></div>
-            <div className="text-xs font-medium text-white">500</div>
-            <div className="text-xs text-gray-500">#6B7280</div>
+            <div className="text-xs font-medium">500</div>
+            <div className="text-xs text-gray-500">#717887</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-600"></div>
-            <div className="text-xs font-medium text-white">600</div>
+            <div className="text-xs font-medium">600</div>
             <div className="text-xs text-gray-500">#4B5563</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-700"></div>
-            <div className="text-xs font-medium text-white">700</div>
-            <div className="text-xs text-gray-500">#374151</div>
+            <div className="text-xs font-medium">700</div>
+            <div className="text-xs text-gray-500">#394252</div>
           </div>
           <div className="space-y-2">
             <div className="h-16 rounded-lg bg-gray-800"></div>
-            <div className="text-xs font-medium text-white">800</div>
+            <div className="text-xs font-medium">800</div>
             <div className="text-xs text-gray-500">#1f2937</div>
           </div>
         </div>
