@@ -49,7 +49,7 @@ export const PrimaryColors: Story = {
           <p className="text-xs text-gray-500">#4C79FF</p>
         </div>
         <div>
-          <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-primary-0 to-secondary-indigo" />
+          <div className="w-24 h-24 rounded-lg bg-linear-to-br from-primary-0 to-secondary-indigo" />
           <p className="mt-2 text-sm font-medium">Gradient</p>
           <p className="text-xs text-gray-500">#4C79FF→#023E99</p>
         </div>

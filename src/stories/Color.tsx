@@ -23,7 +23,7 @@ export function Color() {
             <div className="text-xs text-gray-500">#B3C9FF</div>
           </div>
           <div className="space-y-2">
-            <div className="h-24 rounded-lg bg-gradient-to-r from-primary-0 to-secondary-indigo"></div>
+            <div className="h-24 rounded-lg bg-linear-to-r from-primary-0 to-secondary-indigo"></div>
             <div className="text-sm font-medium">Gradient</div>
             <div className="text-xs text-gray-500">#4C79FF/#023E99</div>
           </div>
