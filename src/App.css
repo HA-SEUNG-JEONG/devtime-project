@@ -85,6 +85,61 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* 컬러 */
+
+  --color-primary-0: #4c79ff;
+  --color-primary-10: #e6ecff;
+  --color-primary-30: #b3c9ff;
+  --color-primary-alt: #78b0ff;
+  --color-primary-alt-10: #e6f0ff;
+  --color-primary-alt-30: #c2ddff;
+
+  --color-white: #ffffff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+
+  --color-secondary-indigo: #023e99;
+  --color-secondary-informative: #2683e8;
+  --color-secondary-negative: #dc2626;
+  --color-secondary-notice: #f8bf24;
+  --color-secondary-positive: #22c55e;
+  --color-secondary-fuchsia: #fd28ec;
+
+  --color-secondary-indigo-light: #a3c3ff;
+  --color-secondary-informative-light: #93caff;
+  --color-secondary-negative-light: #fca5a5;
+  --color-secondary-notice-light: #fde68a;
+  --color-secondary-positive-light: #86efac;
+  --color-secondary-fuchsia-light: #f9a8f4;
+
+  --color-disabled: #9ca3af;
+  --color-hover: rgba(76, 121, 255, 0.1);
+  --color-active: rgba(76, 121, 255, 0.1);
+  --color-focus: #4c79ff;
+  --color-dim-50: rgba(0, 0, 0, 0.5);
+
+  --spacing-0\.5: 0.125rem; /* 2px */
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-9: 2.25rem; /* 36px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-14: 3.5rem; /* 56px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-18: 4.5rem; /* 72px */
 }
 
 :root {
@@ -162,5 +217,152 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  /* 타이포그래피 */
+  .text-heading-b {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.875rem;
+  }
+
+  .text-heading-s {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.875rem;
+  }
+
+  .text-heading-m {
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.875rem;
+  }
+
+  .text-heading-r {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.875rem;
+  }
+
+  .text-title-b {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5rem;
+  }
+
+  .text-title-s {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+  }
+
+  .text-title-m {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+  }
+
+  .text-title-r {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+  }
+
+  .text-subtitle-b {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.375rem;
+  }
+
+  .text-subtitle-s {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.375rem;
+  }
+
+  .text-subtitle-m {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.375rem;
+  }
+
+  .text-subtitle-r {
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.375rem;
+  }
+
+  .text-body-b {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.125rem;
+  }
+
+  .text-body-s {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.125rem;
+  }
+
+  .text-body-m {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.125rem;
+  }
+
+  .text-body-r {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.125rem;
+  }
+
+  .text-caption-b {
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1rem;
+  }
+
+  .text-caption-s {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+  }
+
+  .text-caption-m {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1rem;
+  }
+
+  .text-caption-r {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1rem;
+  }
+
+  .text-label-b {
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 0.75rem;
+  }
+
+  .text-label-s {
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 0.75rem;
+  }
+
+  .text-label-m {
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 0.75rem;
+  }
+
+  .text-label-r {
+    font-size: 0.625rem;
+    font-weight: 400;
+    line-height: 0.75rem;
   }
 }
