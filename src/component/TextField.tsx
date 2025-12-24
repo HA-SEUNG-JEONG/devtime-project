@@ -7,23 +7,25 @@ import {
 } from "@/components/ui/input-group";
 import { CustomButton } from "./CustomButton";
 
-interface TextBoxContextValue {
+interface TextFieldContextValue {
   id: string;
   value?: string;
   defaultValue?: string;
 }
 
-const TextBoxContext = React.createContext<TextBoxContextValue | null>(null);
+const TextFieldContext = React.createContext<TextFieldContextValue | null>(
+  null,
+);
 
-const useTextBoxContext = () => {
-  const context = React.useContext(TextBoxContext);
+const useTextFieldContext = () => {
+  const context = React.useContext(TextFieldContext);
   if (!context) {
-    throw new Error("TextBox subcomponents must be used within TextBox");
+    throw new Error("TextField subcomponents must be used within TextBox");
   }
   return context;
 };
 
-interface TextBoxProps {
+interface TextFieldProps {
   id?: string;
   value?: string;
   defaultValue?: string;
@@ -31,32 +33,32 @@ interface TextBoxProps {
   children: React.ReactNode;
 }
 
-const TextBox = ({
-  id = "text-box",
+const TextField = ({
+  id = "text-field",
   value,
   defaultValue,
   className,
   children,
-}: TextBoxProps) => {
+}: TextFieldProps) => {
   const contextValue = React.useMemo(
     () => ({ id, value, defaultValue }),
     [id, value, defaultValue],
   );
 
   return (
-    <TextBoxContext.Provider value={contextValue}>
+    <TextFieldContext.Provider value={contextValue}>
       <div className={cn("flex flex-col gap-1", className)}>{children}</div>
-    </TextBoxContext.Provider>
+    </TextFieldContext.Provider>
   );
 };
 
-interface TextBoxLabelProps {
+interface TextFieldLabelProps {
   className?: string;
   children: React.ReactNode;
 }
 
-const TextBoxLabel = ({ className, children }: TextBoxLabelProps) => {
-  const { id } = useTextBoxContext();
+const TextFieldLabel = ({ className, children }: TextFieldLabelProps) => {
+  const { id } = useTextFieldContext();
 
   return (
     <label
@@ -68,17 +70,20 @@ const TextBoxLabel = ({ className, children }: TextBoxLabelProps) => {
   );
 };
 
-interface TextBoxInputProps extends Omit<React.ComponentProps<"input">, "id"> {
+interface TextFieldInputProps extends Omit<
+  React.ComponentProps<"input">,
+  "id"
+> {
   className?: string;
   hasButton?: boolean;
 }
 
-const TextBoxInput = ({
+const TextFieldInput = ({
   className,
   hasButton = false,
   ...props
-}: TextBoxInputProps) => {
-  const { id } = useTextBoxContext();
+}: TextFieldInputProps) => {
+  const { id } = useTextFieldContext();
 
   if (hasButton) {
     return (
@@ -108,7 +113,7 @@ const TextBoxInput = ({
   );
 };
 
-interface TextBoxButtonProps {
+interface TextFieldButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
@@ -117,15 +122,15 @@ interface TextBoxButtonProps {
   type?: "inline" | "external";
 }
 
-const TextBoxButton = ({
+const TextFieldButton = ({
   children,
   onClick,
   disabled,
   className,
   variant = "secondary",
   type = "inline",
-}: TextBoxButtonProps) => {
-  const { value, defaultValue } = useTextBoxContext();
+}: TextFieldButtonProps) => {
+  const { value, defaultValue } = useTextFieldContext();
   const inputValue = value ?? defaultValue;
 
   if (type === "inline") {
@@ -161,7 +166,7 @@ interface TextBoxHelperTextProps {
   variant?: "default" | "success" | "error" | "warning";
 }
 
-const TextBoxHelperText = ({
+const TextFieldHelperText = ({
   className,
   children,
   variant = "default",
@@ -180,9 +185,9 @@ const TextBoxHelperText = ({
   );
 };
 
-TextBox.Label = TextBoxLabel;
-TextBox.Input = TextBoxInput;
-TextBox.Button = TextBoxButton;
-TextBox.HelperText = TextBoxHelperText;
+TextField.Label = TextFieldLabel;
+TextField.Input = TextFieldInput;
+TextField.Button = TextFieldButton;
+TextField.HelperText = TextFieldHelperText;
 
-export default TextBox;
+export default TextField;

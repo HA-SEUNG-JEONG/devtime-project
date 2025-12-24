@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import TextBox from "./TextBox";
+import TextBox from "./TextField";
 
 const meta = {
   title: "Component/TextBox",
