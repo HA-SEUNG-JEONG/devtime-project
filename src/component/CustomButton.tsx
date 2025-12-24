@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps {
@@ -9,7 +10,7 @@ export interface ButtonProps {
 }
 
 /** Primary UI component for user interaction */
-export const Button = ({
+export const CustomButton = ({
   label,
   variant = "primary",
   disabled = false,
@@ -27,12 +28,31 @@ export const Button = ({
   }[variant];
 
   return (
-    <button
-      className={`text-body-b ${cn(baseClasses, "w-full", variantClasses, className)}`}
+    <Button
+      variant={
+        variant as
+          | "primary"
+          | "secondary"
+          | "tertiary"
+          | "link"
+          | "default"
+          | "destructive"
+          | "outline"
+          | "ghost"
+          | null
+          | undefined
+      }
       disabled={disabled}
+      className={cn(
+        "typography-body-b",
+        baseClasses,
+        "w-full",
+        variantClasses,
+        className,
+      )}
       {...props}
     >
       {label}
-    </button>
+    </Button>
   );
 };
