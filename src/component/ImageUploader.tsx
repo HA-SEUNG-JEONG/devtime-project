@@ -13,13 +13,6 @@ const ImageUploader = () => {
     inputRef.current?.click();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleClick();
-    }
-  };
-
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setError(null);
@@ -78,13 +71,7 @@ const ImageUploader = () => {
       <label htmlFor="image-uploader">Label</label>
       <div className="flex flex-col gap-2">
 
-          <div
-            role="button"
-            tabIndex={0}
-            className="border-primary-0 relative mr-3 flex h-32 w-32 items-center justify-center rounded-md border-2 border-dashed cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-0 focus:ring-offset-2"
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-          >
+          <div className="relative mr-3 size-30">
             <input
               type="file"
               accept="image/png, image/jpeg, image/gif"
@@ -93,9 +80,8 @@ const ImageUploader = () => {
               className="hidden"
               onChange={handleImageChange}
             />
-
             {imageUrl ? (
-              <>
+              <div className="border-primary-0 relative flex h-full w-full items-center justify-center rounded-md border-2 border-dashed">
                 <img
                   src={imageUrl}
                   alt="업로드된 이미지"
@@ -109,12 +95,13 @@ const ImageUploader = () => {
                 >
                   <TrashIcon size={24} className="text-primary-0" />
                 </button>
-              </>
+              </div>
             ) : (
               <button
                 type="button"
-                className="rounded-md p-2"
+                className="border-primary-0 flex h-full w-full items-center justify-center rounded-md border-2 border-dashed cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-0 focus:ring-offset-2 p-2"
                 aria-label="이미지 업로드"
+                onClick={handleClick}
               >
                 <PlusIcon size={36} className="text-primary-0" />
               </button>
