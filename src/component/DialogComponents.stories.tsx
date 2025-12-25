@@ -5,13 +5,12 @@ import type { StoryObj } from "@storybook/react-vite";
 const meta = {
   title: "Component/Dialog",
   component: DialogComponents,
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof DialogComponents>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  args: { children: null },
-  render: () => <DialogComponents />
+  render: () => <DialogComponents />,
 };

@@ -6,46 +6,36 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose
+  DialogClose,
 } from "@/components/ui/dialog";
-import { Button } from "./Button";
+import { Button } from "@/components/ui/button";
+import { CustomButton } from "./CustomButton";
 
 const DialogComponents = () => {
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="secondary" label="Open Dialog" />
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="typography-title-s text-gray-800">
-              Edit profile
-            </DialogTitle>
-            <DialogDescription className="typography-body-m text-gray-600">
-              Make changes to your profile here. Click save when you&apos;re
-              done.
-            </DialogDescription>
-          </DialogHeader>
+      <DialogTrigger asChild>
+        <Button variant="secondary">Open Dialog</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle className="typography-title-s text-gray-800">
+            Edit profile
+          </DialogTitle>
+          <DialogDescription className="typography-body-m text-gray-600">
+            Make changes to your profile here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
 
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button
-                variant="secondary"
-                label="Cancel"
-                className="typography-subtitle-s"
-              />
-            </DialogClose>
-            <DialogClose asChild>
-              <Button
-                variant="primary"
-                label="Save changes"
-                className="typography-subtitle-s"
-              />
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+        <DialogFooter className="gap-2">
+          <DialogClose asChild>
+            <CustomButton variant="secondary" label="Cancel" />
+          </DialogClose>
+          <DialogClose asChild>
+            <CustomButton variant="primary" label="Save changes" />
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 };
