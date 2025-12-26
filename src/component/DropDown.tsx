@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
-interface CustomDropdownProps {
+interface DropdownProps {
   label?: string;
   placeholder?: string;
   items: {id: number, label: string}[];
@@ -23,7 +23,7 @@ const DropDown = ({
   items,
   onSelect,
   defaultValue
-}: CustomDropdownProps) => {
+}: DropdownProps) => {
   const [selectedValue, setSelectedValue] = useState<string | null>(
     defaultValue || null
   );
@@ -40,25 +40,25 @@ const DropDown = ({
       <label className="text-sm font-medium text-foreground">{label}</label>
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className="w-full justify-between bg-background hover:bg-background border-input"
-          >
-            <span
+          <div className="relative w-full">
+            <Input
+              readOnly
+              value={selectedValue || ""}
+              placeholder={placeholder}
               className={
                 selectedValue
-                  ? "typography-body-b text-foreground"
-                  : "typography-body-m text-muted-foreground"
+                  ? "typography-body-b text-foreground pr-10"
+                  : "typography-body-m text-muted-foreground pr-10"
               }
-            >
-              {selectedValue || placeholder}
-            </span>
-            {isOpen ? (
-              <ChevronUp className="text-primary-0" />
-            ) : (
-              <ChevronDown className="text-primary-0" />
-            )}
-          </Button>
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              {isOpen ? (
+                <ChevronUp className="text-primary-0" />
+              ) : (
+                <ChevronDown className="text-primary-0" />
+              )}
+            </div>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) bg-white border-border shadow-lg">
           {items.map((item, index) => (
