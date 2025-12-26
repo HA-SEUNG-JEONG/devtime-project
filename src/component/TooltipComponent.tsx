@@ -1,15 +1,16 @@
 import {
   Tooltip,
   TooltipTrigger,
-  TooltipContent
+  TooltipContent,
 } from "@/components/ui/tooltip";
-import { Button } from "./Button";
 
 const TooltipComponent = () => {
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger>
-        <Button label="Hover" variant="primary" />
+        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
+          Hover
+        </button>
       </TooltipTrigger>
       <TooltipContent side="bottom">Hover</TooltipContent>
     </Tooltip>
