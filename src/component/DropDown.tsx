@@ -12,7 +12,7 @@ import {
 interface CustomDropdownProps {
   label?: string;
   placeholder?: string;
-  items: string[];
+  items: {id: number, label: string}[];
   onSelect?: (value: string) => void;
   defaultValue?: string;
 }
@@ -62,19 +62,19 @@ const DropDown = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) bg-white border-border shadow-lg">
           {items.map((item, index) => (
-            <div key={index}>
+            <div key={item.id}>
               <DropdownMenuItem
                 className="cursor-pointer hover:bg-accent focus:bg-accent data-highlighted:bg-accent"
-                onClick={() => handleSelect(item)}
+                onClick={() => handleSelect(item.label)}
               >
                 <span
                   className={
-                    selectedValue === item
+                    selectedValue === item.label
                       ? "text-primary-0"
                       : "text-foreground"
                   }
                 >
-                  {item}
+                  {item.label}
                 </span>
               </DropdownMenuItem>
               {index < items.length - 1 && <DropdownMenuSeparator />}

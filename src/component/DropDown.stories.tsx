@@ -13,66 +13,58 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const items = [
+  {id: 1, label: "Option A"},
+  {id: 2, label: "Option B"},
+  {id: 3, label: "Option C"}
+];
+
+const koreanItems = [
+  {id: 1, label: "첫 번째 항목"},
+  {id: 2, label: "두 번째 항목"},
+  {id: 3, label: "세 번째 항목"},
+  {id: 4, label: "네 번째 항목"}
+];
+
+const longItems = [
+  {id: 1, label: "This is a very long first item text"},
+  {id: 2, label: "Another long item with lots of text"},
+  {id: 3, label: "Short"},
+  {id: 4, label: "Medium length item"}
+];
+
+
+
 const defaultItems = [
-  "First Item",
-  "Second Item",
-  "Third Item",
-  "Fourth Item",
-  "Fifth Item",
-  "Last Item"
+  {id: 1, label: "First Item"},
+  {id: 2, label: "Second Item"},
+  {id: 3, label: "Third Item"},
+  {id: 4, label: "Fourth Item"},
+  {id: 5, label: "Fifth Item"},
+  {id: 6, label: "Last Item"}
 ];
 
 const manyItems = [
-  "First Item",
-  "Second Item",
-  "Third Item",
-  "Fourth Item",
-  "Fifth Item",
-  "Sixth Item",
-  "Seventh Item",
-  "Eighth Item",
-  "Ninth Item",
-  "Tenth Item",
-  "First Item",
-  "Second Item",
-  "Third Item",
-  "Fourth Item",
-  "Fifth Item",
-  "Sixth Item",
-  "Seventh Item",
-  "Eighth Item",
-  "Ninth Item",
-  "Tenth Item",
-  "Eleventh Item",
-  "Second Item",
-  "Third Item",
-  "Fourth Item",
-  "Fifth Item",
-  "Sixth Item",
-  "Seventh Item",
-  "Eighth Item",
-  "Ninth Item",
-  "Tenth Item",
-  "Eleventh Item",
-  "Second Item",
-  "Third Item",
-  "Fourth Item",
-  "Fifth Item",
-  "Sixth Item",
-  "Seventh Item",
-  "Eighth Item",
-  "Ninth Item",
-  "Tenth Item",
-  "Eleventh Item",
-  "Twelfth Item",
-  "Thirteenth Item",
-  "Fourteenth Item",
-  "Fifteenth Item",
-  "Sixteenth Item",
-  "Seventeenth Item",
-  "Eighteenth Item",
-  "Nineteenth Item",
-  "Twentieth Item"
+  {id: 1, label: "First Item"}    ,
+  {id: 2, label: "Second Item"},
+  {id: 3, label: "Third Item"},
+  {id: 4, label: "Fourth Item"},
+  {id: 5, label: "Fifth Item"},
+  {id: 6, label: "Sixth Item"},
+  {id: 7, label: "Seventh Item"},
+  {id: 8, label: "Eighth Item"},
+  {id: 9, label: "Ninth Item"},
+  {id: 10, label: "Tenth Item"},
+  {id: 11, label: "Eleventh Item"},
+  {id: 12, label: "Twelfth Item"},
+  {id: 13, label: "Thirteenth Item"},
+  {id: 14, label: "Fourteenth Item"},
+  {id: 15, label: "Fifteenth Item"},
+  {id: 16, label: "Sixteenth Item"},
+  {id: 17, label: "Seventeenth Item"},
+  {id: 18, label: "Eighteenth Item"},
+  {id: 19, label: "Nineteenth Item"},
+  {id: 20, label: "Twentieth Item"}
 ];
 
 export const Default: Story = {
@@ -104,7 +96,7 @@ export const ShortList: Story = {
   args: {
     label: "Dropdown Label",
     placeholder: "Choose",
-    items: ["Option A", "Option B", "Option C"]
+    items: items
   }
 };
 
@@ -112,12 +104,7 @@ export const LongLabels: Story = {
   args: {
     label: "Very Long Dropdown Label Example",
     placeholder: "This is a very long placeholder text",
-    items: [
-      "This is a very long first item text",
-      "Another long item with lots of text",
-      "Short",
-      "Medium length item"
-    ]
+    items: longItems
   }
 };
 
@@ -125,7 +112,7 @@ export const KoreanText: Story = {
   args: {
     label: "드롭다운 레이블",
     placeholder: "선택하세요",
-    items: ["첫 번째 항목", "두 번째 항목", "세 번째 항목", "네 번째 항목"],
+    items: koreanItems,
     defaultValue: "첫 번째 항목"
   }
 };
