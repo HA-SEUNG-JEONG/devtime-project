@@ -22,6 +22,7 @@ const NavBar = () => {
       <HorizontalLogo className="mr-4 cursor-pointer" />
       <div className="flex flex-1 items-center gap-4">
         <button
+          type="button"
           onClick={() => {
             /* 대시보드로 이동 */
           }}
