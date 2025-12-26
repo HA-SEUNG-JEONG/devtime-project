@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps {
@@ -6,14 +7,16 @@ export interface ButtonProps {
   variant: "primary" | "secondary" | "tertiary";
   disabled?: boolean;
   className?: string;
+  fullWidth?: boolean;
 }
 
 /** Primary UI component for user interaction */
-export const Button = ({
+export const CustomButton = ({
   label,
   variant = "primary",
   disabled = false,
   className,
+  fullWidth = false,
   ...props
 }: ButtonProps) => {
   const baseClasses = "px-4 py-3 rounded-[5px]";
@@ -23,16 +26,23 @@ export const Button = ({
     secondary:
       "bg-primary-10 text-primary-0 disabled:bg-gray-200 disabled:text-disabled disabled:cursor-not-allowed hover:bg-[#4C79FF1A] hover:cursor-pointer active:bg-[#4C79FF1A] focus:border-secondary-fuchsia focus:bg-active focus:border-[1.5px] focus:border-solid",
     tertiary:
-      "bg-gray-50 text-primary-0 disabled:bg-gray-200 disabled:text-disabled disabled:cursor-not-allowed hover:bg-[#0000001A] hover:cursor-pointer active:bg-[#0000001A] focus:border-secondary-fuchsia focus:bg-gray-50  focus:border-[1.5px] focus:border-solid"
+      "bg-gray-50 text-primary-0 disabled:bg-gray-200 disabled:text-disabled disabled:cursor-not-allowed hover:bg-[#0000001A] hover:cursor-pointer active:bg-[#0000001A] focus:border-secondary-fuchsia focus:bg-gray-50  focus:border-[1.5px] focus:border-solid",
   }[variant];
 
   return (
-    <button
-      className={`text-body-b ${cn(baseClasses, "w-full", variantClasses, className)}`}
+    <Button
+      variant={variant}
       disabled={disabled}
+      className={`typography-body-b ${cn(
+
+        baseClasses,
+        fullWidth && "w-full",
+        variantClasses,
+        className,
+      )}`}
       {...props}
     >
       {label}
-    </button>
+    </Button>
   );
 };
