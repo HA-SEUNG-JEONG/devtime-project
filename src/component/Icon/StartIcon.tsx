@@ -1,0 +1,32 @@
+import type { IconProps } from "./types";
+
+interface TimerIconProps extends IconProps {
+  onClick?: () => void;
+}
+
+const StartIcon = ({
+  size = 100,
+  className,
+  disabled = false,
+  onClick,
+}: TimerIconProps) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${disabled ? "cursor-not-allowed" : "cursor-pointer"} ${className || ""}`}
+      aria-label="시작"
+      onClick={disabled ? undefined : onClick}
+    >
+      <path
+        d="M87.6727 45.5679C90.7758 47.5378 90.7758 52.4623 87.6727 54.4321L16.9818 99.3067C13.8788 101.277 10 98.8143 10 94.8747L10 5.12534C10 1.18573 13.8788 -1.27653 16.9818 0.693278L87.6727 45.5679Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export default StartIcon;
