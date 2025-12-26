@@ -1,5 +1,6 @@
-import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export interface ButtonProps {
   label: string;
@@ -10,7 +11,6 @@ export interface ButtonProps {
   fullWidth?: boolean;
 }
 
-/** Primary UI component for user interaction */
 export const CustomButton = ({
   label,
   variant = "primary",
