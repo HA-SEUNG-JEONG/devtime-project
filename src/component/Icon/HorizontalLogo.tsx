@@ -1,4 +1,3 @@
-import React from "react";
 import type { IconProps } from "./types";
 
 const HorizontalLogo = ({ size = 148, className }: IconProps) => {
@@ -12,6 +11,7 @@ const HorizontalLogo = ({ size = 148, className }: IconProps) => {
       className={className}
       aria-label="로고"
     >
+      <title>로고</title>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
@@ -64,7 +64,7 @@ const HorizontalLogo = ({ size = 148, className }: IconProps) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#4C79FF" />
-          <stop offset="1" stop-color="#023E99" />
+          <stop offset="1" stopColor="#023E99" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_40000429_8995"
@@ -152,7 +152,7 @@ const HorizontalLogo = ({ size = 148, className }: IconProps) => {
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#4C79FF" />
-          <stop offset="1" stop-color="#023E99" />
+          <stop offset="1" stopColor="#023E99" />
         </linearGradient>
       </defs>
     </svg>

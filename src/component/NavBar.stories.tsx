@@ -5,17 +5,13 @@ const meta = {
   title: "Component/NavBar",
   component: NavBar,
   parameters: {
-    layout: "fullscreen"
+    layout: "fullscreen",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof NavBar>;
 
 type Story = StoryObj<typeof meta>;
 
 export default meta;
 
-export const Default: Story = {
-  args: {
-    title: "NavBar"
-  }
-};
+export const Default: Story = {};
