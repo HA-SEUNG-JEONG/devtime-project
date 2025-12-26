@@ -8,14 +8,15 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { CustomButton } from "./CustomButton";
 
 const DialogContainer = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary">Open Dialog</Button>
+        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
+          다이얼로그 열기
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
