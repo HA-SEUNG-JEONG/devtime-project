@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useId } from "react";
 import { Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,6 @@ interface CustomAutocompleteProps {
   items: { id: number; name: string }[];
   onSelect?: (value: string) => void;
   handleAddNewItem?: (value: string) => void;
-  maxSuggestions?: number;
 }
 
 const AutoComplete = ({
@@ -19,15 +18,16 @@ const AutoComplete = ({
   placeholder = "Placeholder",
   items,
   onSelect,
-  handleAddNewItem
+  handleAddNewItem,
 }: CustomAutocompleteProps) => {
+  const autocompleteId = useId();
   const [inputValue, setInputValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = inputValue
     ? items.filter((item: { id: number; name: string }) =>
-        item.name.toLowerCase().startsWith(inputValue.toLowerCase())
+        item.name.toLowerCase().startsWith(inputValue.toLowerCase()),
       )
     : [];
 
@@ -60,16 +60,13 @@ const AutoComplete = ({
   };
 
   const highlightMatch = (text: string, query: string) => {
-    const index = text.toLowerCase().indexOf(query.toLowerCase());
-    if (index === -1) return <>{text}</>;
-
     return (
       <>
         <span className="typography-body-b">
-          {text.substring(0, index + query.length)}
+          {text.substring(0, query.length)}
         </span>
         <span className="text-muted-foreground typography-body-r">
-          {text.substring(index + query.length)}
+          {text.substring(query.length)}
         </span>
       </>
     );
@@ -77,11 +74,15 @@ const AutoComplete = ({
 
   return (
     <div className="relative" ref={containerRef}>
-      <label className="block text-sm font-medium text-foreground mb-2">
+      <label
+        htmlFor={autocompleteId}
+        className="typography-body-b text-foreground mb-2"
+      >
         {label}
       </label>
       <Input
         type="text"
+        id={autocompleteId}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
@@ -92,14 +93,15 @@ const AutoComplete = ({
       />
 
       {isOpen && (filteredItems.length > 0 || showAddNewItem) && (
-        <div className="absolute z-50 mt-2 w-full rounded-lg border border-border bg-white shadow-lg">
+        <div className="border-border absolute z-50 mt-2 w-full rounded-lg border bg-white shadow-lg">
           {filteredItems.length > 0 && (
             <div className="max-h-[300px] overflow-y-auto p-1">
               {filteredItems.map((item) => (
                 <button
+                  type="button"
                   key={item.id}
                   onClick={() => handleSelect(item.name)}
-                  className="w-full text-left px-3 py-2 text-base hover:bg-accent rounded-md transition-colors"
+                  className="hover:bg-accent w-full rounded-md px-3 py-2 text-left text-base transition-colors"
                 >
                   {highlightMatch(item.name, inputValue)}
                 </button>
@@ -110,15 +112,15 @@ const AutoComplete = ({
           {showAddNewItem && (
             <>
               {filteredItems.length > 0 && (
-                <div className="border-t border-border" />
+                <div className="border-border border-t" />
               )}
               <div className="p-1">
                 <Button
-                  variant="ghost"
+                  variant="tertiary"
                   onClick={() => handleAddNewItem?.(inputValue)}
-                  className="w-full justify-start text-[#3B5CF8] hover:bg-accent hover:text-[#3B5CF8] font-semibold"
+                  className="text-primary-0 hover:bg-accent hover:text-primary-0 w-full justify-start bg-transparent font-semibold"
                 >
-                  <Plus className="h-4 w-4 mr-2" />
+                  <Plus className="mr-2 h-4 w-4" />
                   Add New Item
                 </Button>
               </div>

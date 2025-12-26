@@ -79,7 +79,7 @@ export const NoAddButton: Story = {
     label: "Autocomplete Label",
     placeholder: "Type to filter",
     items: defaultItems
-    // No onAddNew prop - button won't show
+
   }
 };
 
