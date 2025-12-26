@@ -5,9 +5,9 @@ const meta = {
   title: "TextAreaComponent",
   component: TextAreaComponent,
   parameters: {
-    layout: "centered"
+    layout: "centered",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof TextAreaComponent>;
 
 export default meta;
@@ -15,5 +15,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {}
+  args: {
+    placeholder: "Type your message here.",
+  },
 };

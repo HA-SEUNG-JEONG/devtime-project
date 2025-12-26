@@ -1,7 +1,11 @@
 import { Textarea } from "@/components/ui/textarea";
 
-const TextAreaComponent = () => {
-  return <Textarea placeholder="Type your message here." />;
+interface TextAreaComponentProps {
+  placeholder?: string;
+}
+
+const TextAreaComponent = ({ placeholder }: TextAreaComponentProps) => {
+  return <Textarea placeholder={placeholder} />;
 };
 
 export default TextAreaComponent;
