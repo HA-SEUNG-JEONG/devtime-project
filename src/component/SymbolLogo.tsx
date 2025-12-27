@@ -10,6 +10,7 @@ const SymbolLogo = ({ size = 42, className }: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-label="심볼 로고"
+      role="img"
     >
       <g clipPath="url(#clip0_40000429_8915)">
         <path
