@@ -1,6 +1,15 @@
 import type { IconProps } from "./types";
 
-const ResetIcon = ({ size = 48, className }: IconProps) => {
+interface ResetIconProps extends IconProps {
+  onClick?: () => void;
+}
+
+const ResetIcon = ({
+  size = 48,
+  className,
+  disabled = false,
+  onClick,
+}: ResetIconProps) => {
   return (
     <svg
       width={size}
@@ -8,8 +17,9 @@ const ResetIcon = ({ size = 48, className }: IconProps) => {
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`${disabled ? "cursor-not-allowed" : ""} ${className || ""}`}
       aria-label="초기화"
+      onClick={disabled ? undefined : onClick}
     >
       <path
         fillRule="evenodd"

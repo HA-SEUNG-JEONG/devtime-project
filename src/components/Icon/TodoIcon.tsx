@@ -1,6 +1,15 @@
 import type { IconProps } from "./types";
 
-const TodoIcon = ({ size = 48, className }: IconProps) => {
+interface TodoIconProps extends IconProps {
+  onClick?: () => void;
+}
+
+const TodoIcon = ({
+  size = 48,
+  className,
+  disabled = false,
+  onClick,
+}: TodoIconProps) => {
   return (
     <svg
       width={size}
@@ -8,8 +17,9 @@ const TodoIcon = ({ size = 48, className }: IconProps) => {
       viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={className}
+      className={`${disabled ? "cursor-not-allowed" : ""} ${className || ""}`}
       aria-label="할 일"
+      onClick={disabled ? undefined : onClick}
     >
       <path
         fillRule="evenodd"
