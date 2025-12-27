@@ -52,6 +52,10 @@ const TimerAction = ({
     }
   };
 
+  const checkCurrentVariant = (variant: "ready" | "in-progress" | "paused") => {
+    return variant === "ready" ? "text-disabled" : "text-primary-0";
+  };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex gap-[80px]">
@@ -74,15 +78,11 @@ const TimerAction = ({
       <div className="flex gap-6">
         <TodoIcon
           disabled={currentVariant === "ready"}
-          className={
-            currentVariant === "ready" ? "text-disabled" : "text-primary-0"
-          }
+          className={checkCurrentVariant(currentVariant)}
         />
         <ResetIcon
           disabled={currentVariant === "ready"}
-          className={
-            currentVariant === "ready" ? "text-disabled" : "text-primary-0"
-          }
+          className={checkCurrentVariant(currentVariant)}
         />
       </div>
     </div>
