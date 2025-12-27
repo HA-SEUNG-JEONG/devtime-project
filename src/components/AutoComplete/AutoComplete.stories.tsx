@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import AutoComplete from "./AutoComplete";
+
 import { fn } from "storybook/test";
+import AutoComplete from "./AutoComplete";
 
 const meta = {
   title: "Components/CustomAutocomplete",
   component: AutoComplete,
   parameters: {
-    layout: "centered"
+    layout: "centered",
   },
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 } satisfies Meta<typeof AutoComplete>;
 
 export default meta;
@@ -21,15 +22,15 @@ const defaultItems = [
   { id: 4, name: "AAGHR" },
   { id: 5, name: "AAATHCHYYU" },
   { id: 6, name: "BBCDEF" },
-  { id: 7, name: "ZZTEST" }
+  { id: 7, name: "ZZTEST" },
 ];
 
 export const Default: Story = {
   args: {
     label: "Autocomplete Label",
     placeholder: "Placeholder",
-    items: defaultItems
-  }
+    items: defaultItems,
+  },
 };
 
 export const WithInitialValue: Story = {
@@ -39,16 +40,16 @@ export const WithInitialValue: Story = {
     items: defaultItems,
     handleAddNewItem: fn((value: string) => {
       console.log("Add new item:", value);
-    })
-  }
+    }),
+  },
 };
 
 export const EmptyState: Story = {
   args: {
     label: "Autocomplete Label",
     placeholder: "Start typing...",
-    items: []
-  }
+    items: [],
+  },
 };
 
 export const LongList: Story = {
@@ -69,18 +70,17 @@ export const LongList: Story = {
       { id: 11, name: "Grape" },
       { id: 12, name: "Grapefruit" },
       { id: 13, name: "Guava" },
-      { id: 14, name: "Avocado" }
-    ]
-  }
+      { id: 14, name: "Avocado" },
+    ],
+  },
 };
 
 export const NoAddButton: Story = {
   args: {
     label: "Autocomplete Label",
     placeholder: "Type to filter",
-    items: defaultItems
-
-  }
+    items: defaultItems,
+  },
 };
 
 export const KoreanItems: Story = {
@@ -94,9 +94,9 @@ export const KoreanItems: Story = {
       { id: 4, name: "바나나" },
       { id: 5, name: "바다" },
       { id: 6, name: "포도" },
-      { id: 7, name: "포장" }
-    ]
-  }
+      { id: 7, name: "포장" },
+    ],
+  },
 };
 
 export const CaseSensitiveFiltering: Story = {
@@ -109,7 +109,7 @@ export const CaseSensitiveFiltering: Story = {
       { id: 3, name: "AaA" },
       { id: 4, name: "BBB" },
       { id: 5, name: "bbb" },
-      { id: 6, name: "BbB" }
-    ]
-  }
+      { id: 6, name: "BbB" },
+    ],
+  },
 };

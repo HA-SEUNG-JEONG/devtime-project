@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react-vite";
-import DialogContainer from "./DialogContainer";
 import type { StoryObj } from "@storybook/react-vite";
+import DialogContainer from "./DialogContainer";
 
 const meta = {
   title: "Components/Dialog",

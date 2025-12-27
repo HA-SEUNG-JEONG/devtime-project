@@ -1,6 +1,6 @@
-import PlusIcon from "@/component/Icon/PlusIcon";
+import PlusIcon from "@/components/Icon/PlusIcon";
 import { useRef, useState } from "react";
-import TrashIcon from "./Icon/TrashIcon";
+import TrashIcon from "../Icon/TrashIcon";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -70,52 +70,51 @@ const ImageUploader = () => {
     <div className="inline-flex flex-col items-start justify-center gap-2">
       <label htmlFor="image-uploader">Label</label>
       <div className="flex flex-col gap-2">
-
-          <div className="relative mr-3 size-30">
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/gif"
-              ref={inputRef}
-              id="image-uploader"
-              className="hidden"
-              onChange={handleImageChange}
-            />
-            {imageUrl ? (
-              <div className="border-primary-0 relative flex h-full w-full items-center justify-center rounded-md border-2 border-dashed">
-                <img
-                  src={imageUrl}
-                  alt="업로드된 이미지"
-                  className="h-full w-full rounded-md object-cover"
-                />
-                <button
-                  type="button"
-                  className="absolute top-1 right-1 bg-white rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-primary-0"
-                  onClick={handleDelete}
-                  aria-label="이미지 삭제"
-                >
-                  <TrashIcon size={24} className="text-primary-0" />
-                </button>
-              </div>
-            ) : (
+        <div className="relative mr-3 size-30">
+          <input
+            type="file"
+            accept="image/png, image/jpeg, image/gif"
+            ref={inputRef}
+            id="image-uploader"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+          {imageUrl ? (
+            <div className="border-primary-0 relative flex h-full w-full items-center justify-center rounded-md border-2 border-dashed">
+              <img
+                src={imageUrl}
+                alt="업로드된 이미지"
+                className="h-full w-full rounded-md object-cover"
+              />
               <button
                 type="button"
-                className="border-primary-0 flex h-full w-full items-center justify-center rounded-md border-2 border-dashed cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-0 focus:ring-offset-2 p-2"
-                aria-label="이미지 업로드"
-                onClick={handleClick}
+                className="focus:ring-primary-0 absolute top-1 right-1 rounded-full bg-white p-1 focus:ring-2 focus:outline-none"
+                onClick={handleDelete}
+                aria-label="이미지 삭제"
               >
-                <PlusIcon size={36} className="text-primary-0" />
+                <TrashIcon size={24} className="text-primary-0" />
               </button>
-            )}
-          </div>
-          <p className="typography-body-small-m self-end text-gray-500">
-            5MB 미만의 .png, .jpeg, .gif 파일
-          </p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="border-primary-0 focus:ring-primary-0 flex h-full w-full cursor-pointer items-center justify-center rounded-md border-2 border-dashed p-2 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              aria-label="이미지 업로드"
+              onClick={handleClick}
+            >
+              <PlusIcon size={36} className="text-primary-0" />
+            </button>
+          )}
         </div>
-        {error && (
-          <p className="typography-body-small-m text-red-500" role="alert">
-            {error}
-          </p>
-        )}
+        <p className="typography-body-small-m self-end text-gray-500">
+          5MB 미만의 .png, .jpeg, .gif 파일
+        </p>
+      </div>
+      {error && (
+        <p className="typography-body-small-m text-red-500" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 };

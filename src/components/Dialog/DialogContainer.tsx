@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { CustomButton } from "./CustomButton";
+import { CustomButton } from "../Button/CustomButton";
 
 const DialogContainer = () => {
   return (

@@ -1,9 +1,9 @@
-import SymbolLogo from "./SymbolLogo";
-import EditIcon from "./Icon/EditIcon";
-import TrashIcon from "./Icon/TrashIcon";
+import SymbolLogo from "../SymbolLogo";
+import EditIcon from "../Icon/EditIcon";
+import TrashIcon from "../Icon/TrashIcon";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import CheckIcon from "./Icon/CheckIcon";
+import CheckIcon from "../Icon/CheckIcon";
 
 interface TodoItemProps {
   backgroundColor?: string;
