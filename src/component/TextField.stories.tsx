@@ -3,7 +3,7 @@ import { useState } from "react";
 import TextField from "./TextField";
 
 const meta = {
-  title: "Component/TextBox",
+  title: "Components/TextField",
   component: TextField,
   parameters: {
     layout: "centered",
@@ -36,8 +36,7 @@ export const Basic = {
 export const WithLabel = {
   args: { children: null },
   render: () => {
-    function WithLabel(){
-
+    function WithLabel() {
       const [value, setValue] = useState("");
       return (
         <TextField value={value}>
@@ -58,17 +57,17 @@ export const WithHelperText = {
   args: { children: null },
   render: () => {
     function HelperText() {
-    const [value, setValue] = useState("");
-    return (
-      <TextField value={value}>
-        <TextField.Input
-          placeholder="Placeholder"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <TextField.HelperText>Helper Text</TextField.HelperText>
-      </TextField>
-    );
+      const [value, setValue] = useState("");
+      return (
+        <TextField value={value}>
+          <TextField.Input
+            placeholder="Placeholder"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <TextField.HelperText>Helper Text</TextField.HelperText>
+        </TextField>
+      );
     }
     return <HelperText />;
   },
@@ -78,7 +77,6 @@ export const WithHelperTextVariants = {
   args: { children: null },
   render: () => {
     function WithHelperTextVariants() {
-
       const [value, setValue] = useState("");
       return (
         <div className="flex flex-col gap-4">
@@ -91,7 +89,7 @@ export const WithHelperTextVariants = {
             <TextField.HelperText variant="default">
               Default helper text
             </TextField.HelperText>
-                </TextField>
+          </TextField>
           <TextField value={value}>
             <TextField.Input
               placeholder="Placeholder"
@@ -108,7 +106,9 @@ export const WithHelperTextVariants = {
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-            <TextField.HelperText variant="error">Error message</TextField.HelperText>
+            <TextField.HelperText variant="error">
+              Error message
+            </TextField.HelperText>
           </TextField>
           <TextField value={value}>
             <TextField.Input
@@ -131,7 +131,6 @@ export const WithLabelAndHelper = {
   args: { children: null },
   render: () => {
     function WithLabelAndHelper() {
-
       const [value, setValue] = useState("");
       return (
         <TextField value={value}>
@@ -163,29 +162,29 @@ export const WithInlineButton = {
   args: { children: null },
   render: () => {
     function WithInlineButton() {
-    const [value, setValue] = useState("");
-    return (
-      <TextField value={value} className="relative ">
-        <TextField.Label>Field Label</TextField.Label>
-       <div className="flex items-center">
-          <TextField.Input
-            hasButton
-            placeholder="Placeholder"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className="h-14"
-          />
-          <TextField.Button
-            type="inline"
-            onClick={() => console.log("추가 버튼 클릭")}
-            className="absolute right-6"
-          >
-            추가
-          </TextField.Button>
-       </div>
-        <TextField.HelperText>Helper Text</TextField.HelperText>
-      </TextField>
-    );
+      const [value, setValue] = useState("");
+      return (
+        <TextField value={value} className="relative">
+          <TextField.Label>Field Label</TextField.Label>
+          <div className="flex items-center">
+            <TextField.Input
+              hasButton
+              placeholder="Placeholder"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              className="h-14"
+            />
+            <TextField.Button
+              type="inline"
+              onClick={() => console.log("추가 버튼 클릭")}
+              className="absolute right-6"
+            >
+              추가
+            </TextField.Button>
+          </div>
+          <TextField.HelperText>Helper Text</TextField.HelperText>
+        </TextField>
+      );
     }
     return <WithInlineButton />;
   },
