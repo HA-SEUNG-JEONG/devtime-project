@@ -2,19 +2,19 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { fn } from "storybook/test";
 
-import { Button } from "./Button";
+import { CustomButton } from "./CustomButton";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Example/Button",
-  component: Button,
+  component: CustomButton,
   parameters: {
-    layout: "centered"
+    layout: "centered",
   },
   tags: ["autodocs"],
   argTypes: {},
-  args: { onClick: fn() }
-} satisfies Meta<typeof Button>;
+  args: { onClick: fn() },
+} satisfies Meta<typeof CustomButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -23,20 +23,20 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     label: "Button",
-    variant: "primary"
-  }
+    variant: "primary",
+  },
 };
 
 export const Secondary: Story = {
   args: {
     label: "Button",
-    variant: "secondary"
-  }
+    variant: "secondary",
+  },
 };
 
 export const Tertiary: Story = {
   args: {
     label: "Button",
-    variant: "tertiary"
-  }
+    variant: "tertiary",
+  },
 };

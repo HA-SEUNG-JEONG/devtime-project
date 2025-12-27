@@ -1,17 +1,16 @@
 import type { Meta } from "@storybook/react-vite";
-import CheckboxComponent from "./CheckboxComponent";
+import ImageUploader from "./ImageUploader";
 import type { StoryObj } from "@storybook/react-vite";
 
 const meta = {
-  title: "Component/Checkbox",
-  component: CheckboxComponent,
+  title: "Component/ImageUploader",
+  component: ImageUploader,
   tags: ["autodocs"]
-} satisfies Meta<typeof CheckboxComponent>;
+} satisfies Meta<typeof ImageUploader>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
-  args: { id: "checkbox" },
-  render: () => <CheckboxComponent />
+  render: () => <ImageUploader />
 };
