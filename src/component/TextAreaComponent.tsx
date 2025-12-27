@@ -5,7 +5,12 @@ interface TextAreaComponentProps {
 }
 
 const TextAreaComponent = ({ placeholder }: TextAreaComponentProps) => {
-  return <Textarea placeholder={placeholder} />;
+  return (
+    <Textarea
+      placeholder={placeholder}
+      className="typography-body-m w-full text-gray-600"
+    />
+  );
 };
 
 export default TextAreaComponent;
