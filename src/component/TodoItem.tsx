@@ -10,6 +10,7 @@ interface TodoItemProps {
   textColor?: string;
   checked?: boolean;
   isEditing?: boolean;
+  checkedBackgroundColor?: string;
 }
 
 const TodoItem = ({
@@ -17,13 +18,14 @@ const TodoItem = ({
   textColor,
   checked,
   isEditing,
+  checkedBackgroundColor = "bg-gray-400",
 }: TodoItemProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
     <div
       className={`flex items-center justify-between rounded-md p-6 ${
-        isChecked ? "bg-gray-400" : backgroundColor
+        isChecked ? checkedBackgroundColor : backgroundColor
       }`}
     >
       <SymbolLogo className="mr-4" />
