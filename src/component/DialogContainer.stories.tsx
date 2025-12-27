@@ -3,7 +3,7 @@ import DialogContainer from "./DialogContainer";
 import type { StoryObj } from "@storybook/react-vite";
 
 const meta = {
-  title: "Component/Dialog",
+  title: "Components/Dialog",
   component: DialogContainer,
   tags: ["autodocs"],
 } satisfies Meta<typeof DialogContainer>;
