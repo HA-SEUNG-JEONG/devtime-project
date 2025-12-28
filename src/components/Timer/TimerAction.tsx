@@ -53,7 +53,7 @@ const TimerAction = ({
   };
 
   const checkCurrentVariant = (variant: "ready" | "in-progress" | "paused") => {
-    return variant === "ready" ? "text-disabled" : "text-primary-0";
+    return variant === "ready" ? "text-gray-400" : "text-primary-0";
   };
 
   return (

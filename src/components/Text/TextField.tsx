@@ -138,7 +138,7 @@ const TextFieldButton = ({
         disabled={disabled}
         className={cn(
           "typography-caption-m",
-          !inputValue?.trim() ? "text-disabled" : "text-primary-0",
+          !inputValue?.trim() ? "text-gray-400" : "text-primary-0",
           className,
         )}
       >

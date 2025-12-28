@@ -53,7 +53,7 @@ const TimerAction = ({
   };
 
   const checkCurrentVariant = (variant: "ready" | "in-progress" | "paused") => {
-    return variant === "ready" ? "text-disabled" : "text-primary-0";
+    return variant === "ready" ? "text-gray-400" : "text-primary-0";
   };
 
   return (
@@ -61,18 +61,28 @@ const TimerAction = ({
       <div className="flex gap-[80px]">
         <StartIcon
           onClick={() => handleIconClick("start")}
-          disabled={getIconDisabled(isStartIconDisabled)}
-          className={getIconClassName(isStartIconDisabled)}
+          disabled={getIconDisabled(currentVariant === "in-progress")}
+          className={
+            currentVariant === "in-progress"
+              ? "text-gray-400"
+              : "text-primary-0"
+          }
         />
         <PauseIcon
           onClick={() => handleIconClick("pause")}
-          disabled={getIconDisabled(isPauseIconDisabled)}
-          className={getIconClassName(isPauseIconDisabled)}
+          disabled={getIconDisabled(
+            currentVariant === "paused" || currentVariant === "ready",
+          )}
+          className={getIconClassName(
+            currentVariant === "paused" || currentVariant === "ready",
+          )}
         />
         <FinishIcon
           onClick={() => handleIconClick("finish")}
-          disabled={getIconDisabled(isOtherIconsDisabled)}
-          className={getIconClassName(isOtherIconsDisabled)}
+          disabled={getIconDisabled(currentVariant === "ready")}
+          className={
+            currentVariant === "ready" ? "text-gray-400" : "text-primary-0"
+          }
         />
       </div>
       <div className="flex gap-6">

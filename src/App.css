@@ -124,7 +124,6 @@
   --color-secondary-positive-light: #62ec95;
   --color-secondary-fuchsia-light: #ff87f5;
 
-  --color-disabled: #969da8;
   --color-hover: rgba(76, 121, 255, 0.1);
   --color-active: rgba(76, 121, 255, 0.1);
   --color-focus: #4c79ff;
@@ -318,79 +317,79 @@
   }
 
   .typography-body-r {
-  .typography-body-r {
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.125rem;
-  }
+    .typography-body-r {
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.125rem;
+    }
 
-  .typography-body-small-b {
-    font-size: 0.875rem;
-    font-weight: 700;
-    line-height: 1rem;
-  }
-  .typography-body-small-s {
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1rem;
-  }
-  .typography-body-small-m {
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1rem;
-  }
-  .typography-body-small-r {
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1rem;
-  }
+    .typography-body-small-b {
+      font-size: 0.875rem;
+      font-weight: 700;
+      line-height: 1rem;
+    }
+    .typography-body-small-s {
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1rem;
+    }
+    .typography-body-small-m {
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1rem;
+    }
+    .typography-body-small-r {
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1rem;
+    }
 
-  .typography-caption-b {
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1rem;
-  }
+    .typography-caption-b {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1rem;
+    }
 
-  .typography-caption-s {
-    font-size: 0.75rem;
-    font-weight: 600;
-    line-height: 1rem;
-  }
+    .typography-caption-s {
+      font-size: 0.75rem;
+      font-weight: 600;
+      line-height: 1rem;
+    }
 
-  .typography-caption-m {
-    font-size: 0.75rem;
-    font-weight: 500;
-    line-height: 1rem;
-  }
+    .typography-caption-m {
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1rem;
+    }
 
-  .typography-caption-r {
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1rem;
-  }
+    .typography-caption-r {
+      font-size: 0.75rem;
+      font-weight: 400;
+      line-height: 1rem;
+    }
 
-  .typography-label-b {
-    font-size: 0.625rem;
-    font-weight: 700;
-    line-height: 0.75rem;
-  }
+    .typography-label-b {
+      font-size: 0.625rem;
+      font-weight: 700;
+      line-height: 0.75rem;
+    }
 
-  .typography-label-s {
-    font-size: 0.625rem;
-    font-weight: 600;
-    line-height: 0.75rem;
-  }
+    .typography-label-s {
+      font-size: 0.625rem;
+      font-weight: 600;
+      line-height: 0.75rem;
+    }
 
-  .typography-label-m {
-    font-size: 0.625rem;
-    font-weight: 500;
-    line-height: 0.75rem;
-  }
+    .typography-label-m {
+      font-size: 0.625rem;
+      font-weight: 500;
+      line-height: 0.75rem;
+    }
 
-  .typography-label-r {
-    font-size: 0.625rem;
-    font-weight: 400;
-    line-height: 0.75rem;
+    .typography-label-r {
+      font-size: 0.625rem;
+      font-weight: 400;
+      line-height: 0.75rem;
+    }
   }
-}
 }
