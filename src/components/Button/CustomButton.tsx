@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -9,10 +8,12 @@ export interface ButtonProps {
   disabled?: boolean;
   className?: string;
   fullWidth?: boolean;
+  type?: "button" | "submit";
 }
 
 export const CustomButton = ({
   label,
+  type = "button",
   variant = "primary",
   disabled = false,
   className,
@@ -23,10 +24,10 @@ export const CustomButton = ({
 
   return (
     <Button
+      type={type}
       variant={variant}
       disabled={disabled}
-      className={`typography-body-b ${cn(
-
+      className={`typography-subtitle-s ${cn(
         baseClasses,
         fullWidth && "w-full",
         className,

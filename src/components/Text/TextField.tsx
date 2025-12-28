@@ -89,7 +89,7 @@ const TextFieldInput = ({
         <InputGroupInput
           type="text"
           id={id}
-          className={`typography-body-m text-gray-300 ${cn(className)}`}
+          className={`typography-body-m text-gray-600 ${cn(className)}`}
           {...props}
         />
       </InputGroup>
@@ -113,7 +113,7 @@ const TextFieldInput = ({
 
 interface TextFieldButtonProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: () => void | Promise<void>;
   disabled?: boolean;
   className?: string;
   variant?: "primary" | "secondary" | "tertiary";
@@ -134,10 +134,11 @@ const TextFieldButton = ({
   if (type === "inline") {
     return (
       <InputGroupButton
+        type="button"
         onClick={onClick}
         disabled={disabled}
         className={cn(
-          "typography-caption-m",
+          "typography-caption-m bg-transparent",
           !inputValue?.trim() ? "text-gray-400" : "text-primary-0",
           className,
         )}
@@ -154,6 +155,7 @@ const TextFieldButton = ({
       onClick={onClick}
       disabled={disabled ?? !inputValue?.trim()}
       className={className}
+      type={type === "external" ? "button" : "submit"}
     />
   );
 };
