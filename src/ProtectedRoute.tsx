@@ -1,22 +1,24 @@
 import { Navigate } from "react-router";
 import { useAuth } from "@/contexts/AuthContext";
 
-interface ProtectedRouteProps {
+interface RouteGuardProps {
   children: React.ReactNode;
-  requireAuth?: boolean;
 }
 
-export const ProtectedRoute = ({
-  children,
-  requireAuth = true,
-}: ProtectedRouteProps) => {
+export const ProtectedRoute = ({ children }: RouteGuardProps) => {
   const { isLoggedIn } = useAuth();
 
-  if (requireAuth && !isLoggedIn) {
+  if (!isLoggedIn) {
     return <Navigate to="/signin" replace />;
   }
 
-  if (!requireAuth && isLoggedIn) {
+  return children;
+};
+
+export const GuestRoute = ({ children }: RouteGuardProps) => {
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn) {
     return <Navigate to="/" replace />;
   }
 
