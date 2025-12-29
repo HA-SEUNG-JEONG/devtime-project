@@ -6,6 +6,10 @@ import { Link, useNavigate } from "react-router";
 import VerticalLogo from "@/components/Icon/VerticalLogo";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ErrorModal } from "@/components/ErrorModal";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
+import axios from "axios";
+import type { SignupResponse } from "@/types/api";
+import { useDuplicateCheck } from "@/hooks/useDuplicateCheck";
 
 interface SignUpFormData {
   email: string;
@@ -14,8 +18,21 @@ interface SignUpFormData {
   confirmPassword: string;
 }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,25}$/;
+type DuplicateCheckField = "email" | "nickname";
+
+const DUPLICATE_CHECK_CONFIG = {
+  fields: ["email", "nickname"] as DuplicateCheckField[],
+  endpoints: {
+    email: (value: string) =>
+      `${import.meta.env.VITE_API_URL}/api/signup/check-email?email=${value}`,
+    nickname: (value: string) =>
+      `${import.meta.env.VITE_API_URL}/api/signup/check-nickname?nickname=${value}`,
+  },
+  validators: {
+    email: (value: string) => Boolean(value && EMAIL_REGEX.test(value)),
+    nickname: (value: string) => Boolean(value && value.trim().length > 0),
+  },
+};
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -30,26 +47,17 @@ const SignUp = () => {
 
   const watchedEmail = watch("email");
   const watchedNickname = watch("nickname");
-  const watchedPassword = watch("password");
-  const watchedConfirmPassword = watch("confirmPassword");
 
-  // 중복 확인 상태 관리
-  const [isEmailChecked, setIsEmailChecked] = useState(false);
-  const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+  const {
+    fieldStates,
+    handleCheck,
+    handleFieldChange,
+    handleFieldBlur,
+    showCheckWarning,
+    isAllChecked,
+  } = useDuplicateCheck(DUPLICATE_CHECK_CONFIG);
+
   const [isTermsAgreed, setIsTermsAgreed] = useState(false);
-
-  const [emailHelperText, setEmailHelperText] = useState<{
-    message: string;
-    isAvailable: boolean;
-  } | null>(null);
-  const [nicknameHelperText, setNicknameHelperText] = useState<{
-    message: string;
-    isAvailable: boolean;
-  } | null>(null);
-
-  // 포커스 아웃 후 중복 확인 미진행 상태
-  const [isEmailTouched, setIsEmailTouched] = useState(false);
-  const [isNicknameTouched, setIsNicknameTouched] = useState(false);
 
   const [errorModal, setErrorModal] = useState<{
     open: boolean;
@@ -61,133 +69,23 @@ const SignUp = () => {
     description: "",
   });
 
-  // 이메일 유효성 검사 통과 여부
-  const isEmailValid = watchedEmail && EMAIL_REGEX.test(watchedEmail);
-  // 닉네임 유효성 검사 통과 여부
-  const isNicknameValid = watchedNickname && watchedNickname.trim().length > 0;
-  const handleCheck = async (type: "email" | "nickname") => {
-    if (type === "email") {
-      // 유효성 검사 먼저 실행
-      const isValidEmail = await trigger("email");
-      if (!isValidEmail) return;
+  const isEmailValid = DUPLICATE_CHECK_CONFIG.validators.email(watchedEmail);
+  const isNicknameValid =
+    DUPLICATE_CHECK_CONFIG.validators.nickname(watchedNickname);
 
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/signup/check-email?email=${watchedEmail}`,
-          {
-            method: "GET",
-          },
-        );
-        const resData = await res.json();
-        if (resData.available) {
-          setEmailHelperText({
-            message: resData.message || "사용 가능한 이메일입니다.",
-            isAvailable: true,
-          });
-          setIsEmailChecked(true);
-        } else {
-          setEmailHelperText({
-            message: resData.message || "이미 사용 중인 이메일입니다.",
-            isAvailable: false,
-          });
-          setIsEmailChecked(false);
-        }
-      } catch (error) {
-        console.error(error);
-        setEmailHelperText({
-          message: "중복 확인 중 오류가 발생했습니다.",
-          isAvailable: false,
-        });
-        setIsEmailChecked(false);
-      }
-    } else if (type === "nickname") {
-      // 유효성 검사 먼저 실행
-      const isValidNickname = await trigger("nickname");
-      if (!isValidNickname) return;
-
-      try {
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/signup/check-nickname?nickname=${watchedNickname}`,
-          {
-            method: "GET",
-          },
-        );
-        const resData = await res.json();
-        if (resData.available) {
-          setNicknameHelperText({
-            message: resData.message || "사용 가능한 닉네임입니다.",
-            isAvailable: true,
-          });
-          setIsNicknameChecked(true);
-        } else {
-          setNicknameHelperText({
-            message: resData.message || "이미 사용 중인 닉네임입니다.",
-            isAvailable: false,
-          });
-          setIsNicknameChecked(false);
-        }
-      } catch (error) {
-        console.error(error);
-        setNicknameHelperText({
-          message: "중복 확인 중 오류가 발생했습니다.",
-          isAvailable: false,
-        });
-        setIsNicknameChecked(false);
-      }
-    }
-  };
-
-  // 이메일 변경 시 중복 확인 상태 초기화
-  const handleEmailChange = () => {
-    setIsEmailChecked(false);
-    setEmailHelperText(null);
-    setIsEmailTouched(false);
-  };
-
-  // 닉네임 변경 시 중복 확인 상태 초기화
-  const handleNicknameChange = () => {
-    setIsNicknameChecked(false);
-    setNicknameHelperText(null);
-    setIsNicknameTouched(false);
-  };
-
-  // 이메일 포커스 아웃 핸들러
-  const handleEmailBlur = () => {
-    if (isEmailValid && !isEmailChecked) {
-      setIsEmailTouched(true);
-    }
-  };
-
-  // 닉네임 포커스 아웃 핸들러
-  const handleNicknameBlur = () => {
-    if (isNicknameValid && !isNicknameChecked) {
-      setIsNicknameTouched(true);
-    }
-  };
-
-  // 중복 확인 미진행 경고 표시 여부
-  const showEmailCheckWarning =
-    isEmailTouched && isEmailValid && !isEmailChecked && !errors.email;
-  const showNicknameCheckWarning =
-    isNicknameTouched &&
-    isNicknameValid &&
-    !isNicknameChecked &&
-    !errors.nickname;
-
-  // 회원가입 버튼 활성화 조건
-  const isSubmitDisabled =
-    !isValid ||
-    !isEmailChecked ||
-    !isNicknameChecked ||
-    !isTermsAgreed ||
-    !watchedEmail ||
-    !watchedNickname ||
-    !watchedPassword ||
-    !watchedConfirmPassword;
+  const showEmailCheckWarning = showCheckWarning(
+    "email",
+    watchedEmail,
+    !!errors.email,
+  );
+  const showNicknameCheckWarning = showCheckWarning(
+    "nickname",
+    watchedNickname,
+    !!errors.nickname,
+  );
 
   const onSubmit = async (data: SignUpFormData) => {
-    // 중복 확인과 이용약관 동의 여부 최종 체크
-    if (!isEmailChecked || !isNicknameChecked) {
+    if (!isAllChecked(["email", "nickname"])) {
       setErrorModal({
         open: true,
         title: "회원가입 실패",
@@ -206,21 +104,13 @@ const SignUp = () => {
     }
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/signup`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post<SignupResponse>(
+        `${import.meta.env.VITE_API_URL}/api/signup`,
+        data,
+      );
 
-      const responseData = await res.json();
-      if (!res.ok) {
-        throw new Error(
-          responseData.message ||
-            responseData.error?.message ||
-            "회원가입에 실패했습니다.",
-        );
+      if (!res.data.success) {
+        throw new Error(res.data.message || "회원가입에 실패했습니다.");
       }
       reset();
       navigate("/signin", { replace: true });
@@ -267,13 +157,15 @@ const SignUp = () => {
                     value: EMAIL_REGEX,
                     message: "이메일 형식으로 작성해 주세요.",
                   },
-                  onChange: handleEmailChange,
-                  onBlur: handleEmailBlur,
+                  onChange: () => handleFieldChange("email"),
+                  onBlur: () => handleFieldBlur("email", watchedEmail),
                 })}
               />
               <TextField.Button
                 type="external"
-                onClick={() => handleCheck("email")}
+                onClick={() =>
+                  handleCheck("email", watchedEmail, () => trigger("email"))
+                }
                 className="h-11 w-full shrink-0 sm:w-auto"
                 disabled={!isEmailValid || !!errors.email}
               >
@@ -285,17 +177,14 @@ const SignUp = () => {
                 {errors.email.message}
               </TextField.HelperText>
             )}
-            {!errors.email && emailHelperText && (
+            {!errors.email && fieldStates.email.helperText && (
               <TextField.HelperText
-                variant={emailHelperText.isAvailable ? "success" : "error"}
+                variant={
+                  fieldStates.email.helperText.isAvailable ? "success" : "error"
+                }
                 className="text-left"
               >
-                {emailHelperText.message}
-              </TextField.HelperText>
-            )}
-            {showEmailCheckWarning && (
-              <TextField.HelperText variant="error" className="text-left">
-                중복을 확인해 주세요.
+                {fieldStates.email.helperText.message}
               </TextField.HelperText>
             )}
           </TextField>
@@ -312,13 +201,17 @@ const SignUp = () => {
                   required: "닉네임을 입력해 주세요.",
                   validate: (value) =>
                     value.trim().length > 0 || "닉네임을 입력해 주세요.",
-                  onChange: handleNicknameChange,
-                  onBlur: handleNicknameBlur,
+                  onChange: () => handleFieldChange("nickname"),
+                  onBlur: () => handleFieldBlur("nickname", watchedNickname),
                 })}
               />
               <TextField.Button
                 type="external"
-                onClick={() => handleCheck("nickname")}
+                onClick={() =>
+                  handleCheck("nickname", watchedNickname, () =>
+                    trigger("nickname"),
+                  )
+                }
                 className="h-11 w-full shrink-0 sm:w-auto"
                 disabled={!isNicknameValid || !!errors.nickname}
               >
@@ -330,17 +223,16 @@ const SignUp = () => {
                 {errors.nickname.message}
               </TextField.HelperText>
             )}
-            {!errors.nickname && nicknameHelperText && (
+            {!errors.nickname && fieldStates.nickname.helperText && (
               <TextField.HelperText
-                variant={nicknameHelperText.isAvailable ? "success" : "error"}
+                variant={
+                  fieldStates.nickname.helperText.isAvailable
+                    ? "success"
+                    : "error"
+                }
                 className="text-left"
               >
-                {nicknameHelperText.message}
-              </TextField.HelperText>
-            )}
-            {showNicknameCheckWarning && (
-              <TextField.HelperText variant="error" className="text-left">
-                중복을 확인해 주세요.
+                {fieldStates.nickname.helperText.message}
               </TextField.HelperText>
             )}
           </TextField>
@@ -386,12 +278,9 @@ const SignUp = () => {
               className={`h-11 ${errors.confirmPassword ? "border-secondary-negative border" : ""}`}
               {...register("confirmPassword", {
                 required: "비밀번호 확인을 입력해 주세요.",
-                validate: (value) => {
-                  return (
-                    value === watch("password") ||
-                    "비밀번호가 일치하지 않습니다."
-                  );
-                },
+                validate: (value) =>
+                  value === watch("password") ||
+                  "비밀번호가 일치하지 않습니다.",
               })}
             />
             {errors.confirmPassword && (
@@ -414,7 +303,7 @@ const SignUp = () => {
           </div>
 
           {/* 약관 내용 */}
-          <div className="typography-caption-r sm:typography-body-r flex h-[100px] w-full flex-col overflow-y-auto rounded-[5px] bg-gray-200 px-3 py-3 text-xs sm:h-[110px] sm:py-4 sm:text-sm">
+          <div className="typography-caption-r sm:typography-body-r h-[100px] w-full overflow-y-auto rounded-[5px] bg-gray-200 px-3 py-3 text-xs sm:h-[110px] sm:py-4 sm:text-sm">
             제1조 (목적) 이 약관은 DevTime(이하 "서비스")의 이용 조건 및 절차,
             사용자와 서비스 제공자(회사) 간의 권리, 의무 및 책임사항을 규정함을
             목적으로 합니다. 제2조 (정의) 서비스: 개발자들이 일상 업무 및 할
@@ -458,7 +347,9 @@ const SignUp = () => {
             variant="primary"
             className="w-full"
             type="submit"
-            disabled={isSubmitDisabled}
+            disabled={
+              !isValid || !isAllChecked(["email", "nickname"]) || !isTermsAgreed
+            }
           />
 
           <div className="flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">

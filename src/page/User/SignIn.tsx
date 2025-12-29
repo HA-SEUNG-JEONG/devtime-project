@@ -1,32 +1,32 @@
 import { CustomButton } from "@/components/Button/CustomButton";
+import { CustomDialog } from "@/components/Dialog/CustomDialog";
 import { ErrorModal } from "@/components/ErrorModal";
 import SymbolLogo from "@/components/SymbolLogo";
 import TextField from "@/components/Text/TextField";
+import { useAuth } from "@/contexts/AuthContext";
+
+import axios from "axios";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
+import type { LoginResponse } from "@/types/api";
 
 interface LoginFormData {
   email: string;
   password: string;
 }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PASSWORD_REGEX = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
-
 const SignIn = () => {
   const {
     register,
     handleSubmit,
     reset,
-    watch,
     formState: { errors, isValid },
   } = useForm<LoginFormData>({ mode: "onChange" });
   const navigate = useNavigate();
+  const { login } = useAuth();
   const emailInputRef = useRef<HTMLInputElement>(null);
-
-  const watchedEmail = watch("email");
-  const watchedPassword = watch("password");
 
   const [errorModal, setErrorModal] = useState<{
     open: boolean;
@@ -38,44 +38,64 @@ const SignIn = () => {
     description: "",
   });
 
+  const [duplicateLoginModal, setDuplicateLoginModal] = useState<{
+    open: boolean;
+    data: LoginResponse | null;
+  }>({
+    open: false,
+    data: null,
+  });
+
+  const proceedLogin = (responseData: LoginResponse) => {
+    login(responseData.accessToken, responseData.refreshToken);
+    reset();
+
+    if (responseData.isFirstLogin) {
+      navigate("/profile", { replace: true });
+    } else {
+      navigate("/", { replace: true });
+    }
+  };
+
   const handleLogin = async (data: LoginFormData) => {
     try {
-      const res = await fetch(
+      const res = await axios.post<LoginResponse>(
         `${import.meta.env.VITE_API_URL}/api/auth/login`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
+        data,
       );
 
-      const responseData = await res.json();
-
-      if (!res.ok) {
+      if (!res.data.success) {
         throw new Error(
-          responseData.message ||
-            responseData.error?.message ||
-            "로그인 정보를 다시 확인해 주세요.",
+          res.data.message || "로그인 정보를 다시 확인해 주세요.",
         );
       }
-      reset();
 
-      // isFirstLogin에 따른 분기 처리
-      if (responseData.isFirstLogin) {
-        navigate("/profile", { replace: true });
-      } else {
-        navigate("/", { replace: true });
+      // 중복 로그인 확인
+      if (res.data.isDuplicateLogin) {
+        setDuplicateLoginModal({
+          open: true,
+          data: res.data,
+        });
+        return;
       }
+
+      proceedLogin(res.data);
     } catch (error) {
+      let errorMessage = "로그인 정보를 다시 확인해 주세요.";
+
+      if (axios.isAxiosError(error) && error.response?.data) {
+        errorMessage =
+          error.response.data.message ||
+          error.response.data.error?.message ||
+          errorMessage;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       setErrorModal({
         open: true,
         title: "로그인 실패",
-        description:
-          error instanceof Error
-            ? error.message
-            : "로그인 정보를 다시 확인해 주세요.",
+        description: errorMessage,
       });
     }
   };
@@ -85,7 +105,16 @@ const SignIn = () => {
     emailInputRef.current?.focus();
   };
 
-  const isButtonDisabled = !isValid || !watchedEmail || !watchedPassword;
+  const handleCloseDuplicateLoginModal = () => {
+    setDuplicateLoginModal({ open: false, data: null });
+  };
+
+  const handleConfirmDuplicateLogin = () => {
+    if (duplicateLoginModal.data) {
+      proceedLogin(duplicateLoginModal.data);
+    }
+    setDuplicateLoginModal({ open: false, data: null });
+  };
 
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden lg:justify-end">
@@ -159,7 +188,7 @@ const SignIn = () => {
             label="로그인"
             variant="primary"
             className="mt-8 w-full sm:mt-12"
-            disabled={isButtonDisabled}
+            disabled={!isValid}
           />
           <div className="flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-2">
             <p className="typography-body-r text-primary-0">
@@ -178,6 +207,29 @@ const SignIn = () => {
         description={errorModal.description}
         onOpenChange={handleCloseModal}
       />
+
+      <CustomDialog
+        open={duplicateLoginModal.open}
+        onOpenChange={handleCloseDuplicateLoginModal}
+      >
+        <CustomDialog.Content>
+          <CustomDialog.Header>
+            <CustomDialog.Title>중복 로그인 알림</CustomDialog.Title>
+            <CustomDialog.Description>
+              다른 기기에서 이미 로그인되어 있습니다. 계속 진행하면 다른
+              기기에서 로그아웃됩니다.
+            </CustomDialog.Description>
+          </CustomDialog.Header>
+          <CustomDialog.Footer>
+            <CustomDialog.CancelButton onClick={handleCloseDuplicateLoginModal}>
+              취소
+            </CustomDialog.CancelButton>
+            <CustomDialog.ConfirmButton onClick={handleConfirmDuplicateLogin}>
+              계속 진행
+            </CustomDialog.ConfirmButton>
+          </CustomDialog.Footer>
+        </CustomDialog.Content>
+      </CustomDialog>
     </div>
   );
 };
