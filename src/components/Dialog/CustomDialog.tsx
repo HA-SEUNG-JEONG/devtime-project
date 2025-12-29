@@ -73,6 +73,7 @@ const CustomDialogTrigger = ({
         children
       ) : (
         <button
+          type="button"
           className={cn(
             "typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white",
             className,
@@ -116,7 +117,10 @@ interface CustomDialogHeaderProps {
   className?: string;
 }
 
-const CustomDialogHeader = ({ children, className }: CustomDialogHeaderProps) => {
+const CustomDialogHeader = ({
+  children,
+  className,
+}: CustomDialogHeaderProps) => {
   return <DialogHeader className={className}>{children}</DialogHeader>;
 };
 
@@ -145,7 +149,9 @@ const CustomDialogDescription = ({
   className,
 }: CustomDialogDescriptionProps) => {
   return (
-    <DialogDescription className={cn("typography-body-m text-gray-600", className)}>
+    <DialogDescription
+      className={cn("typography-body-m text-gray-600", className)}
+    >
       {children}
     </DialogDescription>
   );
@@ -167,8 +173,13 @@ interface CustomDialogFooterProps {
   className?: string;
 }
 
-const CustomDialogFooter = ({ children, className }: CustomDialogFooterProps) => {
-  return <DialogFooter className={cn("gap-2", className)}>{children}</DialogFooter>;
+const CustomDialogFooter = ({
+  children,
+  className,
+}: CustomDialogFooterProps) => {
+  return (
+    <DialogFooter className={cn("gap-2", className)}>{children}</DialogFooter>
+  );
 };
 
 // Cancel Button
@@ -207,7 +218,6 @@ const ConfirmButton = ({
   disabled,
   className,
 }: ConfirmButtonProps) => {
-  const buttonVariant = variant === "danger" ? "primary" : "primary";
   const dangerClassName =
     variant === "danger"
       ? "bg-secondary-negative hover:bg-secondary-negative/90"
@@ -216,7 +226,7 @@ const ConfirmButton = ({
   return (
     <DialogClose asChild>
       <CustomButton
-        variant={buttonVariant}
+        variant="primary"
         label={typeof children === "string" ? children : "확인"}
         onClick={onClick}
         disabled={disabled}
@@ -232,7 +242,10 @@ interface CustomDialogCloseProps {
   asChild?: boolean;
 }
 
-const CustomDialogClose = ({ children, asChild = true }: CustomDialogCloseProps) => {
+const CustomDialogClose = ({
+  children,
+  asChild = true,
+}: CustomDialogCloseProps) => {
   return <DialogClose asChild={asChild}>{children}</DialogClose>;
 };
 
