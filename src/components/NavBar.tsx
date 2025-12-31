@@ -5,6 +5,7 @@ import avatar from "@/assets/avatar.png";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import axios from "axios";
+import { useErrorModal } from "@/contexts/ErrorModalContext";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -20,6 +21,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { LoginRequiredModal } from "./LoginRequiredModal";
 
 const NavBar = () => {
+  const { showError } = useErrorModal();
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const [nickName, setNickName] = useState("");
@@ -48,12 +50,22 @@ const NavBar = () => {
         );
         setNickName(response.data.nickname);
       } catch (error) {
-        // console.error("프로필 조회 실패:", error);
+        showError({
+          title: "프로필 조회 실패",
+          description:
+            error instanceof Error
+              ? error.message
+              : "프로필 조회에 실패했습니다.",
+        });
       }
     };
     getProfile();
   }, [isLoggedIn]);
 
+  const handleLogout = async () => {
+    await logout();
+    navigate("/signin");
+  };
   return (
     <nav className="flex items-center justify-between">
       <HorizontalLogo
@@ -93,12 +105,7 @@ const NavBar = () => {
                   </span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className="mx-3" />
-                <DropdownMenuItem
-                  onClick={() => {
-                    logout();
-                    // navigate("/signin");
-                  }}
-                >
+                <DropdownMenuItem onClick={handleLogout}>
                   <LogoutIcon size={20} className="text-gray-600" />
                   <span className="typography-body-s text-gray-600">
                     로그아웃
