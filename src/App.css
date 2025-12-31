@@ -224,20 +224,20 @@
 /* Typography 변수 정의 */
 :root {
   /* Size & Line Height */
-  --typo-heading-size: 1.5rem;
-  --typo-heading-lh: 1.875rem;
-  --typo-title-size: 1.25rem;
-  --typo-title-lh: 1.5rem;
-  --typo-subtitle-size: 1.125rem;
-  --typo-subtitle-lh: 1.375rem;
-  --typo-body-size: 1rem;
-  --typo-body-lh: 1.125rem;
-  --typo-body-small-size: 0.875rem;
-  --typo-body-small-lh: 1rem;
-  --typo-caption-size: 0.75rem;
-  --typo-caption-lh: 1rem;
-  --typo-label-size: 0.625rem;
-  --typo-label-lh: 0.75rem;
+  --typo-heading-size: 1.5rem; /* 24px */
+  --typo-heading-lh: 1.875rem; /* 30px */
+  --typo-title-size: 1.25rem; /* 20px */
+  --typo-title-lh: 1.5rem; /* 24px */
+  --typo-subtitle-size: 1.125rem; /* 18px */
+  --typo-subtitle-lh: 1.375rem; /* 22px */
+  --typo-body-size: 1rem; /* 16px */
+  --typo-body-lh: 1.125rem; /* 18px */
+  --typo-body-small-size: 0.875rem; /* 14px */
+  --typo-body-small-lh: 1rem; /* 16px */
+  --typo-caption-size: 0.75rem; /* 12px */
+  --typo-caption-lh: 1rem; /* 16px */
+  --typo-label-size: 0.625rem; /* 10px */
+  --typo-label-lh: 0.75rem; /* 12px */
 
   /* Font Weights */
   --fw-b: 700;

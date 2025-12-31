@@ -98,7 +98,7 @@ const NavBar = () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="border border-gray-300">
-                <DropdownMenuItem onClick={() => navigate("/mypage")}>
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
                   <UserIcon size={20} className="text-gray-600" />
                   <span className="typography-body-s text-gray-600">
                     마이페이지

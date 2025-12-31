@@ -59,10 +59,7 @@ const TextFieldLabel = ({ className, children }: TextFieldLabelProps) => {
   const { id } = useTextFieldContext();
 
   return (
-    <label
-      htmlFor={id}
-      className={`typography-body-m ${cn("text-gray-700", className)}`}
-    >
+    <label htmlFor={id} className={cn("typography-body-m", className)}>
       {children}
     </label>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useId } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -6,13 +6,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 interface DropdownProps {
   label?: string;
   placeholder?: string;
-  items: {id: number, label: string}[];
+  items: { id: number; label: string }[];
   onSelect?: (value: string) => void;
   defaultValue?: string;
 }
@@ -22,10 +22,11 @@ const DropDown = ({
   placeholder = "Placeholder",
   items,
   onSelect,
-  defaultValue
+  defaultValue,
 }: DropdownProps) => {
+  const dropdownId = useId();
   const [selectedValue, setSelectedValue] = useState<string | null>(
-    defaultValue || null
+    defaultValue || null,
   );
   const [isOpen, setIsOpen] = useState(false);
 
@@ -37,34 +38,39 @@ const DropDown = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium text-foreground">{label}</label>
+      <label htmlFor={dropdownId} className="typography-body-small-m text-left">
+        {label}
+      </label>
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
           <div className="relative w-full">
             <Input
+              id={dropdownId}
               readOnly
               value={selectedValue || ""}
               placeholder={placeholder}
+              aria-expanded={isOpen}
+              aria-haspopup="listbox"
               className={
                 selectedValue
-                  ? "typography-body-b text-foreground pr-10"
-                  : "typography-body-m text-muted-foreground pr-10"
+                  ? "typography-body-m pr-10 text-gray-600"
+                  : "typography-body-m bg-gray-50 pr-10 text-gray-50"
               }
             />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+            <div className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2">
               {isOpen ? (
-                <ChevronUp className="text-primary-0" />
+                <ChevronUp className="text-primary-0" aria-hidden="true" />
               ) : (
-                <ChevronDown className="text-primary-0" />
+                <ChevronDown className="text-primary-0" aria-hidden="true" />
               )}
             </div>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-(--radix-dropdown-menu-trigger-width) bg-white border-border shadow-lg">
+        <DropdownMenuContent className="border-border w-(--radix-dropdown-menu-trigger-width) bg-white shadow-lg">
           {items.map((item, index) => (
             <div key={item.id}>
               <DropdownMenuItem
-                className="cursor-pointer hover:bg-accent focus:bg-accent data-highlighted:bg-accent"
+                className="hover:bg-accent focus:bg-accent data-highlighted:bg-accent cursor-pointer"
                 onClick={() => handleSelect(item.label)}
               >
                 <span
@@ -77,7 +83,9 @@ const DropDown = ({
                   {item.label}
                 </span>
               </DropdownMenuItem>
-              {index < items.length - 1 && <DropdownMenuSeparator className="mx-3"/>}
+              {index < items.length - 1 && (
+                <DropdownMenuSeparator className="mx-3" />
+              )}
             </div>
           ))}
         </DropdownMenuContent>
