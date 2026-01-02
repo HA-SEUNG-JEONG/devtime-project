@@ -42,7 +42,7 @@ const PURPOSE_OPTIONS = [
   { id: 2, label: "이직 준비" },
   { id: 3, label: "단순 개발 역량 향상" },
   { id: 4, label: "회사 내 프로젝트 원활하게 수행" },
-  { id: 5, label: "기타(직접 입력)" },
+  { id: 5, label: "기타" },
 ];
 
 const CAREER_LABELS: string[] = CAREER_OPTIONS.map((option) => option.label);
@@ -93,7 +93,7 @@ const ProfileSetup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSkipDialog, setShowSkipDialog] = useState(false);
 
-  const isOtherPurpose = purpose === ("기타(직접 입력)" as PurposeType);
+  const isOtherPurpose = purpose === ("기타" as PurposeType);
   const isFormValid =
     career &&
     purpose &&
@@ -245,6 +245,14 @@ const ProfileSetup = () => {
     setProfileImage("");
   };
 
+  const handlePurposeSelect = (value: string) => {
+    if (value === "기타") {
+      setValue("purpose", "기타" as PurposeType);
+    } else if (isPurposeType(value)) {
+      setValue("purpose", value);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!isFormValid || !isCareerLevel(career)) return;
 
@@ -300,9 +308,45 @@ const ProfileSetup = () => {
     }
   };
 
-  const handleSkip = () => {
-    setShowSkipDialog(false);
-    navigate("/", { replace: true });
+  const handleSkip = async () => {
+    setIsLoading(true);
+
+    try {
+      // 기본값으로 프로필 생성
+      const requestData: CreateProfileRequest = {
+        career: "경력 없음",
+        purpose: "단순 개발 역량 향상",
+        techStacks: [],
+        goal: "",
+        profileImage: "",
+      };
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/profile`,
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenStorage.getAccessToken()}`,
+          },
+        },
+      );
+
+      navigate("/", { replace: true });
+    } catch (error) {
+      let errorMessage = "프로필 생성에 실패했습니다.";
+
+      if (axios.isAxiosError(error) && error.response?.data) {
+        errorMessage = error.response.data.message || errorMessage;
+      }
+
+      showError({
+        title: "프로필 생성 실패",
+        description: errorMessage,
+      });
+    } finally {
+      setIsLoading(false);
+      setShowSkipDialog(false);
+    }
   };
 
   return (
@@ -324,7 +368,7 @@ const ProfileSetup = () => {
 
           {/* 개발 경력 */}
           <DropDown
-            label="개발 경력 *"
+            label="개발 경력"
             placeholder="개발 경력을 선택해 주세요."
             items={CAREER_OPTIONS}
             onSelect={(value) => {
@@ -334,25 +378,24 @@ const ProfileSetup = () => {
 
           {/* 공부 목적 */}
           <DropDown
-            label="공부 목적 *"
+            label="공부 목적"
             placeholder="공부의 목적을 선택해 주세요."
             items={PURPOSE_OPTIONS}
-            onSelect={(value) => {
-              if (isPurposeType(value)) setValue("purpose", value);
-            }}
+            onSelect={handlePurposeSelect}
           />
 
           {/* 기타 선택 시 상세 입력 */}
           {isOtherPurpose && (
             <TextField value={purposeDetail}>
               <TextField.Label className="typography-body-small-m text-left">
-                기타 목적 *
+                기타 목적
               </TextField.Label>
               <TextField.Input
                 placeholder="목적을 직접 입력해 주세요."
                 value={purposeDetail}
                 onChange={(e) => setValue("purposeDetail", e.target.value)}
                 className="h-11"
+                required
               />
             </TextField>
           )}
@@ -373,7 +416,7 @@ const ProfileSetup = () => {
           {/* 기술 스택 */}
           <div className="flex flex-col gap-2">
             <AutoComplete
-              label="공부/사용 중인 기술 스택 *"
+              label="공부/사용 중인 기술 스택"
               placeholder="기술 스택을 검색해 등록해 주세요."
               items={filteredTechStackOptions}
               value={techStackInput}
@@ -495,11 +538,17 @@ const ProfileSetup = () => {
             </CustomDialog.Description>
           </CustomDialog.Header>
           <CustomDialog.Footer>
-            <CustomDialog.CancelButton onClick={() => setShowSkipDialog(false)}>
+            <CustomDialog.CancelButton
+              onClick={() => setShowSkipDialog(false)}
+              disabled={isLoading}
+            >
               계속 설정하기
             </CustomDialog.CancelButton>
-            <CustomDialog.ConfirmButton onClick={handleSkip}>
-              건너뛰기
+            <CustomDialog.ConfirmButton
+              onClick={handleSkip}
+              disabled={isLoading}
+            >
+              {isLoading ? "처리 중..." : "건너뛰기"}
             </CustomDialog.ConfirmButton>
           </CustomDialog.Footer>
         </CustomDialog.Content>

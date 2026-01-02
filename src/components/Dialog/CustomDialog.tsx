@@ -186,16 +186,23 @@ const CustomDialogFooter = ({
 interface CancelButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
+  disabled?: boolean;
   className?: string;
 }
 
-const CancelButton = ({ children, onClick, className }: CancelButtonProps) => {
+const CancelButton = ({
+  children,
+  onClick,
+  disabled,
+  className,
+}: CancelButtonProps) => {
   return (
     <DialogClose asChild>
       <CustomButton
         variant="secondary"
         label={typeof children === "string" ? children : "취소"}
         onClick={onClick}
+        disabled={disabled}
         className={className}
       />
     </DialogClose>

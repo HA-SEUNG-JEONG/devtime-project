@@ -75,15 +75,11 @@ const AutoComplete = ({
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev < totalOptions - 1 ? prev + 1 : 0,
-        );
+        setHighlightedIndex((prev) => (prev < totalOptions - 1 ? prev + 1 : 0));
         break;
       case "ArrowUp":
         e.preventDefault();
-        setHighlightedIndex((prev) =>
-          prev > 0 ? prev - 1 : totalOptions - 1,
-        );
+        setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : totalOptions - 1));
         break;
       case "Enter":
         e.preventDefault();
@@ -189,7 +185,9 @@ const AutoComplete = ({
                   onClick={() => handleSelect(item.name)}
                   onMouseEnter={() => setHighlightedIndex(index)}
                   className={`w-full rounded-md px-3 py-2 text-left text-base transition-colors ${
-                    safeHighlightedIndex === index ? "bg-accent" : "hover:bg-accent"
+                    safeHighlightedIndex === index
+                      ? "bg-accent"
+                      : "hover:bg-accent"
                   }`}
                 >
                   {highlightMatch(item.name, inputValue)}
@@ -200,9 +198,7 @@ const AutoComplete = ({
 
           {showAddNewItem && (
             <>
-              {items.length > 0 && (
-                <div className="border-border border-t" />
-              )}
+              {items.length > 0 && <div className="border-border border-t" />}
               <div className="p-1">
                 <Button
                   id={getOptionId(items.length)}
