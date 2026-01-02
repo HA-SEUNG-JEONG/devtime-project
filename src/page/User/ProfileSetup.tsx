@@ -451,7 +451,7 @@ const ProfileSetup = () => {
           {/* 프로필 이미지 */}
           <div className="flex flex-col gap-2">
             <label className="typography-body-small-m text-left">
-              프로필 이미지 *
+              프로필 이미지
             </label>
             <div className="flex items-center gap-3">
               <div className="relative">
