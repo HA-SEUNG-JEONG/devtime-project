@@ -450,7 +450,10 @@ const ProfileSetup = () => {
 
           {/* 프로필 이미지 */}
           <div className="flex flex-col gap-2">
-            <label className="typography-body-small-m text-left">
+            <label
+              htmlFor="image-uploader"
+              className="typography-body-small-m text-left"
+            >
               프로필 이미지
             </label>
             <div className="flex items-center gap-3">
@@ -458,6 +461,7 @@ const ProfileSetup = () => {
                 <div className="border-primary-0 relative flex h-20 w-20 items-center justify-center rounded-md border-2 border-dashed">
                   {!imagePreview && (
                     <input
+                      id="image-uploader"
                       type="file"
                       accept="image/png, image/jpeg"
                       onChange={handleImageChange}
