@@ -1,6 +1,6 @@
 import type { IconProps } from "./types";
 
-const HorizontalLogo = ({ size = 148, className }: IconProps) => {
+const HorizontalLogo = ({ size = 148, className, onClick }: IconProps) => {
   return (
     <svg
       width={size}
@@ -10,6 +10,7 @@ const HorizontalLogo = ({ size = 148, className }: IconProps) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-label="로고"
+      onClick={onClick}
     >
       <title>로고</title>
       <path

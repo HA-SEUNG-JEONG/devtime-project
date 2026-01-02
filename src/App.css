@@ -6,9 +6,6 @@
 @custom-variant dark (&:is(.dark *));
 
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -224,171 +221,181 @@
   }
 }
 
-@layer utilities {
-  .typography-heading-b {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.875rem;
-  }
+/* Typography 변수 정의 */
+:root {
+  /* Size & Line Height */
+  --typo-heading-size: 1.5rem; /* 24px */
+  --typo-heading-lh: 1.875rem; /* 30px */
+  --typo-title-size: 1.25rem; /* 20px */
+  --typo-title-lh: 1.5rem; /* 24px */
+  --typo-subtitle-size: 1.125rem; /* 18px */
+  --typo-subtitle-lh: 1.375rem; /* 22px */
+  --typo-body-size: 1rem; /* 16px */
+  --typo-body-lh: 1.125rem; /* 18px */
+  --typo-body-small-size: 0.875rem; /* 14px */
+  --typo-body-small-lh: 1rem; /* 16px */
+  --typo-caption-size: 0.75rem; /* 12px */
+  --typo-caption-lh: 1rem; /* 16px */
+  --typo-label-size: 0.625rem; /* 10px */
+  --typo-label-lh: 0.75rem; /* 12px */
 
-  .typography-heading-s {
-    font-size: 1.5rem;
-    font-weight: 600;
-    line-height: 1.875rem;
-  }
+  /* Font Weights */
+  --fw-b: 700;
+  --fw-s: 600;
+  --fw-m: 500;
+  --fw-r: 400;
+}
 
-  .typography-heading-m {
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.875rem;
-  }
+/* Heading */
+@utility typography-heading-b {
+  font-size: var(--typo-heading-size);
+  line-height: var(--typo-heading-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-heading-s {
+  font-size: var(--typo-heading-size);
+  line-height: var(--typo-heading-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-heading-m {
+  font-size: var(--typo-heading-size);
+  line-height: var(--typo-heading-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-heading-r {
+  font-size: var(--typo-heading-size);
+  line-height: var(--typo-heading-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-heading-r {
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.875rem;
-  }
+/* Title */
+@utility typography-title-b {
+  font-size: var(--typo-title-size);
+  line-height: var(--typo-title-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-title-s {
+  font-size: var(--typo-title-size);
+  line-height: var(--typo-title-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-title-m {
+  font-size: var(--typo-title-size);
+  line-height: var(--typo-title-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-title-r {
+  font-size: var(--typo-title-size);
+  line-height: var(--typo-title-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-title-b {
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.5rem;
-  }
+/* Subtitle */
+@utility typography-subtitle-b {
+  font-size: var(--typo-subtitle-size);
+  line-height: var(--typo-subtitle-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-subtitle-s {
+  font-size: var(--typo-subtitle-size);
+  line-height: var(--typo-subtitle-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-subtitle-m {
+  font-size: var(--typo-subtitle-size);
+  line-height: var(--typo-subtitle-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-subtitle-r {
+  font-size: var(--typo-subtitle-size);
+  line-height: var(--typo-subtitle-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-title-s {
-    font-size: 1.25rem;
-    font-weight: 600;
-    line-height: 1.5rem;
-  }
+/* Body */
+@utility typography-body-b {
+  font-size: var(--typo-body-size);
+  line-height: var(--typo-body-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-body-s {
+  font-size: var(--typo-body-size);
+  line-height: var(--typo-body-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-body-m {
+  font-size: var(--typo-body-size);
+  line-height: var(--typo-body-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-body-r {
+  font-size: var(--typo-body-size);
+  line-height: var(--typo-body-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-title-m {
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.5rem;
-  }
+/* Body Small */
+@utility typography-body-small-b {
+  font-size: var(--typo-body-small-size);
+  line-height: var(--typo-body-small-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-body-small-s {
+  font-size: var(--typo-body-small-size);
+  line-height: var(--typo-body-small-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-body-small-m {
+  font-size: var(--typo-body-small-size);
+  line-height: var(--typo-body-small-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-body-small-r {
+  font-size: var(--typo-body-small-size);
+  line-height: var(--typo-body-small-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-title-r {
-    font-size: 1.25rem;
-    font-weight: 400;
-    line-height: 1.5rem;
-  }
+/* Caption */
+@utility typography-caption-b {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-caption-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-caption-s {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-caption-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-caption-m {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-caption-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-caption-r {
+  font-size: var(--typo-caption-size);
+  line-height: var(--typo-caption-lh);
+  font-weight: var(--fw-r);
+}
 
-  .typography-subtitle-b {
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.375rem;
-  }
-
-  .typography-subtitle-s {
-    font-size: 1.125rem;
-    font-weight: 600;
-    line-height: 1.375rem;
-  }
-
-  .typography-subtitle-m {
-    font-size: 1.125rem;
-    font-weight: 500;
-    line-height: 1.375rem;
-  }
-
-  .typography-subtitle-r {
-    font-size: 1.125rem;
-    font-weight: 400;
-    line-height: 1.375rem;
-  }
-
-  .typography-body-b {
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1.125rem;
-  }
-
-  .typography-body-s {
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.125rem;
-  }
-
-  .typography-body-m {
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.125rem;
-  }
-
-  .typography-body-r {
-    .typography-body-r {
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.125rem;
-    }
-
-    .typography-body-small-b {
-      font-size: 0.875rem;
-      font-weight: 700;
-      line-height: 1rem;
-    }
-    .typography-body-small-s {
-      font-size: 0.875rem;
-      font-weight: 600;
-      line-height: 1rem;
-    }
-    .typography-body-small-m {
-      font-size: 0.875rem;
-      font-weight: 500;
-      line-height: 1rem;
-    }
-    .typography-body-small-r {
-      font-size: 0.875rem;
-      font-weight: 400;
-      line-height: 1rem;
-    }
-
-    .typography-caption-b {
-      font-size: 0.75rem;
-      font-weight: 700;
-      line-height: 1rem;
-    }
-
-    .typography-caption-s {
-      font-size: 0.75rem;
-      font-weight: 600;
-      line-height: 1rem;
-    }
-
-    .typography-caption-m {
-      font-size: 0.75rem;
-      font-weight: 500;
-      line-height: 1rem;
-    }
-
-    .typography-caption-r {
-      font-size: 0.75rem;
-      font-weight: 400;
-      line-height: 1rem;
-    }
-
-    .typography-label-b {
-      font-size: 0.625rem;
-      font-weight: 700;
-      line-height: 0.75rem;
-    }
-
-    .typography-label-s {
-      font-size: 0.625rem;
-      font-weight: 600;
-      line-height: 0.75rem;
-    }
-
-    .typography-label-m {
-      font-size: 0.625rem;
-      font-weight: 500;
-      line-height: 0.75rem;
-    }
-
-    .typography-label-r {
-      font-size: 0.625rem;
-      font-weight: 400;
-      line-height: 0.75rem;
-    }
-  }
+/* Label */
+@utility typography-label-b {
+  font-size: var(--typo-label-size);
+  line-height: var(--typo-label-lh);
+  font-weight: var(--fw-b);
+}
+@utility typography-label-s {
+  font-size: var(--typo-label-size);
+  line-height: var(--typo-label-lh);
+  font-weight: var(--fw-s);
+}
+@utility typography-label-m {
+  font-size: var(--typo-label-size);
+  line-height: var(--typo-label-lh);
+  font-weight: var(--fw-m);
+}
+@utility typography-label-r {
+  font-size: var(--typo-label-size);
+  line-height: var(--typo-label-lh);
+  font-weight: var(--fw-r);
 }
