@@ -96,6 +96,11 @@ const TimerStartDialog = ({
             maxLength={30}
             className="typography-title-m text-left text-4xl font-bold text-gray-300"
           />
+          {todayGoal.trim().length > 30 && (
+            <p className="text-secondary-negative typography-body-small-m mt-1 text-left">
+              오늘의 목표는 30자 이하로 입력해 주세요
+            </p>
+          )}
         </CustomDialog.Header>
 
         <CustomDialog.Body className="space-y-4">
@@ -127,11 +132,6 @@ const TimerStartDialog = ({
                     추가
                   </button>
                 </div>
-                <TextField.HelperText variant="error">
-                  {todayGoal.trim().length > 30
-                    ? "오늘의 목표는 30자 이하로 입력해 주세요"
-                    : ""}
-                </TextField.HelperText>
               </TextField>
             </div>
           </div>
@@ -161,7 +161,7 @@ const TimerStartDialog = ({
             variant="primary"
             label={isLoading ? "시작 중..." : "타이머 시작하기"}
             onClick={handleStart}
-            disabled={!todayGoal.trim() || tasks.length === 0}
+            disabled={tasks.length === 0}
           />
         </CustomDialog.Footer>
       </CustomDialog.Content>

@@ -265,14 +265,13 @@ export const useTimer = (): UseTimerReturn => {
 
   const resumeTimer = useCallback(() => {
     const now = new Date().toISOString();
-    setState((prev) => {
-      startTimerInterval(now, prev.elapsedSeconds);
-      return {
-        ...prev,
-        status: "in-progress",
-      };
-    });
-  }, [startTimerInterval]);
+
+    setState((prev) => ({
+      ...prev,
+      status: "in-progress",
+    }));
+    startTimerInterval(now, state.elapsedSeconds);
+  }, [startTimerInterval, state.elapsedSeconds]);
 
   const hours = Math.floor(state.elapsedSeconds / 3600);
   const minutes = Math.floor((state.elapsedSeconds % 3600) / 60);

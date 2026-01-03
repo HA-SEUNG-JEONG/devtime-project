@@ -40,7 +40,7 @@ function App() {
       const errorDescription =
         error?.type === "conflict"
           ? "기존 타이머를 종료한 후 다시 시도해주세요."
-          : error?.message ?? "다시 시도해주세요.";
+          : (error?.message ?? "다시 시도해주세요.");
 
       showError({
         title: errorTitle,

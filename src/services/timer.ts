@@ -1,4 +1,5 @@
 import { apiClient } from "@/utils/api";
+import axios from "axios";
 import type {
   StartTimerRequest,
   StartTimerResponse,
@@ -21,12 +22,10 @@ export const timerService = {
         await apiClient.get<GetActiveTimerResponse>("/api/timers");
       return response.data;
     } catch (error) {
-      if (
-        (error as { response?: { status: number } }).response?.status === 404
-      ) {
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
         return null;
       }
-      throw error;
+      throw new Error("Failed to get active timer");
     }
   },
 
