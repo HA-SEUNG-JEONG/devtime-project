@@ -187,16 +187,17 @@ const SignIn = () => {
           <CustomDialog.Header>
             <CustomDialog.Title>중복 로그인 알림</CustomDialog.Title>
             <CustomDialog.Description>
-              다른 기기에서 이미 로그인되어 있습니다. 계속 진행하면 다른
-              기기에서 로그아웃됩니다.
+              다른 기기에 중복 로그인 된 상태입니다. [확인] 버튼을 누르면 다른
+              기기에서 강제 로그아웃되며, 진행중이던 타이머가 있다면 기록이 자동
+              삭제됩니다.
             </CustomDialog.Description>
           </CustomDialog.Header>
           <CustomDialog.Footer>
-            <CustomDialog.CancelButton onClick={handleCloseDuplicateLoginModal}>
-              취소
-            </CustomDialog.CancelButton>
-            <CustomDialog.ConfirmButton onClick={handleConfirmDuplicateLogin}>
-              계속 진행
+            <CustomDialog.ConfirmButton
+              onClick={handleConfirmDuplicateLogin}
+              className="typography-subtitle-s"
+            >
+              확인
             </CustomDialog.ConfirmButton>
           </CustomDialog.Footer>
         </CustomDialog.Content>

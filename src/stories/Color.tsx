@@ -181,7 +181,7 @@ export function Color() {
           <div className="space-y-2">
             <div className="h-20 rounded-lg bg-gray-400 disabled:bg-gray-400"></div>
             <div className="text-xs font-medium">Disabled(400)</div>
-            <div className="text-xs text-gray-500">#9CA3AF</div>
+            <div className="text-xs text-gray-500">#969DA8</div>
           </div>
           <div className="space-y-2">
             <div className="bg-primary-0 h-20 rounded-lg border border-gray-200 hover:bg-[#0000001A]"></div>

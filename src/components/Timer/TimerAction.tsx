@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FinishIcon from "../../components/Icon/FinishIcon";
 import PauseIcon from "../../components/Icon/PauseIcon";
 import ResetIcon from "../Icon/ResetIcon";
@@ -6,32 +6,35 @@ import StartIcon from "../../components/Icon/StartIcon";
 import TodoIcon from "../Icon/TodoIcon";
 import { useAuth } from "@/contexts/AuthContext";
 import { LoginRequiredModal } from "../LoginRequiredModal";
+import { cn } from "@/lib/utils";
 
 interface TimerActionProps {
   variant: "ready" | "in-progress" | "paused";
-  onClick?: () => void;
+  onStart?: () => void;
+  onPause?: () => void;
+  onResume?: () => void;
+  onFinish?: () => void;
+  onTodoClick?: () => void;
+  onResetClick?: () => void;
   disabled?: boolean;
 }
 
 const TimerAction = ({
   variant,
-  onClick,
+  onStart,
+  onPause,
+  onResume,
+  onFinish,
+  onTodoClick,
+  onResetClick,
   disabled = false,
 }: TimerActionProps) => {
   const { isLoggedIn } = useAuth();
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [currentVariant, setCurrentVariant] = useState<
-    "ready" | "in-progress" | "paused"
-  >(variant);
 
-  useEffect(() => {
-    setCurrentVariant(variant);
-  }, [variant]);
-
-  const isStartIconDisabled = currentVariant === "in-progress";
-  const isPauseIconDisabled =
-    currentVariant === "paused" || currentVariant === "ready";
-  const isOtherIconsDisabled = currentVariant === "ready";
+  const isStartIconDisabled = variant === "in-progress";
+  const isPauseIconDisabled = variant === "paused" || variant === "ready";
+  const isOtherIconsDisabled = variant === "ready";
 
   const getIconClassName = (iconDisabled: boolean) => {
     return iconDisabled || disabled ? "text-primary-10" : "text-primary-0";
@@ -50,14 +53,15 @@ const TimerAction = ({
     }
 
     if (icon === "start" && !isStartIconDisabled) {
-      setCurrentVariant("in-progress");
-      onClick?.();
+      if (variant === "paused") {
+        onResume?.();
+      } else {
+        onStart?.();
+      }
     } else if (icon === "pause" && !isPauseIconDisabled) {
-      setCurrentVariant("paused");
-      onClick?.();
+      onPause?.();
     } else if (icon === "finish" && !isOtherIconsDisabled) {
-      setCurrentVariant("ready");
-      onClick?.();
+      onFinish?.();
     }
   };
 
@@ -66,6 +70,7 @@ const TimerAction = ({
       setShowLoginModal(true);
       return;
     }
+    onTodoClick?.();
   };
 
   const handleResetClick = () => {
@@ -73,10 +78,11 @@ const TimerAction = ({
       setShowLoginModal(true);
       return;
     }
+    onResetClick?.();
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between space-x-4">
       <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-[80px]">
         <StartIcon
           onClick={() => handleIconClick("start")}
@@ -91,20 +97,18 @@ const TimerAction = ({
         <FinishIcon
           onClick={() => handleIconClick("finish")}
           disabled={getIconDisabled(isOtherIconsDisabled)}
-          className={getIconClassName(isOtherIconsDisabled)}
+          className={cn(getIconClassName(isOtherIconsDisabled), "mr-[134px]")}
         />
       </div>
-      {currentVariant !== "ready" && (
+      {variant !== "ready" && (
         <div className="flex gap-4 sm:gap-6">
           <TodoIcon
-            className="text-primary-0"
+            className="text-primary-0 size-16 rounded-full bg-white p-2"
             onClick={handleTodoClick}
-            size={36}
           />
           <ResetIcon
-            className="text-primary-0"
+            className="text-primary-0 size-16 rounded-full bg-white p-2"
             onClick={handleResetClick}
-            size={36}
           />
         </div>
       )}
