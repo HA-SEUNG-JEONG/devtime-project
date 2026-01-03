@@ -27,7 +27,6 @@ function App() {
   };
 
   const handleStartTimer = async (todayGoal: string, tasks: string[]) => {
-    console.log(todayGoal, tasks, "todayGoal, tasks");
     try {
       await startTimer(todayGoal, tasks);
       setShowStartDialog(false);
