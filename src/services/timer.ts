@@ -5,7 +5,7 @@ import type {
   StartTimerResponse,
   GetActiveTimerResponse,
   GetStudyLogDetailResponse,
-  PolingTimerResponse,
+  UpdateTimerResponse,
 } from "@/types/types";
 
 export const timerService = {
@@ -51,8 +51,8 @@ export const timerService = {
   updateTimer: async (
     timerId: string,
     elapsedSeconds: number,
-  ): Promise<PolingTimerResponse> => {
-    const response = await apiClient.put<PolingTimerResponse>(
+  ): Promise<UpdateTimerResponse> => {
+    const response = await apiClient.put<UpdateTimerResponse>(
       `/api/timers/${timerId}`,
       {
         splitTimes: [
