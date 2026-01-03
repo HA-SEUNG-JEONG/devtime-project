@@ -385,7 +385,7 @@ export interface DeleteStudyLogResponse {
   message: string;
 }
 
-export interface PullingTimerResponse {
+export interface PolingTimerResponse {
   message?: string;
   startTime: string;
   splitTimes: SplitTime[];

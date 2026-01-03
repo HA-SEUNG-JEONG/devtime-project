@@ -5,7 +5,7 @@ import type {
   StartTimerResponse,
   GetActiveTimerResponse,
   GetStudyLogDetailResponse,
-  PullingTimerResponse,
+  PolingTimerResponse,
 } from "@/types/types";
 
 export const timerService = {
@@ -21,7 +21,6 @@ export const timerService = {
     try {
       const response =
         await apiClient.get<GetActiveTimerResponse>("/api/timers");
-      console.log(response.data, "response");
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 404) {
@@ -49,8 +48,8 @@ export const timerService = {
     }
   },
 
-  pullingTimer: async (timerId: string) => {
-    const response = await apiClient.put<PullingTimerResponse>(
+  pullingTimer: async (timerId: string): Promise<PolingTimerResponse> => {
+    const response = await apiClient.put<PolingTimerResponse>(
       `/api/timers/${timerId}`,
       {
         splitTimes: [
@@ -67,8 +66,8 @@ export const timerService = {
   updateTimer: async (
     timerId: string,
     elapsedSeconds: number,
-  ): Promise<PullingTimerResponse> => {
-    const response = await apiClient.put<PullingTimerResponse>(
+  ): Promise<PolingTimerResponse> => {
+    const response = await apiClient.put<PolingTimerResponse>(
       `/api/timers/${timerId}`,
       {
         splitTimes: [
