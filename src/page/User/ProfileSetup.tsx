@@ -17,7 +17,7 @@ import type {
   CustomPurpose,
   CreateProfileRequest,
   GetTechStacksResponse,
-} from "@/types/api";
+} from "@/types/types";
 import DeleteIcon from "@/components/Icon/DeleteIcon";
 import PlusIcon from "@/components/Icon/PlusIcon";
 

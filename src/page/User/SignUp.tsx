@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useErrorModal } from "@/contexts/ErrorModalContext";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
 import axios from "axios";
-import type { SignupResponse } from "@/types/api";
+import type { SignupResponse } from "@/types/types";
 import { useDuplicateCheck } from "@/hooks/useDuplicateCheck";
 
 interface SignUpFormData {
@@ -355,7 +355,6 @@ const SignUp = () => {
           </div>
         </form>
       </div>
-
     </div>
   );
 };

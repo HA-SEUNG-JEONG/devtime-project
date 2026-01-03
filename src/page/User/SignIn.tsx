@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "./constant";
-import type { LoginResponse } from "@/types/api";
+import type { LoginResponse } from "@/types/types";
 
 interface LoginFormData {
   email: string;

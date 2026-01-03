@@ -208,13 +208,6 @@ export interface UpdateTimerRequest {
   splitTimes: SplitTime[];
 }
 
-export interface UpdateTimerResponse {
-  message: string;
-  startTime: string; // ISO 8601 DateTime
-  splitTimes: SplitTime[];
-  lastUpdateTime: string; // ISO 8601 DateTime
-}
-
 // DELETE /api/timers/{timerId}
 export interface DeleteTimerResponse {
   message: string;
@@ -383,6 +376,13 @@ export interface GetStudyLogDetailResponse {
 export interface DeleteStudyLogResponse {
   success: boolean;
   message: string;
+}
+
+export interface UpdateTimerResponse {
+  message?: string;
+  startTime: string;
+  splitTimes: SplitTime[];
+  lastUpdateTime: string;
 }
 
 // ============================================
