@@ -48,21 +48,6 @@ export const timerService = {
     }
   },
 
-  pullingTimer: async (timerId: string): Promise<PolingTimerResponse> => {
-    const response = await apiClient.put<PolingTimerResponse>(
-      `/api/timers/${timerId}`,
-      {
-        splitTimes: [
-          {
-            date: new Date().toISOString(),
-            timeSpent: 0,
-          },
-        ],
-      },
-    );
-    return response.data;
-  },
-
   updateTimer: async (
     timerId: string,
     elapsedSeconds: number,
