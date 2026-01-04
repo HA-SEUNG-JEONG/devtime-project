@@ -18,16 +18,21 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-let isRefreshing = false;
-let refreshSubscribers: ((token: string) => void)[] = [];
+let refreshPromise: Promise<string> | null = null;
 
-const onRefreshed = (token: string) => {
-  refreshSubscribers.forEach((callback) => callback(token));
-  refreshSubscribers = [];
-};
+const refreshAccessToken = async (): Promise<string> => {
+  const refreshToken = tokenStorage.getRefreshToken();
+  if (!refreshToken) {
+    throw new Error("No refresh token");
+  }
 
-const addRefreshSubscriber = (callback: (token: string) => void) => {
-  refreshSubscribers.push(callback);
+  const res = await axios.post(`${BASE_URL}/api/auth/refresh`, {
+    refreshToken,
+  });
+
+  const newAccessToken = res.data.accessToken;
+  tokenStorage.setAccessToken(newAccessToken);
+  return newAccessToken;
 };
 
 apiClient.interceptors.response.use(
@@ -36,42 +41,22 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     if (error.response?.status === 401 && !originalRequest._retry) {
-      if (isRefreshing) {
-        return new Promise((resolve) => {
-          addRefreshSubscriber((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            resolve(apiClient(originalRequest));
-          });
-        });
-      }
-
       originalRequest._retry = true;
-      isRefreshing = true;
-
-      const refreshToken = tokenStorage.getRefreshToken();
-      if (!refreshToken) {
-        tokenStorage.clearTokens();
-        window.location.href = "/signin";
-        return Promise.reject(error);
-      }
 
       try {
-        const res = await axios.post(`${BASE_URL}/api/auth/refresh`, {
-          refreshToken,
-        });
+        if (!refreshPromise) {
+          refreshPromise = refreshAccessToken().finally(() => {
+            refreshPromise = null;
+          });
+        }
 
-        const newAccessToken = res.data.accessToken;
-        tokenStorage.setAccessToken(newAccessToken);
-        onRefreshed(newAccessToken);
-
+        const newAccessToken = await refreshPromise;
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
       } catch {
         tokenStorage.clearTokens();
         window.location.href = "/signin";
         return Promise.reject(error);
-      } finally {
-        isRefreshing = false;
       }
     }
 

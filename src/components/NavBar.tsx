@@ -4,8 +4,7 @@ import HorizontalLogo from "./Icon/HorizontalLogo";
 import avatar from "@/assets/avatar.png";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import axios from "axios";
-import { useErrorModal } from "@/contexts/ErrorModalContext";
+import { apiClient } from "@/utils/api";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -16,12 +15,10 @@ import {
 
 import UserIcon from "./Icon/UserIcon";
 import LogoutIcon from "./Icon/LogoutIcon";
-import { tokenStorage } from "@/utils/token";
 import { useAuth } from "@/contexts/AuthContext";
 import { LoginRequiredModal } from "./LoginRequiredModal";
 
 const NavBar = () => {
-  const { showError } = useErrorModal();
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const [nickName, setNickName] = useState("");
@@ -40,23 +37,10 @@ const NavBar = () => {
 
     const getProfile = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/profile`,
-          {
-            headers: {
-              Authorization: `Bearer ${tokenStorage.getAccessToken()}`,
-            },
-          },
-        );
+        const response = await apiClient.get("/api/profile");
         setNickName(response.data.nickname);
-      } catch (error) {
-        showError({
-          title: "프로필 조회 실패",
-          description:
-            error instanceof Error
-              ? error.message
-              : "프로필 조회에 실패했습니다.",
-        });
+      } catch {
+        // 토큰 갱신 실패 시 apiClient 인터셉터에서 자동으로 로그아웃 처리
       }
     };
     getProfile();
