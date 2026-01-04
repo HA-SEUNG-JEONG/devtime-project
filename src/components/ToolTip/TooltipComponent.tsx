@@ -3,6 +3,7 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface TooltipComponentProps {
   content: React.ReactNode;
@@ -10,6 +11,7 @@ interface TooltipComponentProps {
   side?: "top" | "bottom" | "left" | "right";
   delayDuration?: number;
   sideOffset?: number;
+  className?: string;
 }
 
 const TooltipComponent = ({
@@ -18,13 +20,12 @@ const TooltipComponent = ({
   side,
   delayDuration,
   sideOffset,
+  className,
 }: TooltipComponentProps) => {
   return (
     <Tooltip delayDuration={delayDuration}>
       <TooltipTrigger asChild>
-        <button className="typography-body-b bg-primary-0 cursor-pointer rounded-[5px] px-4 py-3 text-white">
-          {children}
-        </button>
+        <button className={cn(className)}>{children}</button>
       </TooltipTrigger>
       <TooltipContent sideOffset={sideOffset} side={side}>
         {content}

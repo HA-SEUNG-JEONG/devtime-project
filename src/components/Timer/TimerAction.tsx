@@ -7,6 +7,7 @@ import TodoIcon from "../Icon/TodoIcon";
 import { useAuth } from "@/contexts/AuthContext";
 import { LoginRequiredModal } from "../LoginRequiredModal";
 import { cn } from "@/lib/utils";
+import TooltipComponent from "../ToolTip/TooltipComponent";
 
 interface TimerActionProps {
   variant: "ready" | "in-progress" | "paused";
@@ -84,32 +85,42 @@ const TimerAction = ({
   return (
     <div className="flex items-center justify-between space-x-4">
       <div className="flex gap-8 sm:gap-12 md:gap-16 lg:gap-[80px]">
-        <StartIcon
-          onClick={() => handleIconClick("start")}
-          disabled={getIconDisabled(isStartIconDisabled)}
-          className={getIconClassName(isStartIconDisabled)}
-        />
-        <PauseIcon
-          onClick={() => handleIconClick("pause")}
-          disabled={getIconDisabled(isPauseIconDisabled)}
-          className={getIconClassName(isPauseIconDisabled)}
-        />
-        <FinishIcon
-          onClick={() => handleIconClick("finish")}
-          disabled={getIconDisabled(isOtherIconsDisabled)}
-          className={cn(getIconClassName(isOtherIconsDisabled), "mr-[134px]")}
-        />
+        <TooltipComponent content="시작" side="bottom">
+          <StartIcon
+            onClick={() => handleIconClick("start")}
+            disabled={getIconDisabled(isStartIconDisabled)}
+            className={getIconClassName(isStartIconDisabled)}
+          />
+        </TooltipComponent>
+        <TooltipComponent content="일시정지" side="bottom">
+          <PauseIcon
+            onClick={() => handleIconClick("pause")}
+            disabled={getIconDisabled(isPauseIconDisabled)}
+            className={getIconClassName(isPauseIconDisabled)}
+          />
+        </TooltipComponent>
+        <TooltipComponent content="종료" side="bottom">
+          <FinishIcon
+            onClick={() => handleIconClick("finish")}
+            disabled={getIconDisabled(isOtherIconsDisabled)}
+            className={cn(getIconClassName(isOtherIconsDisabled), "mr-[134px]")}
+          />
+        </TooltipComponent>
       </div>
       {variant !== "ready" && (
         <div className="flex gap-4 sm:gap-6">
-          <TodoIcon
-            className="text-primary-0 size-16 rounded-full bg-white p-2"
-            onClick={handleTodoClick}
-          />
-          <ResetIcon
-            className="text-primary-0 size-16 rounded-full bg-white p-2"
-            onClick={handleResetClick}
-          />
+          <TooltipComponent content="할 일 목록" side="bottom">
+            <TodoIcon
+              className="text-primary-0 size-16 rounded-full bg-white p-2"
+              onClick={handleTodoClick}
+            />
+          </TooltipComponent>
+          <TooltipComponent content="타이머 초기화" side="bottom">
+            <ResetIcon
+              className="text-primary-0 size-16 rounded-full bg-white p-2"
+              onClick={handleResetClick}
+            />
+          </TooltipComponent>
         </div>
       )}
 
