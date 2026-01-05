@@ -40,11 +40,11 @@ function App() {
     setIsResetting(true);
     try {
       await resetTimer();
-      setShowResetDialog(false);
     } catch {
       // 에러는 useTimer 훅 내부에서 처리됨
     } finally {
       setIsResetting(false);
+      setShowResetDialog(false);
     }
   };
 

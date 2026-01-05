@@ -25,7 +25,9 @@ const TooltipComponent = ({
   return (
     <Tooltip delayDuration={delayDuration}>
       <TooltipTrigger asChild>
-        <button className={cn(className)}>{children}</button>
+        <button type="button" className={cn(className)}>
+          {children}
+        </button>
       </TooltipTrigger>
       <TooltipContent sideOffset={sideOffset} side={side}>
         {content}

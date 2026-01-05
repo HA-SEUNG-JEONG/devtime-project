@@ -53,7 +53,6 @@ const SignUp = () => {
     handleCheck,
     handleFieldChange,
     handleFieldBlur,
-    showCheckWarning,
     isAllChecked,
   } = useDuplicateCheck(DUPLICATE_CHECK_CONFIG);
 
@@ -63,17 +62,6 @@ const SignUp = () => {
   const isEmailValid = DUPLICATE_CHECK_CONFIG.validators.email(watchedEmail);
   const isNicknameValid =
     DUPLICATE_CHECK_CONFIG.validators.nickname(watchedNickname);
-
-  const showEmailCheckWarning = showCheckWarning(
-    "email",
-    watchedEmail,
-    !!errors.email,
-  );
-  const showNicknameCheckWarning = showCheckWarning(
-    "nickname",
-    watchedNickname,
-    !!errors.nickname,
-  );
 
   const onSubmit = async (data: SignUpFormData) => {
     if (!isAllChecked(["email", "nickname"])) {
@@ -144,7 +132,7 @@ const SignUp = () => {
               <TextField.Input
                 hasButton
                 placeholder="이메일을 입력해주세요."
-                className={`h-11 ${errors.email || showEmailCheckWarning ? "border-secondary-negative border" : ""}`}
+                className={`h-11 ${errors.email ? "border-secondary-negative border" : ""}`}
                 {...register("email", {
                   required: "이메일을 입력해 주세요.",
                   pattern: {
@@ -190,7 +178,7 @@ const SignUp = () => {
               <TextField.Input
                 hasButton
                 placeholder="닉네임을 입력해주세요."
-                className={`h-11 ${errors.nickname || showNicknameCheckWarning ? "border-secondary-negative border" : ""}`}
+                className={`h-11 ${errors.nickname ? "border-secondary-negative border" : ""}`}
                 {...register("nickname", {
                   required: "닉네임을 입력해 주세요.",
                   validate: (value) =>

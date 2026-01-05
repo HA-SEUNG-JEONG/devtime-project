@@ -195,6 +195,7 @@ export const useTimer = (): UseTimerReturn => {
 
   const resetTimer = useCallback(async () => {
     const currentTimerId = state.timerId;
+    const previousState = state;
 
     clock.stop();
     polling.stop();
@@ -207,6 +208,13 @@ export const useTimer = (): UseTimerReturn => {
           title: "타이머 초기화 실패",
           description: "서버에서 타이머를 삭제하지 못했습니다.",
         });
+        if (previousState.status === "in-progress") {
+          clock.start(
+            previousState.startTime as string,
+            previousState.elapsedSeconds,
+          );
+          setState((prev) => ({ ...prev, status: "ready" }));
+        }
         throw new Error("Failed to delete timer");
       }
     }
