@@ -88,7 +88,7 @@ const Dashboard = () => {
           page,
           limit: 10,
         });
-        console.log(data, "data");
+
         setStudyLogs(data.data.studyLogs);
         setPagination(data.data.pagination);
       } catch {
@@ -133,7 +133,12 @@ const Dashboard = () => {
       setDeleteDialogOpen(false);
       setDeleteTargetId(null);
 
-      fetchStudyLogs(currentPage);
+      const isLastItemPage = studyLogs.length === 1 && currentPage > 1;
+      const targetPage = isLastItemPage ? currentPage - 1 : currentPage;
+      if (isLastItemPage) {
+        setCurrentPage(targetPage);
+      }
+      fetchStudyLogs(targetPage);
       fetchStats();
       fetchHeatmap();
     } catch {

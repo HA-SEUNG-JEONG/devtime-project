@@ -92,7 +92,6 @@ const StudyHeatmap = ({ heatmap, isLoading }: StudyHeatmapProps) => {
   };
 
   const weekCount = grid[0]?.length ?? 0;
-  console.log(weekCount);
 
   return (
     <Card className="gap-4 px-6 py-5">

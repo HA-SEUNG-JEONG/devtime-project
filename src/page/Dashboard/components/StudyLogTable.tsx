@@ -106,7 +106,7 @@ const StudyLogTable = ({
                       type="button"
                       onClick={() => onDelete(log.id)}
                       className="hover:text-secondary-negative text-gray-400 transition-colors"
-                      aria-label="삭제"
+                      aria-label={`${formatDate(log.date)} 학습 기록 삭제`}
                     >
                       <Trash2 size={18} />
                     </button>
@@ -117,7 +117,10 @@ const StudyLogTable = ({
           </div>
 
           {pagination && pagination.totalPages > 1 && (
-            <nav className="mt-4 flex justify-center" aria-label="페이지 네비게이션">
+            <nav
+              className="mt-4 flex justify-center"
+              aria-label="페이지 네비게이션"
+            >
               <Pagination
                 currentPage={pagination.currentPage}
                 totalPages={pagination.totalPages}

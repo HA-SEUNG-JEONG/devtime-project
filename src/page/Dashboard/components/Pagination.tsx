@@ -1,5 +1,7 @@
 import ChevronLeft from "@/components/Icon/ChevronLeft";
 import ChevronRight from "@/components/Icon/ChevronRight";
+import DoubleChevronLeft from "@/components/Icon/DoubleChevronLeft";
+import DoubleChevronRight from "@/components/Icon/DoubleChevronRight";
 import { cn } from "@/lib/utils";
 
 interface PaginationProps {
@@ -72,7 +74,7 @@ const Pagination = ({
         )}
         aria-label="처음으로"
       >
-        <ChevronLeft size={16} />
+        <DoubleChevronLeft size={16} />
       </button>
 
       <button
@@ -136,7 +138,7 @@ const Pagination = ({
         )}
         aria-label="끝으로"
       >
-        <ChevronRight size={16} />
+        <DoubleChevronRight size={16} />
       </button>
     </nav>
   );
