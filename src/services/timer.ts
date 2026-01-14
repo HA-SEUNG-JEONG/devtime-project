@@ -7,6 +7,10 @@ import type {
   GetStudyLogDetailResponse,
   UpdateTimerResponse,
   DeleteTimerResponse,
+  UpdateTasksRequest,
+  UpdateTasksResponse,
+  StopTimerRequest,
+  StopTimerResponse,
 } from "@/types/types";
 
 export const timerService = {
@@ -70,6 +74,28 @@ export const timerService = {
   deleteTimer: async (timerId: string): Promise<DeleteTimerResponse> => {
     const response = await apiClient.delete<DeleteTimerResponse>(
       `/api/timers/${timerId}`,
+    );
+    return response.data;
+  },
+
+  updateTasks: async (
+    studyLogId: string,
+    data: UpdateTasksRequest,
+  ): Promise<UpdateTasksResponse> => {
+    const response = await apiClient.put<UpdateTasksResponse>(
+      `/api/${studyLogId}/tasks`,
+      data,
+    );
+    return response.data;
+  },
+
+  stopTimer: async (
+    timerId: string,
+    data: StopTimerRequest,
+  ): Promise<StopTimerResponse> => {
+    const response = await apiClient.post<StopTimerResponse>(
+      `/api/timers/${timerId}/stop`,
+      data,
     );
     return response.data;
   },

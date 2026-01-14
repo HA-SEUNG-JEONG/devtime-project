@@ -3,7 +3,7 @@ import axios from "axios";
 import { timerService } from "@/services/timer";
 import { useErrorModal } from "@/contexts/ErrorModalContext";
 import type { Task } from "@/components/Timer/TaskItem";
-import type { TimerConflictResponse } from "@/types/types";
+import type { TimerConflictResponse, TaskInput } from "@/types/types";
 import { useTimerClock } from "./useTimerClock";
 import { useTimerPolling } from "./useTimerPolling";
 import { useTimerRestore } from "./useTimerRestore";
@@ -26,6 +26,7 @@ interface UseTimerReturn {
   hours: number;
   minutes: number;
   seconds: number;
+  elapsedSeconds: number;
   isLoading: boolean;
   isRestoring: boolean;
   error: TimerError | null;
@@ -33,6 +34,8 @@ interface UseTimerReturn {
   pauseTimer: () => Promise<void>;
   resumeTimer: () => void;
   resetTimer: () => Promise<void>;
+  updateTasks: (tasks: Task[]) => Promise<void>;
+  stopTimer: (review: string, tasks: Task[]) => Promise<void>;
   clearError: () => void;
 }
 
@@ -65,6 +68,13 @@ const extractErrorFromAxios = (err: unknown): TimerError => {
   }
 
   return { type: "unknown", message: "타이머 시작에 실패했습니다." };
+};
+
+const normalizeSeconds = (value: number): number => {
+  if (!Number.isFinite(value) || value < 0) {
+    return 0;
+  }
+  return Math.floor(value);
 };
 
 export const useTimer = (): UseTimerReturn => {
@@ -222,9 +232,89 @@ export const useTimer = (): UseTimerReturn => {
     setState(INITIAL_TIMER_STATE);
   }, [clock, polling, state, showError]);
 
-  const hours = Math.floor(state.elapsedSeconds / 3600);
-  const minutes = Math.floor((state.elapsedSeconds % 3600) / 60);
-  const seconds = state.elapsedSeconds % 60;
+  const updateTasks = useCallback(
+    async (tasks: Task[]) => {
+      const currentStudyLogId = state.studyLogId;
+      if (!currentStudyLogId) {
+        throw new Error("No active study log");
+      }
+
+      setIsLoading(true);
+      try {
+        const taskInputs: TaskInput[] = tasks.map((task) => ({
+          content: task.content,
+          isCompleted: task.isCompleted,
+        }));
+
+        await timerService.updateTasks(currentStudyLogId, { tasks: taskInputs });
+        setState((prev) => ({ ...prev, tasks }));
+      } catch {
+        showError({
+          title: "할 일 목록 저장 실패",
+          description: "서버에 할 일 목록을 저장하지 못했습니다.",
+        });
+        throw new Error("Failed to update tasks");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [state.studyLogId, showError],
+  );
+
+  const stopTimer = useCallback(
+    async (review: string, tasks: Task[]) => {
+      const currentTimerId = state.timerId;
+      if (!currentTimerId) {
+        throw new Error("No active timer");
+      }
+
+      const elapsedSeconds = clock.getElapsedSeconds();
+      const previousStatus = state.status;
+
+      setIsLoading(true);
+      clock.stop();
+      polling.stop();
+
+      try {
+        const taskInputs: TaskInput[] = tasks.map((task) => ({
+          content: task.content,
+          isCompleted: task.isCompleted,
+        }));
+
+        await timerService.stopTimer(currentTimerId, {
+          splitTimes: [
+            {
+              date: new Date().toISOString(),
+              timeSpent: elapsedSeconds,
+            },
+          ],
+          review,
+          tasks: taskInputs,
+        });
+
+        setState(INITIAL_TIMER_STATE);
+      } catch {
+        showError({
+          title: "타이머 종료 실패",
+          description: "서버에서 타이머를 종료하지 못했습니다.",
+        });
+        if (previousStatus === "in-progress") {
+          clock.start(new Date().toISOString(), elapsedSeconds);
+          polling.start(currentTimerId);
+        }
+        setState((prev) => ({ ...prev, status: previousStatus }));
+        throw new Error("Failed to stop timer");
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [state.timerId, state.status, clock, polling, showError],
+  );
+
+  const normalizedElapsed = normalizeSeconds(state.elapsedSeconds);
+  const hours = Math.floor(normalizedElapsed / 3600);
+  const minutes = Math.floor((normalizedElapsed % 3600) / 60);
+  const seconds = normalizedElapsed % 60;
 
   return {
     status: state.status,
@@ -235,6 +325,7 @@ export const useTimer = (): UseTimerReturn => {
     hours,
     minutes,
     seconds,
+    elapsedSeconds: normalizedElapsed,
     isLoading,
     isRestoring,
     error,
@@ -242,6 +333,8 @@ export const useTimer = (): UseTimerReturn => {
     pauseTimer,
     resumeTimer,
     resetTimer,
+    updateTasks,
+    stopTimer,
     clearError,
   };
 };

@@ -5,6 +5,8 @@ import Timer from "./component/Timer/Timer";
 import TimerAction from "./components/Timer/TimerAction";
 import TimerStartDialog from "./components/Timer/TimerStartDialog";
 import TimerResetDialog from "./components/Timer/TimerResetDialog";
+import TimerTodoDialog from "./components/Timer/TimerTodoDialog";
+import TimerStopDialog from "./components/Timer/TimerStopDialog";
 import { useTimer } from "./hooks/useTimer";
 import { useErrorModal } from "./contexts/ErrorModalContext";
 
@@ -12,19 +14,25 @@ function App() {
   const { showError } = useErrorModal();
   const [showStartDialog, setShowStartDialog] = useState(false);
   const [showResetDialog, setShowResetDialog] = useState(false);
+  const [showTodoDialog, setShowTodoDialog] = useState(false);
+  const [showStopDialog, setShowStopDialog] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const {
     status,
     todayGoal,
+    tasks,
     hours,
     minutes,
     seconds,
+    elapsedSeconds,
     isLoading,
     error,
     startTimer,
     pauseTimer,
     resumeTimer,
     resetTimer,
+    updateTasks,
+    stopTimer,
     clearError,
   } = useTimer();
 
@@ -34,6 +42,14 @@ function App() {
 
   const handleResetClick = () => {
     setShowResetDialog(true);
+  };
+
+  const handleTodoClick = () => {
+    setShowTodoDialog(true);
+  };
+
+  const handleFinishClick = () => {
+    setShowStopDialog(true);
   };
 
   const handleResetConfirm = async () => {
@@ -99,6 +115,8 @@ function App() {
           onStart={handleStartClick}
           onPause={pauseTimer}
           onResume={resumeTimer}
+          onFinish={handleFinishClick}
+          onTodoClick={handleTodoClick}
           onResetClick={handleResetClick}
         />
       </main>
@@ -115,6 +133,25 @@ function App() {
         onOpenChange={setShowResetDialog}
         onConfirm={handleResetConfirm}
         isLoading={isResetting}
+      />
+
+      <TimerTodoDialog
+        open={showTodoDialog}
+        onOpenChange={setShowTodoDialog}
+        onSave={updateTasks}
+        todayGoal={todayGoal}
+        initialTasks={tasks}
+        isLoading={isLoading}
+      />
+
+      <TimerStopDialog
+        open={showStopDialog}
+        onOpenChange={setShowStopDialog}
+        onStop={stopTimer}
+        todayGoal={todayGoal}
+        initialTasks={tasks}
+        elapsedSeconds={elapsedSeconds}
+        isLoading={isLoading}
       />
     </div>
   );
