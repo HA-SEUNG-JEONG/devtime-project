@@ -7,8 +7,8 @@ interface RankingCardProps {
   username: string;
   subtitle: string;
   stats: {
-    totalHours: number;
-    dailyAverage: number;
+    totalHours: string;
+    dailyAverage: string;
     experience: string;
   };
   avatarUrl?: string;
@@ -69,13 +69,13 @@ const RankingList = ({
             <span>
               누적{" "}
               <span className="text-foreground font-bold">
-                {stats.totalHours}시간
+                {stats.totalHours}
               </span>
             </span>
             <span>
               일 평균{" "}
               <span className="text-foreground font-bold">
-                {stats.dailyAverage}시간
+                {stats.dailyAverage}
               </span>
             </span>
             <span>
